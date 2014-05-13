@@ -21,8 +21,8 @@ public class Bootstrap {
 	 */
 	public static void main(String[] args) {
 		
-		logger.info("Usage - java com.pay.posp.server.Bootstrap <port>");
-		logger.info("Usage - java -jar  posp.jar <port>");
+		logger.info("Usage - java com.redcard.posp.server.Bootstrap <port>");
+		logger.info("Usage - java -jar  new-posp-app.jar <port>");
         ApplicationContextInit.getInstance();
 		int port = ApplicationContextInit.receiverPort;
 		if (args.length>1) {
@@ -54,7 +54,7 @@ public class Bootstrap {
         
         // Bind and start to accept incoming connections.
 		serverBootstrap.bind(new InetSocketAddress(port));
-        logger.info("启动接收端�?端口="+port+"�?成功");
+        logger.info("启动接收端端口=["+port+"]成功");
         logger.info("-------->> posp right here <<-------- \n");
 	}
 }
