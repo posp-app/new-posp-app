@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+
+
+<mapper namespace="com.pay.posp.manage.dao.ITblMerchantDao">
+	<resultMap id="TblMerchantResult" type="TblMerchant">
+		<result property="fldCode" column="fldCode" />
+		<result property="fldGroupCode" column="fldGroupCode" />
+		<result property="fldBrandCode" column="fldBrandCode" />
+		<result property="fldFullName" column="fldFullName" />
+		<result property="fldShortName" column="fldShortName" />
+		<result property="fldStatus" column="fldStatus" />
+		<result property="fldSettleType" column="fldSettleType" />
+		<result property="fldIndustryType" column="fldIndustryType" />
+		<result property="fldAddress" column="fldAddress" />
+		<result property="fldPostcode" column="fldPostcode" />
+		<result property="fldContacter" column="fldContacter" />
+		<result property="fldPhone" column="fldPhone" />
+		<result property="fldMobiles" column="fldMobiles" />
+		<result property="fldEmails" column="fldEmails" />
+		<result property="fldFax" column="fldFax" />
+		<result property="fldPinKey" column="fldPinKey" />
+		<result property="fldMacKey" column="fldMacKey" />
+		<result property="fldSystem" column="fldSystem" />
+		<result property="fldOperateUserNo" column="fldOperateUserNo" />
+		<result property="fldOperateDate" column="fldOperateDate" />
+		<result property="fldCreateUserNo" column="fldCreateUserNo" />
+		<result property="fldCreateDate" column="fldCreateDate" />
+	</resultMap>
+	<select id="selectAllTblMerchant" resultMap="TblMerchantResult">
+		SELECT fldCode,fldStatus FROM
+		tblMerchant
+	</select>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="TblMerchant_columns">
+	    <![CDATA[
+        fldCode ,fldGroupCode ,fldBrandCode ,fldFullName ,fldShortName ,fldStatus ,fldSettleType ,fldIndustryType ,fldAddress ,fldPostcode ,fldContacter ,fldPhone ,fldMobiles ,fldEmails ,fldFax ,fldPinKey ,fldMacKey ,fldSystem ,fldOperateUserNo ,fldOperateDate ,fldCreateUserNo ,fldCreateDate 
+	    ]]>
+	</sql>
+	
+	<sql id="TblMerchant_columns_as">
+	    <![CDATA[
+        fldCode as fldCode,fldGroupCode as fldGroupCode,fldBrandCode as fldBrandCode,fldFullName as fldFullName,fldShortName as fldShortName,fldStatus as fldStatus,fldSettleType as fldSettleType,fldIndustryType as fldIndustryType,fldAddress as fldAddress,fldPostcode as fldPostcode,fldContacter as fldContacter,fldPhone as fldPhone,fldMobiles as fldMobiles,fldEmails as fldEmails,fldFax as fldFax,fldPinKey as fldPinKey,fldMacKey as fldMacKey,fldSystem as fldSystem,fldOperateUserNo as fldOperateUserNo,fldOperateDate as fldOperateDate,fldCreateUserNo as fldCreateUserNo,fldCreateDate as fldCreateDate
+	    ]]>
+	</sql>
+
+	<insert id="insert_TblMerchant" parameterType="TblMerchant">
+    <![CDATA[
+        INSERT INTO tblMerchant (
+        	fldCode ,
+        	fldGroupCode ,
+        	fldBrandCode ,
+        	fldFullName ,
+        	fldShortName ,
+        	fldStatus ,
+        	fldSettleType ,
+        	fldIndustryType ,
+        	fldAddress ,
+        	fldPostcode ,
+        	fldContacter ,
+        	fldPhone ,
+        	fldMobiles ,
+        	fldEmails ,
+        	fldFax ,
+        	fldPinKey ,
+        	fldMacKey ,
+        	fldSystem ,
+        	fldOperateUserNo ,
+        	fldOperateDate ,
+        	fldCreateUserNo ,
+        	fldCreateDate 
+        ) VALUES (
+        	#{fldCode,jdbcType=nvarchar} ,
+        	#{fldGroupCode,jdbcType=nvarchar} ,
+        	#{fldBrandCode,jdbcType=nvarchar} ,
+        	#{fldFullName,jdbcType=nvarchar} ,
+        	#{fldShortName,jdbcType=nvarchar} ,
+        	#{fldStatus,jdbcType=int} ,
+        	#{fldSettleType,jdbcType=int} ,
+        	#{fldIndustryType,jdbcType=nvarchar} ,
+        	#{fldAddress,jdbcType=nvarchar} ,
+        	#{fldPostcode,jdbcType=nvarchar} ,
+        	#{fldContacter,jdbcType=nvarchar} ,
+        	#{fldPhone,jdbcType=nvarchar} ,
+        	#{fldMobiles,jdbcType=nvarchar} ,
+        	#{fldEmails,jdbcType=nvarchar} ,
+        	#{fldFax,jdbcType=nvarchar} ,
+        	#{fldPinKey,jdbcType=nvarchar} ,
+        	#{fldMacKey,jdbcType=nvarchar} ,
+        	#{fldSystem,jdbcType=int} ,
+        	#{fldOperateUserNo,jdbcType=nvarchar} ,
+        	#{fldOperateDate,jdbcType=datetime} ,
+        	#{fldCreateUserNo,jdbcType=nvarchar} ,
+        	#{fldCreateDate,jdbcType=datetime} 
+        )
+    ]]>
+	</insert>
+
+	<update id="updateById_TblMerchant" parameterType="TblMerchant">
+        UPDATE tblMerchant 
+        <set>
+	        <if test="fldGroupCode != null">
+	        	fldGroupCode = #{fldGroupCode} ,
+			</if>
+	        <if test="fldBrandCode != null">
+	        	fldBrandCode = #{fldBrandCode} ,
+			</if>
+	        <if test="fldFullName != null">
+	        	fldFullName = #{fldFullName} ,
+			</if>
+	        <if test="fldShortName != null">
+	        	fldShortName = #{fldShortName} ,
+			</if>
+	        <if test="fldStatus != null">
+	        	fldStatus = #{fldStatus} ,
+			</if>
+	        <if test="fldSettleType != null">
+	        	fldSettleType = #{fldSettleType} ,
+			</if>
+	        <if test="fldIndustryType != null">
+	        	fldIndustryType = #{fldIndustryType} ,
+			</if>
+	        <if test="fldAddress != null">
+	        	fldAddress = #{fldAddress} ,
+			</if>
+	        <if test="fldPostcode != null">
+	        	fldPostcode = #{fldPostcode} ,
+			</if>
+	        <if test="fldContacter != null">
+	        	fldContacter = #{fldContacter} ,
+			</if>
+	        <if test="fldPhone != null">
+	        	fldPhone = #{fldPhone} ,
+			</if>
+	        <if test="fldMobiles != null">
+	        	fldMobiles = #{fldMobiles} ,
+			</if>
+	        <if test="fldEmails != null">
+	        	fldEmails = #{fldEmails} ,
+			</if>
+	        <if test="fldFax != null">
+	        	fldFax = #{fldFax} ,
+			</if>
+	        <if test="fldPinKey != null">
+	        	fldPinKey = #{fldPinKey} ,
+			</if>
+	        <if test="fldMacKey != null">
+	        	fldMacKey = #{fldMacKey} ,
+			</if>
+	        <if test="fldSystem != null">
+	        	fldSystem = #{fldSystem} ,
+			</if>
+	        <if test="fldOperateUserNo != null">
+	        	fldOperateUserNo = #{fldOperateUserNo} ,
+			</if>
+	        <if test="fldOperateDate != null">
+	        	fldOperateDate = #{fldOperateDate} ,
+			</if>
+	        <if test="fldCreateUserNo != null">
+	        	fldCreateUserNo = #{fldCreateUserNo} ,
+			</if>
+	        <if test="fldCreateDate != null">
+	        	fldCreateDate = #{fldCreateDate} 
+			</if>
+	        
+	    </set>
+        WHERE 
+	        fldCode = #{fldCode} 
+	</update>
+
+	<delete id="deleteById_TblMerchant">
+    <![CDATA[
+        DELETE FROM tblMerchant WHERE
+        fldCode = #{fldCode} 
+    ]]>
+	</delete>
+	
+	<delete id="deleteByObj_TblMerchant">
+    <![CDATA[
+        DELETE FROM tblMerchant 
+    ]]>
+     <include refid="selectTblMerchant_where" />
+	</delete>
+
+	<select id="selectByIdTblMerchant" resultMap="TblMerchantResult">
+		SELECT
+		<include refid="TblMerchant_columns" />
+	    <![CDATA[
+	        FROM tblMerchant 
+	        WHERE 
+		        fldCode = #{fldCode} 
+	    ]]>
+	</select>
+
+	<sql id="selectTblMerchant_where">
+		<where>
+			
+			<if test="fldCode != null and fldCode != ''">
+				and fldCode = #{fldCode}
+			</if>
+			
+			<if test="fldGroupCode != null and fldGroupCode != ''">
+				and fldGroupCode = #{fldGroupCode}
+			</if>
+			
+			<if test="fldBrandCode != null and fldBrandCode != ''">
+				and fldBrandCode = #{fldBrandCode}
+			</if>
+			
+			<if test="fldFullName != null and fldFullName != ''">
+				and fldFullName = #{fldFullName}
+			</if>
+			
+			<if test="fldShortName != null and fldShortName != ''">
+				and fldShortName = #{fldShortName}
+			</if>
+			
+			<if test="fldStatus != null and fldStatus != ''">
+				and fldStatus = #{fldStatus}
+			</if>
+			
+			<if test="fldSettleType != null and fldSettleType != ''">
+				and fldSettleType = #{fldSettleType}
+			</if>
+			
+			<if test="fldIndustryType != null and fldIndustryType != ''">
+				and fldIndustryType = #{fldIndustryType}
+			</if>
+			
+			<if test="fldAddress != null and fldAddress != ''">
+				and fldAddress = #{fldAddress}
+			</if>
+			
+			<if test="fldPostcode != null and fldPostcode != ''">
+				and fldPostcode = #{fldPostcode}
+			</if>
+			
+			<if test="fldContacter != null and fldContacter != ''">
+				and fldContacter = #{fldContacter}
+			</if>
+			
+			<if test="fldPhone != null and fldPhone != ''">
+				and fldPhone = #{fldPhone}
+			</if>
+			
+			<if test="fldMobiles != null and fldMobiles != ''">
+				and fldMobiles = #{fldMobiles}
+			</if>
+			
+			<if test="fldEmails != null and fldEmails != ''">
+				and fldEmails = #{fldEmails}
+			</if>
+			
+			<if test="fldFax != null and fldFax != ''">
+				and fldFax = #{fldFax}
+			</if>
+			
+			<if test="fldPinKey != null and fldPinKey != ''">
+				and fldPinKey = #{fldPinKey}
+			</if>
+			
+			<if test="fldMacKey != null and fldMacKey != ''">
+				and fldMacKey = #{fldMacKey}
+			</if>
+			
+			<if test="fldSystem != null and fldSystem != ''">
+				and fldSystem = #{fldSystem}
+			</if>
+			
+			<if test="fldOperateUserNo != null and fldOperateUserNo != ''">
+				and fldOperateUserNo = #{fldOperateUserNo}
+			</if>
+			
+			<if test="fldCreateUserNo != null and fldCreateUserNo != ''">
+				and fldCreateUserNo = #{fldCreateUserNo}
+			</if>
+		</where>
+	</sql>
+
+	<select id="select_TblMerchantsCount" resultType="long">
+		SELECT count(*) FROM tblMerchant
+		<include refid="selectTblMerchant_where" />
+	</select>
+
+	<!-- 分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页 因为分页查询将传 #offset#,#pageSize#,#lastRows# 
+		三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现 -->
+	<select id="selectPage_TblMerchants" resultMap="TblMerchantResult">
+		SELECT
+		<include refid="TblMerchant_columns" />
+		FROM tblMerchant
+		<include refid="selectTblMerchant_where" />
+	</select>
+
+	<select id="findByPKId_TblMerchant" parameterType="long" resultMap="TblMerchantResult">
+		SELECT
+		<include refid="TblMerchant_columns_as" />
+		 FROM tblMerchant
+		WHERE 
+		        fldCode = #{pk_Id} 
+	</select>
+	
+	
+	<select id="findListByObj_TblMerchant" resultMap="TblMerchantResult">
+		SELECT
+		<include refid="TblMerchant_columns" />
+		FROM tblMerchant
+		<include refid="selectTblMerchant_where" />
+	</select>
+</mapper>
+

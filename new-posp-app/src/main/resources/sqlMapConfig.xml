@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+	        <typeAlias alias="TblMerchantBrand"  type="com.redcard.posp.manage.model.TblMerchantBrand"/>
+	        <typeAlias alias="TblMerchantGroup"  type="com.redcard.posp.manage.model.TblMerchantGroup"/>
+	        <typeAlias alias="TblMerchantGroupTradeType"  type="com.redcard.posp.manage.model.TblMerchantGroupTradeType"/>
+	        <typeAlias alias="TblMerchant"  type="com.redcard.posp.manage.model.TblMerchant"/>
+	        <typeAlias alias="TblMerchantPos"  type="com.redcard.posp.manage.model.TblMerchantPos"/>
+	        <typeAlias alias="TblMerchantTransformHostLink"  type="com.redcard.posp.manage.model.TblMerchantTransformHostLink"/>
+	        <typeAlias alias="TblProxyHost"  type="com.redcard.posp.manage.model.TblProxyHost"/>
+	        <typeAlias alias="TblTrade"  type="com.redcard.posp.manage.model.TblTrade"/>
+	        <typeAlias alias="TblTransactionMessage"  type="com.redcard.posp.manage.model.TblTransactionMessage"/>
+	        <typeAlias alias="TblTransformCard"  type="com.redcard.posp.manage.model.TblTransformCard"/>
+	</typeAliases>
+	<mappers>
+		<mapper resource="mybatis/TblMerchantBrandMapper.xml" />
+		<mapper resource="mybatis/TblMerchantGroupMapper.xml" />
+		<mapper resource="mybatis/TblMerchantGroupTradeTypeMapper.xml" />
+		<mapper resource="mybatis/TblMerchantMapper.xml" />
+		<mapper resource="mybatis/TblMerchantPosMapper.xml" />
+		<mapper resource="mybatis/TblMerchantTransformHostLinkMapper.xml" />
+		<mapper resource="mybatis/TblProxyHostMapper.xml" />
+		<mapper resource="mybatis/TblTradeMapper.xml" />
+		<mapper resource="mybatis/TblTransactionMessageMapper.xml" />
+		<mapper resource="mybatis/TblTransformCardMapper.xml" />
+	</mappers>
+</configuration> 
+

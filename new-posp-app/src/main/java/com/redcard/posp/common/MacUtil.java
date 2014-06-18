@@ -926,6 +926,61 @@ public class MacUtil {
 			}
 			return sb.toString();
 		}
+		
+		/**
+		 * 生成redCard-MAC校验码
+		 * 所有的输入输出数据必须是16进制字符串
+		 * 密钥只能为16位长度的16进制字符串,否则将返回null
+		 * 初始向量为16为长度的16进制字符串,如果不符合条件,自动设置为"0000000000000000"
+		 * 原始数据,16进制表示的字符串
+		 * @param key	密钥
+		 * @param vector	初始向量
+		 * @param data	加密数据
+		 * @return	加密后的数据
+		 */
+		public static String redCardMac(String key,String vector,String data)
+		{
+			if(key.length() != 16)
+			{
+				new Exception("key's length must be 16!").printStackTrace();
+				return null;
+			}
+			
+			if(vector == null || vector.length() != 16)
+				vector = "0000000000000000";
+			
+			StringBuffer sb = new StringBuffer(data);
+			int mod = data.length()%16;
+			if(mod != 0)
+			{
+				for(int i = 0;i < 16 - mod;i++)
+				{
+					sb.append("0");
+				}
+			}
+			
+			String operator = sb.toString();
+			//System.out.println("补位后的操作数为：" + operator);
+			
+			int count = operator.length()/16+1;
+			String [] blocks = new String[count];
+			blocks[0] = "0000000000000000";
+			for(int i = 0;i < count-1;i++)
+			{
+				blocks[i+1] = operator.substring(i*16, i*16 + 16);
+				//System.out.println(blocks[i+1]);
+			}
+			String xor = blocks[0];
+			//System.out.println(xor);
+			//循环进行异或,DES加密
+			for(int i = 1;i < count;i++)
+			{
+				xor = xOrString(xor,blocks[i]);
+				//System.out.println("block=["+blocks[i]+"];xor="+xor);
+			}
+			vector = DES_1(xor,key,0);
+			return vector;
+		}
 	
 	public static void main(String [] args)
 	{

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="pospSQLSessionFactory" />
+	</bean>  
+
+	<bean id="tblMerchantBrandDao" class="com.redcard.posp.manage.dao.impl.TblMerchantBrandDaoImpl"
+		scope="prototype">
+		<property name="sqlSessionTemplate" ref="sqlSession" />
+	</bean>
+	<bean id="tblMerchantDao" class="com.redcard.posp.manage.dao.impl.TblMerchantDaoImpl"
+		scope="prototype">
+		<property name="sqlSessionTemplate" ref="sqlSession" />
+	</bean>
+	<bean id="tblMerchantGroupDao" class="com.redcard.posp.manage.dao.impl.TblMerchantGroupDaoImpl"
+		scope="prototype">
+		<property name="sqlSessionTemplate" ref="sqlSession" />
+	</bean>
+	<bean id="tblMerchantGroupTradeTypeDao"
+		class="com.redcard.posp.manage.dao.impl.TblMerchantGroupTradeTypeDaoImpl"
+		scope="prototype">
+		<property name="sqlSessionTemplate" ref="sqlSession" />
+	</bean>
+	<bean id="tblMerchantPosDao" class="com.redcard.posp.manage.dao.impl.TblMerchantPosDaoImpl"
+		scope="prototype">
+		<property name="sqlSessionTemplate" ref="sqlSession" />
+	</bean>
+	<bean id="tblMerchantTransformHostLinkDao"
+		class="com.redcard.posp.manage.dao.impl.TblMerchantTransformHostLinkDaoImpl"
+		scope="prototype">
+		<property name="sqlSessionTemplate" ref="sqlSession" />
+	</bean>
+	<bean id="tblProxyHostDao" class="com.redcard.posp.manage.dao.impl.TblProxyHostDaoImpl"
+		scope="prototype">
+		<property name="sqlSessionTemplate" ref="sqlSession" />
+	</bean>
+	<bean id="tblTradeDao" class="com.redcard.posp.manage.dao.impl.TblTradeDaoImpl"
+		scope="prototype">
+		<property name="sqlSessionTemplate" ref="sqlSession" />
+	</bean>
+	<bean id="tblTransactionMessageDao"
+		class="com.redcard.posp.manage.dao.impl.TblTransactionMessageDaoImpl"
+		scope="prototype">
+		<property name="sqlSessionTemplate" ref="sqlSession" />
+	</bean>
+	<bean id="tblTransformCardDao" class="com.redcard.posp.manage.dao.impl.TblTransformCardDaoImpl"
+		scope="prototype">
+		<property name="sqlSessionTemplate" ref="sqlSession" />
+	</bean>
+</beans>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+
+	<bean id="tblMerchantBrandService"
+		class="com.redcard.posp.manage.service.impl.TblMerchantBrandServiceImpl"
+		scope="prototype">
+		<property name="tblMerchantBrandDao">
+			<ref bean="tblMerchantBrandDao" />
+		</property>
+	</bean>
+	
+	<bean id="tblMerchantGroupService"
+		class="com.redcard.posp.manage.service.impl.TblMerchantGroupServiceImpl"
+		scope="prototype">
+		<property name="tblMerchantGroupDao">
+			<ref bean="tblMerchantGroupDao" />
+		</property>
+	</bean>
+	<bean id="tblMerchantGroupTradeTypeService"
+		class="com.redcard.posp.manage.service.impl.TblMerchantGroupTradeTypeServiceImpl"
+		scope="prototype">
+		<property name="tblMerchantGroupTradeTypeDao">
+			<ref bean="tblMerchantGroupTradeTypeDao" />
+		</property>
+	</bean>
+	<bean id="tblMerchantPosService"
+		class="com.redcard.posp.manage.service.impl.TblMerchantPosServiceImpl"
+		scope="prototype">
+		<property name="tblMerchantPosDao">
+			<ref bean="tblMerchantPosDao" />
+		</property>
+	</bean>
+	<bean id="tblMerchantService"
+		class="com.redcard.posp.manage.service.impl.TblMerchantServiceImpl"
+		scope="prototype">
+		<property name="tblMerchantDao">
+			<ref bean="tblMerchantDao" />
+		</property>
+	</bean>
+	<bean id="tblMerchantTransformHostLinkService"
+		class="com.redcard.posp.manage.service.impl.TblMerchantTransformHostLinkServiceImpl"
+		scope="prototype">
+		<property name="tblMerchantTransformHostLinkDao">
+			<ref bean="tblMerchantTransformHostLinkDao" />
+		</property>
+	</bean>
+	<bean id="tblProxyHostService"
+		class="com.redcard.posp.manage.service.impl.TblProxyHostServiceImpl"
+		scope="prototype">
+		<property name="tblProxyHostDao">
+			<ref bean="tblProxyHostDao" />
+		</property>
+	</bean>
+	<bean id="tblTradeService"
+		class="com.redcard.posp.manage.service.impl.TblTradeServiceImpl"
+		scope="prototype">
+		<property name="tblTradeDao">
+			<ref bean="tblTradeDao" />
+		</property>
+	</bean>
+	<bean id="tblTransactionMessageService"
+		class="com.redcard.posp.manage.service.impl.TblTransactionMessageServiceImpl"
+		scope="prototype">
+		<property name="tblTransactionMessageDao">
+			<ref bean="tblTransactionMessageDao" />
+		</property>
+	</bean>
+	<bean id="tblTransformCardService"
+		class="com.redcard.posp.manage.service.impl.TblTransformCardServiceImpl"
+		scope="prototype">
+		<property name="tblTransformCardDao">
+			<ref bean="tblTransformCardDao" />
+		</property>
+	</bean>
+	
+	
+	
+	<bean id="messageService"
+		class="com.redcard.posp.manage.service.impl.MessageServiceImpl"
+		scope="prototype">
+	</bean>
+
+</beans>

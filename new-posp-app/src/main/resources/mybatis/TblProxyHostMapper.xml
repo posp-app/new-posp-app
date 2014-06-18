@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+
+
+<mapper namespace="com.pay.posp.manage.dao.ITblProxyHostDao">
+	<resultMap id="TblProxyHostResult" type="TblProxyHost">
+		<result property="fldHostCode" column="fldHostCode" />
+		<result property="fldHostName" column="fldHostName" />
+		<result property="fldHostIp" column="fldHostIp" />
+		<result property="fldHostPort" column="fldHostPort" />
+		<result property="fldStatus" column="fldStatus" />
+		<result property="fldOrgCode" column="fldOrgCode" />
+		<result property="fldPinKey" column="fldPinKey" />
+		<result property="fldMacKey" column="fldMacKey" />
+		<result property="fldEncryptKey" column="fldEncryptKey" />
+		<result property="fldSystem" column="fldSystem" />
+		<result property="fldOperateUserNo" column="fldOperateUserNo" />
+		<result property="fldOperateDate" column="fldOperateDate" />
+		<result property="fldCreateUserNo" column="fldCreateUserNo" />
+		<result property="fldCreateDate" column="fldCreateDate" />
+		<result property="fldTerminalNo" column="fldTerminalNo" />
+		<result property="fldMerchantNo" column="fldMerchantNo" />
+	</resultMap>
+	<select id="selectAllTblProxyHost" resultMap="TblProxyHostResult">
+		SELECT * FROM
+		tblProxyHost
+	</select>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="TblProxyHost_columns">
+	    <![CDATA[
+        fldHostCode ,fldHostName ,fldHostIp ,fldHostPort ,fldStatus ,fldOrgCode ,fldPinKey ,fldMacKey ,fldEncryptKey,fldSystem ,fldOperateUserNo ,fldOperateDate ,fldCreateUserNo ,fldCreateDate,fldTerminalNo,fldMerchantNo
+	    ]]>
+	</sql>
+	
+	<sql id="TblProxyHost_columns_as">
+	    <![CDATA[
+        fldHostCode as fldHostCode,fldHostName as fldHostName,fldHostIp as fldHostIp,fldHostPort as fldHostPort,fldStatus as fldStatus,fldOrgCode as fldOrgCode,
+        fldPinKey as fldPinKey,fldMacKey as fldMacKey,fldEncryptKey as fldEncryptKey,fldSystem as fldSystem,
+        fldOperateUserNo as fldOperateUserNo,fldOperateDate as fldOperateDate,
+        fldCreateUserNo as fldCreateUserNo,fldCreateDate as fldCreateDate,
+        fldTerminalNo as fldTerminalNo,fldMerchantNo as fldMerchantNo
+	    ]]>
+	</sql>
+
+	<insert id="insert_TblProxyHost" parameterType="TblProxyHost">
+    <![CDATA[
+        INSERT INTO tblProxyHost (
+        	fldHostCode ,
+        	fldHostName ,
+        	fldHostIp ,
+        	fldHostPort ,
+        	fldStatus ,
+        	fldOrgCode ,
+        	fldPinKey ,
+        	fldMacKey ,
+        	fldEncryptKey,
+        	fldSystem ,
+        	fldOperateUserNo ,
+        	fldOperateDate ,
+        	fldCreateUserNo ,
+        	fldTerminalNo ,
+        	fldMerchantNo ,
+        	fldCreateDate 
+        ) VALUES (
+        	#{fldHostCode,jdbcType=nvarchar} ,
+        	#{fldHostName,jdbcType=nvarchar} ,
+        	#{fldHostIp,jdbcType=nvarchar} ,
+        	#{fldHostPort,jdbcType=int} ,
+        	#{fldStatus,jdbcType=int} ,
+        	#{fldOrgCode,jdbcType=nvarchar} ,
+        	#{fldPinKey,jdbcType=nvarchar} ,
+        	#{fldMacKey,jdbcType=nvarchar} ,
+        	#{fldEncryptKey,jdbcType=nvarchar},
+        	#{fldSystem,jdbcType=int} ,
+        	#{fldOperateUserNo,jdbcType=nvarchar} ,
+        	#{fldOperateDate,jdbcType=datetime} ,
+        	#{fldCreateUserNo,jdbcType=nvarchar} ,
+        	#{fldTerminalNo,jdbcType=nvarchar} ,
+        	#{fldMerchantNo,jdbcType=nvarchar} ,
+        	#{fldCreateDate,jdbcType=datetime} 
+        )
+    ]]>
+	</insert>
+
+	<update id="updateById_TblProxyHost" parameterType="TblProxyHost">
+        UPDATE tblProxyHost 
+        <set>
+	        <if test="fldHostName != null">
+	        	fldHostName = #{fldHostName} ,
+			</if>
+	        <if test="fldHostIp != null">
+	        	fldHostIp = #{fldHostIp} ,
+			</if>
+	        <if test="fldHostPort != null">
+	        	fldHostPort = #{fldHostPort} ,
+			</if>
+	        <if test="fldStatus != null">
+	        	fldStatus = #{fldStatus} ,
+			</if>
+	        <if test="fldOrgCode != null">
+	        	fldOrgCode = #{fldOrgCode} ,
+			</if>
+	        <if test="fldPinKey != null">
+	        	fldPinKey = #{fldPinKey} ,
+			</if>
+	        <if test="fldMacKey != null">
+	        	fldMacKey = #{fldMacKey} ,
+			</if>
+	        <if test="fldEncryptKey != null">
+	        	fldEncryptKey = #{fldEncryptKey} ,
+			</if>
+	        <if test="fldSystem != null">
+	        	fldSystem = #{fldSystem} ,
+			</if>
+	        <if test="fldOperateUserNo != null">
+	        	fldOperateUserNo = #{fldOperateUserNo} ,
+			</if>
+	        <if test="fldOperateDate != null">
+	        	fldOperateDate = #{fldOperateDate} ,
+			</if>
+	        <if test="fldCreateUserNo != null">
+	        	fldCreateUserNo = #{fldCreateUserNo} ,
+			</if>
+	        <if test="fldTerminalNo != null">
+	        	fldTerminalNo = #{fldTerminalNo} ,
+			</if>
+	        <if test="fldMerchantNo != null">
+	        	fldMerchantNo = #{fldMerchantNo} ,
+			</if>
+	        <if test="fldOrgCode != null">
+	        	fldOrgCode = #{fldOrgCode} ,
+			</if>
+	        <if test="fldCreateDate != null">
+	        	fldCreateDate = #{fldCreateDate} 
+			</if>
+	        
+	    </set>
+        WHERE 
+	        fldHostCode = #{fldHostCode} 
+	</update>
+	
+	<update id="update_ByMerchantNo" parameterType="TblProxyHost">
+        UPDATE tblProxyHost 
+        <set>
+	        <if test="fldPinKey != null">
+	        	fldPinKey = #{fldPinKey} ,
+			</if>
+	        <if test="fldEncryptKey != null">
+	        	fldEncryptKey = #{fldEncryptKey} ,
+			</if>
+	        <if test="fldMacKey != null">
+	        	fldMacKey = #{fldMacKey}
+			</if>
+	        
+	    </set>
+        WHERE 
+	        fldMerchantNo = #{fldMerchantNo} 
+	</update>
+
+	<delete id="deleteById_TblProxyHost">
+    <![CDATA[
+        DELETE FROM tblProxyHost WHERE
+        fldHostCode = #{fldHostCode} 
+    ]]>
+	</delete>
+	
+	<delete id="deleteByObj_TblProxyHost">
+    <![CDATA[
+        DELETE FROM tblProxyHost 
+    ]]>
+     <include refid="selectTblProxyHost_where" />
+	</delete>
+
+	<select id="selectByIdTblProxyHost" resultMap="TblProxyHostResult">
+		SELECT
+		<include refid="TblProxyHost_columns" />
+	    <![CDATA[
+	        FROM tblProxyHost 
+	        WHERE 
+		        fldHostCode = #{fldHostCode} 
+	    ]]>
+	</select>
+
+	<sql id="selectTblProxyHost_where">
+		<where>
+			
+			<if test="fldHostCode != null and fldHostCode != ''">
+				and fldHostCode = #{fldHostCode}
+			</if>
+			
+			<if test="fldHostName != null and fldHostName != ''">
+				and fldHostName = #{fldHostName}
+			</if>
+			
+			<if test="fldHostIp != null and fldHostIp != ''">
+				and fldHostIp = #{fldHostIp}
+			</if>
+			
+			<if test="fldHostPort != null and fldHostPort != ''">
+				and fldHostPort = #{fldHostPort}
+			</if>
+			
+			<if test="fldStatus != null and fldStatus != ''">
+				and fldStatus = #{fldStatus}
+			</if>
+			
+			<if test="fldTerminalNo != null and fldTerminalNo != ''">
+				and fldTerminalNo = #{fldTerminalNo}
+			</if>
+			
+			<if test="fldMerchantNo != null and fldMerchantNo != ''">
+				and fldMerchantNo = #{fldMerchantNo}
+			</if>
+			
+			<if test="fldOrgCode != null and fldOrgCode != ''">
+				and fldOrgCode = #{fldOrgCode}
+			</if>
+			
+			<if test="fldPinKey != null and fldPinKey != ''">
+				and fldPinKey = #{fldPinKey}
+			</if>
+			
+			<if test="fldMacKey != null and fldMacKey != ''">
+				and fldMacKey = #{fldMacKey}
+			</if>
+	        <if test="fldEncryptKey != null and fldEncryptKey != ''">
+	        	fldEncryptKey = #{fldEncryptKey} 
+			</if>
+			
+			<if test="fldSystem != null and fldSystem != ''">
+				and fldSystem = #{fldSystem}
+			</if>
+			
+			<if test="fldOperateUserNo != null and fldOperateUserNo != ''">
+				and fldOperateUserNo = #{fldOperateUserNo}
+			</if>
+			
+			<if test="fldCreateUserNo != null and fldCreateUserNo != ''">
+				and fldCreateUserNo = #{fldCreateUserNo}
+			</if>
+		</where>
+	</sql>
+
+	<select id="select_TblProxyHostsCount" resultType="long">
+		SELECT count(*) FROM tblProxyHost
+		<include refid="selectTblProxyHost_where" />
+	</select>
+
+	<!-- 分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页 因为分页查询将传 #offset#,#pageSize#,#lastRows# 
+		三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现 -->
+	<select id="selectPage_TblProxyHosts" resultMap="TblProxyHostResult">
+		SELECT
+		<include refid="TblProxyHost_columns" />
+		FROM tblProxyHost
+		<include refid="selectTblProxyHost_where" />
+	</select>
+
+	<select id="findByPKId_TblProxyHost" parameterType="long" resultMap="TblProxyHostResult">
+		SELECT
+		<include refid="TblProxyHost_columns_as" />
+		 FROM tblProxyHost
+		WHERE 
+		        fldHostCode = #{pk_Id} 
+	</select>
+	
+	
+	<select id="findListByObj_TblProxyHost" resultMap="TblProxyHostResult">
+		SELECT
+		<include refid="TblProxyHost_columns" />
+		FROM tblProxyHost
+		<include refid="selectTblProxyHost_where" />
+	</select>
+</mapper>
+

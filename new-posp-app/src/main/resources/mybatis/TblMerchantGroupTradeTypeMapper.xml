@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+
+
+<mapper namespace="com.pay.posp.manage.dao.ITblMerchantGroupTradeTypeDao">
+	<resultMap id="TblMerchantGroupTradeTypeResult" type="TblMerchantGroupTradeType">
+		<result property="fldId" column="fldId" />
+		<result property="fldMerchantGroupCode" column="fldMerchantGroupCode" />
+		<result property="fldTradeType" column="fldTradeType" />
+		<result property="fldTradeName" column="fldTradeName" />
+		<result property="fldCreateUserNo" column="fldCreateUserNo" />
+		<result property="fldCreateDate" column="fldCreateDate" />
+		<result property="fldOperateUserNo" column="fldOperateUserNo" />
+		<result property="fldOperateDate" column="fldOperateDate" />
+	</resultMap>
+	<select id="selectAllTblMerchantGroupTradeType" resultMap="TblMerchantGroupTradeTypeResult">
+		SELECT * FROM
+		tblMerchantGroupTradeType
+	</select>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="TblMerchantGroupTradeType_columns">
+	    <![CDATA[
+        fldId ,fldMerchantGroupCode ,fldTradeType ,fldTradeName ,fldCreateUserNo ,fldCreateDate ,fldOperateUserNo ,fldOperateDate 
+	    ]]>
+	</sql>
+	
+	<sql id="TblMerchantGroupTradeType_columns_as">
+	    <![CDATA[
+        fldId as fldId,fldMerchantGroupCode as fldMerchantGroupCode,fldTradeType as fldTradeType,fldTradeName as fldTradeName,fldCreateUserNo as fldCreateUserNo,fldCreateDate as fldCreateDate,fldOperateUserNo as fldOperateUserNo,fldOperateDate as fldOperateDate
+	    ]]>
+	</sql>
+
+	<insert id="insert_TblMerchantGroupTradeType" parameterType="TblMerchantGroupTradeType">
+    <![CDATA[
+        INSERT INTO tblMerchantGroupTradeType (
+        	fldId ,
+        	fldMerchantGroupCode ,
+        	fldTradeType ,
+        	fldTradeName ,
+        	fldCreateUserNo ,
+        	fldCreateDate ,
+        	fldOperateUserNo ,
+        	fldOperateDate 
+        ) VALUES (
+        	#{fldId,jdbcType=int identity} ,
+        	#{fldMerchantGroupCode,jdbcType=nvarchar} ,
+        	#{fldTradeType,jdbcType=nvarchar} ,
+        	#{fldTradeName,jdbcType=nvarchar} ,
+        	#{fldCreateUserNo,jdbcType=nvarchar} ,
+        	#{fldCreateDate,jdbcType=datetime} ,
+        	#{fldOperateUserNo,jdbcType=nvarchar} ,
+        	#{fldOperateDate,jdbcType=datetime} 
+        )
+    ]]>
+	</insert>
+
+	<update id="updateById_TblMerchantGroupTradeType" parameterType="TblMerchantGroupTradeType">
+        UPDATE tblMerchantGroupTradeType 
+        <set>
+	        <if test="fldMerchantGroupCode != null">
+	        	fldMerchantGroupCode = #{fldMerchantGroupCode} ,
+			</if>
+	        <if test="fldTradeType != null">
+	        	fldTradeType = #{fldTradeType} ,
+			</if>
+	        <if test="fldTradeName != null">
+	        	fldTradeName = #{fldTradeName} ,
+			</if>
+	        <if test="fldCreateUserNo != null">
+	        	fldCreateUserNo = #{fldCreateUserNo} ,
+			</if>
+	        <if test="fldCreateDate != null">
+	        	fldCreateDate = #{fldCreateDate} ,
+			</if>
+	        <if test="fldOperateUserNo != null">
+	        	fldOperateUserNo = #{fldOperateUserNo} ,
+			</if>
+	        <if test="fldOperateDate != null">
+	        	fldOperateDate = #{fldOperateDate} 
+			</if>
+	        
+	    </set>
+        WHERE 
+	        fldId = #{fldId} 
+	</update>
+
+	<delete id="deleteById_TblMerchantGroupTradeType">
+    <![CDATA[
+        DELETE FROM tblMerchantGroupTradeType WHERE
+        fldId = #{fldId} 
+    ]]>
+	</delete>
+	
+	<delete id="deleteByObj_TblMerchantGroupTradeType">
+    <![CDATA[
+        DELETE FROM tblMerchantGroupTradeType 
+    ]]>
+     <include refid="selectTblMerchantGroupTradeType_where" />
+	</delete>
+
+	<select id="selectByIdTblMerchantGroupTradeType" resultMap="TblMerchantGroupTradeTypeResult">
+		SELECT
+		<include refid="TblMerchantGroupTradeType_columns" />
+	    <![CDATA[
+	        FROM tblMerchantGroupTradeType 
+	        WHERE 
+		        fldId = #{fldId} 
+	    ]]>
+	</select>
+
+	<sql id="selectTblMerchantGroupTradeType_where">
+		<where>
+			
+			<if test="fldId != null and fldId != ''">
+				and fldId = #{fldId}
+			</if>
+			
+			<if test="fldMerchantGroupCode != null and fldMerchantGroupCode != ''">
+				and fldMerchantGroupCode = #{fldMerchantGroupCode}
+			</if>
+			
+			<if test="fldTradeType != null and fldTradeType != ''">
+				and fldTradeType = #{fldTradeType}
+			</if>
+			
+			<if test="fldTradeName != null and fldTradeName != ''">
+				and fldTradeName = #{fldTradeName}
+			</if>
+			
+			<if test="fldCreateUserNo != null and fldCreateUserNo != ''">
+				and fldCreateUserNo = #{fldCreateUserNo}
+			</if>
+			
+			<if test="fldOperateUserNo != null and fldOperateUserNo != ''">
+				and fldOperateUserNo = #{fldOperateUserNo}
+			</if>
+		</where>
+	</sql>
+
+	<select id="select_TblMerchantGroupTradeTypesCount" resultType="long">
+		SELECT count(*) FROM tblMerchantGroupTradeType
+		<include refid="selectTblMerchantGroupTradeType_where" />
+	</select>
+
+	<!-- 分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页 因为分页查询将传 #offset#,#pageSize#,#lastRows# 
+		三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现 -->
+	<select id="selectPage_TblMerchantGroupTradeTypes" resultMap="TblMerchantGroupTradeTypeResult">
+		SELECT
+		<include refid="TblMerchantGroupTradeType_columns" />
+		FROM tblMerchantGroupTradeType
+		<include refid="selectTblMerchantGroupTradeType_where" />
+	</select>
+
+	<select id="findByPKId_TblMerchantGroupTradeType" parameterType="long" resultMap="TblMerchantGroupTradeTypeResult">
+		SELECT
+		<include refid="TblMerchantGroupTradeType_columns_as" />
+		 FROM tblMerchantGroupTradeType
+		WHERE 
+		        fldId = #{pk_Id} 
+	</select>
+	
+	
+	<select id="findListByObj_TblMerchantGroupTradeType" resultMap="TblMerchantGroupTradeTypeResult">
+		SELECT
+		<include refid="TblMerchantGroupTradeType_columns" />
+		FROM tblMerchantGroupTradeType
+		<include refid="selectTblMerchantGroupTradeType_where" />
+	</select>
+</mapper>
+

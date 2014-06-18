@@ -5,14 +5,14 @@ import java.io.UnsupportedEncodingException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 
 import com.opensymphony.oscache.util.StringUtil;
-import com.pay.posp.common.CommonUtil;
-import com.pay.posp.common.DecodeUtil;
-import com.pay.posp.common.SecurityUtil;
-import com.pay.posp.common.TypeConvert;
-import com.pay.posp.support.ApplicationKey;
-import com.pay.posp.support.Key;
+import com.redcard.posp.common.DecodeUtil;
+import com.redcard.posp.common.SecurityUtil;
+import com.redcard.posp.common.TypeConvert;
+import com.redcard.posp.support.ApplicationKey;
+import com.redcard.posp.support.Key;
 
 /**
  * 
@@ -49,7 +49,7 @@ public class Message implements Serializable {
 	
 	protected int length = 0;
 	
-	protected byte buf[];
+	public byte buf[];
 	
 	protected StringBuilder toString;
 	
@@ -195,7 +195,11 @@ public class Message implements Serializable {
 		byte[] temp = DecodeUtil.str2Bcd(value);
 		this.field[fieldNumber-1] = temp;
 		if (fieldNumber>1){
-			SecurityUtil.setBinaryOne(bitMap, fieldNumber);
+			if (!StringUtil.isEmpty(value)) {
+				SecurityUtil.setBinaryOne(bitMap, fieldNumber);
+			} else {
+				SecurityUtil.setBinaryZero(bitMap, fieldNumber);
+			}
 		}
  	}
 	public void setASCField(int fieldNumber,String value) {
@@ -730,13 +734,11 @@ public class Message implements Serializable {
 	}
 
 	public String getPinKey() {
-		Key k= getKey(Key.KEY_TYPE_PIN);
-		return k==null?"":k.getKey();
+		return getFieldValue(61);
 	}
 
 	public String getMacKey() {
-		Key k= getKey(Key.KEY_TYPE_MAC);
-		return k==null?"":k.getKey();
+		return getFieldValue(60);
 	}
 	
 	public String getEncryptKey() {
@@ -983,7 +985,9 @@ public class Message implements Serializable {
 		StringBuilder sb = new StringBuilder();
 		sb.append("bitMap=["+TypeConvert.bytes2HexString(bitMap)+"]\r");
 		for (int i=1;i<=field.length;i++) {
-			sb.append("Field["+i+"]="+getFieldOrgString(i)+"\n");
+			if (!StringUtils.isEmpty(getFieldOrgString(i))) {
+				sb.append("Field["+i+"]="+getFieldOrgString(i)+"\n");
+			}
 		}
 		return sb.toString();
 	}

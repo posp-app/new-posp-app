@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+	
+<mapper namespace="com.pay.posp.manage.dao.ITblMerchantBrandDao">
+
+	<resultMap id="TblMerchantBrandResult" type="TblMerchantBrand">
+		<result property="fldBrandCode" column="fldBrandCode" />
+		<result property="fldFullName" column="fldFullName" />
+		<result property="fldType" column="fldType" />
+		<result property="fldShortName" column="fldShortName" />
+		<result property="fldStatus" column="fldStatus" />
+		<result property="fldSystem" column="fldSystem" />
+		<result property="fldOperateUserNo" column="fldOperateUserNo" />
+		<result property="fldOperateDate" column="fldOperateDate" />
+		<result property="fldCreateUserNo" column="fldCreateUserNo" />
+		<result property="fldCreateDate" column="fldCreateDate" />
+	</resultMap>
+	<select id="selectAllTblMerchantBrand" resultMap="TblMerchantBrandResult">
+		SELECT * FROM
+		tblMerchantBrand
+	</select>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="TblMerchantBrand_columns">
+	    <![CDATA[
+        fldBrandCode ,fldFullName ,fldType ,fldShortName ,fldStatus ,fldSystem ,fldOperateUserNo ,fldOperateDate ,fldCreateUserNo ,fldCreateDate 
+	    ]]>
+	</sql>
+	
+	<sql id="TblMerchantBrand_columns_as">
+	    <![CDATA[
+        fldBrandCode as fldBrandCode,fldFullName as fldFullName,fldType as fldType,fldShortName as fldShortName,fldStatus as fldStatus,fldSystem as fldSystem,fldOperateUserNo as fldOperateUserNo,fldOperateDate as fldOperateDate,fldCreateUserNo as fldCreateUserNo,fldCreateDate as fldCreateDate
+	    ]]>
+	</sql>
+
+	<insert id="insert_TblMerchantBrand" parameterType="TblMerchantBrand">
+    <![CDATA[
+        INSERT INTO tblMerchantBrand (
+        	fldBrandCode ,
+        	fldFullName ,
+        	fldType ,
+        	fldShortName ,
+        	fldStatus ,
+        	fldSystem ,
+        	fldOperateUserNo ,
+        	fldOperateDate ,
+        	fldCreateUserNo ,
+        	fldCreateDate 
+        ) VALUES (
+        	#{fldBrandCode,jdbcType=nvarchar} ,
+        	#{fldFullName,jdbcType=nvarchar} ,
+        	#{fldType,jdbcType=nvarchar} ,
+        	#{fldShortName,jdbcType=nvarchar} ,
+        	#{fldStatus,jdbcType=int} ,
+        	#{fldSystem,jdbcType=int} ,
+        	#{fldOperateUserNo,jdbcType=nvarchar} ,
+        	#{fldOperateDate,jdbcType=datetime} ,
+        	#{fldCreateUserNo,jdbcType=nvarchar} ,
+        	#{fldCreateDate,jdbcType=datetime} 
+        )
+    ]]>
+	</insert>
+
+	<update id="updateById_TblMerchantBrand" parameterType="TblMerchantBrand">
+        UPDATE tblMerchantBrand 
+        <set>
+	        <if test="fldFullName != null">
+	        	fldFullName = #{fldFullName} ,
+			</if>
+	        <if test="fldType != null">
+	        	fldType = #{fldType} ,
+			</if>
+	        <if test="fldShortName != null">
+	        	fldShortName = #{fldShortName} ,
+			</if>
+	        <if test="fldStatus != null">
+	        	fldStatus = #{fldStatus} ,
+			</if>
+	        <if test="fldSystem != null">
+	        	fldSystem = #{fldSystem} ,
+			</if>
+	        <if test="fldOperateUserNo != null">
+	        	fldOperateUserNo = #{fldOperateUserNo} ,
+			</if>
+	        <if test="fldOperateDate != null">
+	        	fldOperateDate = #{fldOperateDate} ,
+			</if>
+	        <if test="fldCreateUserNo != null">
+	        	fldCreateUserNo = #{fldCreateUserNo} ,
+			</if>
+	        <if test="fldCreateDate != null">
+	        	fldCreateDate = #{fldCreateDate} 
+			</if>
+	        
+	    </set>
+        WHERE 
+	        fldBrandCode = #{fldBrandCode} 
+	</update>
+
+	<delete id="deleteById_TblMerchantBrand">
+    <![CDATA[
+        DELETE FROM tblMerchantBrand WHERE
+        fldBrandCode = #{fldBrandCode} 
+    ]]>
+	</delete>
+	
+	<delete id="deleteByObj_TblMerchantBrand">
+    <![CDATA[
+        DELETE FROM tblMerchantBrand 
+    ]]>
+     <include refid="selectTblMerchantBrand_where" />
+	</delete>
+
+	<select id="selectByIdTblMerchantBrand" resultMap="TblMerchantBrandResult">
+		SELECT
+		<include refid="TblMerchantBrand_columns" />
+	    <![CDATA[
+	        FROM tblMerchantBrand 
+	        WHERE 
+		        fldBrandCode = #{fldBrandCode} 
+	    ]]>
+	</select>
+
+	<sql id="selectTblMerchantBrand_where">
+		<where>
+			
+			<if test="fldBrandCode != null and fldBrandCode != ''">
+				and fldBrandCode = #{fldBrandCode}
+			</if>
+			
+			<if test="fldFullName != null and fldFullName != ''">
+				and fldFullName = #{fldFullName}
+			</if>
+			
+			<if test="fldType != null and fldType != ''">
+				and fldType = #{fldType}
+			</if>
+			
+			<if test="fldShortName != null and fldShortName != ''">
+				and fldShortName = #{fldShortName}
+			</if>
+			
+			<if test="fldStatus != null and fldStatus != ''">
+				and fldStatus = #{fldStatus}
+			</if>
+			
+			<if test="fldSystem != null and fldSystem != ''">
+				and fldSystem = #{fldSystem}
+			</if>
+			
+			<if test="fldOperateUserNo != null and fldOperateUserNo != ''">
+				and fldOperateUserNo = #{fldOperateUserNo}
+			</if>
+			<if test="fldOperateDateBegin != null">
+				and fldOperateDate >= #{fldOperateDateBegin}
+			</if>
+			<if test="fldOperateDateEnd != null">
+				and fldOperateDate &lt;= #{fldOperateDateEnd}
+			</if>
+			
+			<if test="fldCreateUserNo != null and fldCreateUserNo != ''">
+				and fldCreateUserNo = #{fldCreateUserNo}
+			</if>
+			<if test="fldCreateDateBegin != null">
+				and fldCreateDate >= #{fldCreateDateBegin}
+			</if>
+			<if test="fldCreateDateEnd != null">
+				and fldCreateDate &lt;= #{fldCreateDateEnd}
+			</if>
+		</where>
+	</sql>
+
+	<select id="select_TblMerchantBrandsCount" resultType="long">
+		SELECT count(*) FROM tblMerchantBrand
+		<include refid="selectTblMerchantBrand_where" />
+	</select>
+
+	<!-- 分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页 因为分页查询将传 #offset#,#pageSize#,#lastRows# 
+		三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现 -->
+	<select id="selectPage_TblMerchantBrands" resultMap="TblMerchantBrandResult">
+		SELECT
+		<include refid="TblMerchantBrand_columns" />
+		FROM tblMerchantBrand
+		<include refid="selectTblMerchantBrand_where" />
+	</select>
+
+	<select id="findByPKId_TblMerchantBrand" parameterType="long" resultMap="TblMerchantBrandResult">
+		SELECT
+		<include refid="TblMerchantBrand_columns_as" />
+		 FROM tblMerchantBrand
+		WHERE 
+		        fldBrandCode = #{pk_Id} 
+	</select>
+	
+	
+	<select id="findListByObj_TblMerchantBrand" resultMap="TblMerchantBrandResult">
+		SELECT
+		<include refid="TblMerchantBrand_columns" />
+		FROM tblMerchantBrand
+		<include refid="selectTblMerchantBrand_where" />
+	</select>
+</mapper>
+

@@ -11,6 +11,8 @@ public class ApplicationKey {
 	public static final String FORMAT_LLVAR = "LLVAR";
 	public static final String FORMAT_LLLVAR = "LLLVAR";
 	public static final String NAME = "name";
+	public static final String CLASS_NAME = "class";
+	public static final String NODE = "node";
 	public static final String BIND = "bind";
 	public static final String HEAD = "head";
 	public static final String BIT_MAP = "bit-map";
@@ -19,6 +21,9 @@ public class ApplicationKey {
 	public static final String TRANS = "trans";
 	public static final String TRAN = "tran";
 	public static final String TYPE = "type";
+	public static final String PROCCESS = "proc";
+	public static final String PROTOCOL_TYPE = "PROTOCOL_TYPE";
+	public static final String PROTOCOL_TYPE_WIN_POINT = "PROTOCOL_TYPE_WIN_POINT";
 
 	public static final String SERVER = "server";
 	public static final String RECEIVER_PORT = "receiverPort";
@@ -58,6 +63,8 @@ public class ApplicationKey {
 	
 	public static final String INPUT_MESSAGE_FORMAT="inputMessageFormat";
 	public static final String OUTPUT_MESSAGE_FORMAT="outputMessageFormat";
+	public static final String OUTS = "outs";
+	public static final String OUT = "out";
 	
 	
 }

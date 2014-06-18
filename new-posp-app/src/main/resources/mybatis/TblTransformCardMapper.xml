@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+
+
+<mapper namespace="com.pay.posp.manage.dao.ITblTransformCardDao">
+	<resultMap id="TblTransformCardResult" type="TblTransformCard">
+		<result property="fldId" column="fldId" />
+		<result property="fldHostCode" column="fldHostCode" />
+		<result property="fldIssuer" column="fldIssuer" />
+		<result property="fldCardRule" column="fldCardRule" />
+		<result property="fldSystem" column="fldSystem" />
+		<result property="fldOperateUserNo" column="fldOperateUserNo" />
+		<result property="fldOperateDate" column="fldOperateDate" />
+		<result property="fldCreateUserNo" column="fldCreateUserNo" />
+		<result property="fldCreateDate" column="fldCreateDate" />
+	</resultMap>
+	<select id="selectAllTblTransformCard" resultMap="TblTransformCardResult">
+		SELECT * FROM
+		tblTransformCard
+	</select>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="TblTransformCard_columns">
+	    <![CDATA[
+        fldId ,fldHostCode ,fldIssuer ,fldCardRule ,fldSystem ,fldOperateUserNo ,fldOperateDate ,fldCreateUserNo ,fldCreateDate 
+	    ]]>
+	</sql>
+	
+	<sql id="TblTransformCard_columns_as">
+	    <![CDATA[
+        fldId as fldId,fldHostCode as fldHostCode,fldIssuer as fldIssuer,fldCardRule as fldCardRule,fldSystem as fldSystem,fldOperateUserNo as fldOperateUserNo,fldOperateDate as fldOperateDate,fldCreateUserNo as fldCreateUserNo,fldCreateDate as fldCreateDate
+	    ]]>
+	</sql>
+
+	<insert id="insert_TblTransformCard" parameterType="TblTransformCard">
+    <![CDATA[
+        INSERT INTO tblTransformCard (
+        	fldId ,
+        	fldHostCode ,
+        	fldIssuer ,
+        	fldCardRule ,
+        	fldSystem ,
+        	fldOperateUserNo ,
+        	fldOperateDate ,
+        	fldCreateUserNo ,
+        	fldCreateDate 
+        ) VALUES (
+        	#{fldId,jdbcType=int identity} ,
+        	#{fldHostCode,jdbcType=nvarchar} ,
+        	#{fldIssuer,jdbcType=nvarchar} ,
+        	#{fldCardRule,jdbcType=nvarchar} ,
+        	#{fldSystem,jdbcType=int} ,
+        	#{fldOperateUserNo,jdbcType=nvarchar} ,
+        	#{fldOperateDate,jdbcType=datetime} ,
+        	#{fldCreateUserNo,jdbcType=nvarchar} ,
+        	#{fldCreateDate,jdbcType=datetime} 
+        )
+    ]]>
+	</insert>
+
+	<update id="updateById_TblTransformCard" parameterType="TblTransformCard">
+        UPDATE tblTransformCard 
+        <set>
+	        <if test="fldHostCode != null">
+	        	fldHostCode = #{fldHostCode} ,
+			</if>
+	        <if test="fldIssuer != null">
+	        	fldIssuer = #{fldIssuer} ,
+			</if>
+	        <if test="fldCardRule != null">
+	        	fldCardRule = #{fldCardRule} ,
+			</if>
+	        <if test="fldSystem != null">
+	        	fldSystem = #{fldSystem} ,
+			</if>
+	        <if test="fldOperateUserNo != null">
+	        	fldOperateUserNo = #{fldOperateUserNo} ,
+			</if>
+	        <if test="fldOperateDate != null">
+	        	fldOperateDate = #{fldOperateDate} ,
+			</if>
+	        <if test="fldCreateUserNo != null">
+	        	fldCreateUserNo = #{fldCreateUserNo} ,
+			</if>
+	        <if test="fldCreateDate != null">
+	        	fldCreateDate = #{fldCreateDate} 
+			</if>
+	        
+	    </set>
+        WHERE 
+	        fldId = #{fldId} 
+	</update>
+
+	<delete id="deleteById_TblTransformCard">
+    <![CDATA[
+        DELETE FROM tblTransformCard WHERE
+        fldId = #{fldId} 
+    ]]>
+	</delete>
+	
+	<delete id="deleteByObj_TblTransformCard">
+    <![CDATA[
+        DELETE FROM tblTransformCard 
+    ]]>
+     <include refid="selectTblTransformCard_where" />
+	</delete>
+
+	<select id="selectByIdTblTransformCard" resultMap="TblTransformCardResult">
+		SELECT
+		<include refid="TblTransformCard_columns" />
+	    <![CDATA[
+	        FROM tblTransformCard 
+	        WHERE 
+		        fldId = #{fldId} 
+	    ]]>
+	</select>
+
+	<sql id="selectTblTransformCard_where">
+		<where>
+			
+			<if test="fldId != null and fldId != ''">
+				and fldId = #{fldId}
+			</if>
+			
+			<if test="fldHostCode != null and fldHostCode != ''">
+				and fldHostCode = #{fldHostCode}
+			</if>
+			
+			<if test="fldIssuer != null and fldIssuer != ''">
+				and fldIssuer = #{fldIssuer}
+			</if>
+			
+			<if test="fldCardRule != null and fldCardRule != ''">
+				and fldCardRule = #{fldCardRule}
+			</if>
+			
+			<if test="fldSystem != null and fldSystem != ''">
+				and fldSystem = #{fldSystem}
+			</if>
+			
+			<if test="fldOperateUserNo != null and fldOperateUserNo != ''">
+				and fldOperateUserNo = #{fldOperateUserNo}
+			</if>
+			
+			<if test="fldCreateUserNo != null and fldCreateUserNo != ''">
+				and fldCreateUserNo = #{fldCreateUserNo}
+			</if>
+		</where>
+	</sql>
+
+	<select id="select_TblTransformCardsCount" resultType="long">
+		SELECT count(*) FROM tblTransformCard
+		<include refid="selectTblTransformCard_where" />
+	</select>
+
+	<!-- 分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页 因为分页查询将传 #offset#,#pageSize#,#lastRows# 
+		三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现 -->
+	<select id="selectPage_TblTransformCards" resultMap="TblTransformCardResult">
+		SELECT
+		<include refid="TblTransformCard_columns" />
+		FROM tblTransformCard
+		<include refid="selectTblTransformCard_where" />
+	</select>
+
+	<select id="findByPKId_TblTransformCard" parameterType="long" resultMap="TblTransformCardResult">
+		SELECT
+		<include refid="TblTransformCard_columns_as" />
+		 FROM tblTransformCard
+		WHERE 
+		        fldId = #{pk_Id} 
+	</select>
+	
+	
+	<select id="findListByObj_TblTransformCard" resultMap="TblTransformCardResult">
+		SELECT
+		<include refid="TblTransformCard_columns" />
+		FROM tblTransformCard
+		<include refid="selectTblTransformCard_where" />
+	</select>
+</mapper>
+

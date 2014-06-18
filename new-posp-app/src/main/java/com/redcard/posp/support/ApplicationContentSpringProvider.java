@@ -6,16 +6,16 @@ import java.util.Date;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-import com.pay.posp.common.CommonUtil;
-import com.pay.posp.manage.service.ITblMerchantGroupService;
-import com.pay.posp.manage.service.ITblMerchantGroupTradeTypeService;
-import com.pay.posp.manage.service.ITblMerchantPosService;
-import com.pay.posp.manage.service.ITblMerchantService;
-import com.pay.posp.manage.service.ITblMerchantTransformHostLinkService;
-import com.pay.posp.manage.service.ITblProxyHostService;
-import com.pay.posp.manage.service.ITblTransactionMessageService;
-import com.pay.posp.manage.service.ITblTransformCardService;
-import com.pay.posp.manage.service.impl.MessageServiceImpl;
+import com.redcard.posp.common.CommonUtil;
+import com.redcard.posp.manage.service.ITblMerchantGroupService;
+import com.redcard.posp.manage.service.ITblMerchantGroupTradeTypeService;
+import com.redcard.posp.manage.service.ITblMerchantPosService;
+import com.redcard.posp.manage.service.ITblMerchantService;
+import com.redcard.posp.manage.service.ITblMerchantTransformHostLinkService;
+import com.redcard.posp.manage.service.ITblProxyHostService;
+import com.redcard.posp.manage.service.ITblTransactionMessageService;
+import com.redcard.posp.manage.service.ITblTransformCardService;
+import com.redcard.posp.manage.service.impl.MessageServiceImpl;
 
 public class ApplicationContentSpringProvider {
 
@@ -54,7 +54,7 @@ public class ApplicationContentSpringProvider {
 
 	public Object getBean(String name) {
 		return getApplicationContext().getBean(name);
-	}/*
+	}
 	
 	public ITblTransactionMessageService getTransactionMessageService() {
 		return (ITblTransactionMessageService)getBean("tblTransactionMessageService");
@@ -93,5 +93,5 @@ public class ApplicationContentSpringProvider {
 			return CommonUtil.maskCardNO(cardNO, ApplicationContextInit.maskLength);
 		}
 		return cardNO;
-	}*/
+	}
 }

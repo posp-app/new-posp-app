@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+
+
+<mapper namespace="com.pay.posp.manage.dao.ITblTransactionMessageDao">
+	<resultMap id="TblTransactionMessageResult" type="TblTransactionMessage">
+		<result property="fldId" column="fldId" />
+		<result property="fldPacketType" column="fldPacketType" />
+		<result property="fldCardNo" column="fldCardNo" />
+		<result property="fldProcessCode" column="fldProcessCode" />
+		<result property="fldTransactionAmount" column="fldTransactionAmount" />
+		<result property="fldSystemTraceNumber" column="fldSystemTraceNumber" />
+		<result property="fldLocalTime" column="fldLocalTime" />
+		<result property="fldLocalDate" column="fldLocalDate" />
+		<result property="fldExpirationDate" column="fldExpirationDate" />
+		<result property="fldServiceEntryMode" column="fldServiceEntryMode" />
+		<result property="fldServiceConditionCode" column="fldServiceConditionCode" />
+		<result property="fldAcquirInstitutionCode" column="fldAcquirInstitutionCode" />
+		<result property="fldForwardInstitutionCode" column="fldForwardInstitutionCode" />
+		<result property="fldReferenceNumber" column="fldReferenceNumber" />
+		<result property="fldResponseCode" column="fldResponseCode" />
+		<result property="fldTerminalNo" column="fldTerminalNo" />
+		<result property="fldMerchantNo" column="fldMerchantNo" />
+		<result property="fldBatchNumber" column="fldBatchNumber" />
+		<result property="fldAdditionalAmount" column="fldAdditionalAmount" />
+		<result property="fldOperateNo" column="fldOperateNo" />
+		<result property="fldInvoiceNo" column="fldInvoiceNo" />
+		<result property="fldCardType" column="fldCardType" />
+		<result property="fldIssueBank" column="fldIssueBank" />
+		<result property="fldOriginalTransaction" column="fldOriginalTransaction" />
+		<result property="fldOriginalTransactionDate" column="fldOriginalTransactionDate" />
+		<result property="fldInstallmentPeriod" column="fldInstallmentPeriod" />
+		<result property="fldInstallmentAmount" column="fldInstallmentAmount" />
+		<result property="fldSystem" column="fldSystem" />
+		<result property="fldSystemDate" column="fldSystemDate" />
+	</resultMap>
+	<select id="selectAllTblTransactionMessage" resultMap="TblTransactionMessageResult">
+		SELECT * FROM
+		tblTransactionMessage
+	</select>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="TblTransactionMessage_columns">
+	    <![CDATA[
+        fldId ,fldPacketType ,fldCardNo ,fldProcessCode ,fldTransactionAmount ,fldSystemTraceNumber ,fldLocalTime ,fldLocalDate ,fldExpirationDate ,fldServiceEntryMode ,fldServiceConditionCode ,fldAcquirInstitutionCode ,fldForwardInstitutionCode ,fldReferenceNumber ,fldResponseCode ,fldTerminalNo ,fldMerchantNo ,fldBatchNumber ,fldAdditionalAmount ,fldOperateNo ,fldInvoiceNo ,fldCardType ,fldIssueBank ,fldOriginalTransaction ,fldOriginalTransactionDate ,fldInstallmentPeriod ,fldInstallmentAmount ,fldSystem ,fldSystemDate 
+	    ]]>
+	</sql>
+	
+	<sql id="TblTransactionMessage_columns_as">
+	    <![CDATA[
+        fldId as fldId,fldPacketType as fldPacketType,fldCardNo as fldCardNo,fldProcessCode as fldProcessCode,fldTransactionAmount as fldTransactionAmount,fldSystemTraceNumber as fldSystemTraceNumber,fldLocalTime as fldLocalTime,fldLocalDate as fldLocalDate,fldExpirationDate as fldExpirationDate,fldServiceEntryMode as fldServiceEntryMode,fldServiceConditionCode as fldServiceConditionCode,fldAcquirInstitutionCode as fldAcquirInstitutionCode,fldForwardInstitutionCode as fldForwardInstitutionCode,fldReferenceNumber as fldReferenceNumber,fldResponseCode as fldResponseCode,fldTerminalNo as fldTerminalNo,fldMerchantNo as fldMerchantNo,fldBatchNumber as fldBatchNumber,fldAdditionalAmount as fldAdditionalAmount,fldOperateNo as fldOperateNo,fldInvoiceNo as fldInvoiceNo,fldCardType as fldCardType,fldIssueBank as fldIssueBank,fldOriginalTransaction as fldOriginalTransaction,fldOriginalTransactionDate as fldOriginalTransactionDate,fldInstallmentPeriod as fldInstallmentPeriod,fldInstallmentAmount as fldInstallmentAmount,fldSystem as fldSystem,fldSystemDate as fldSystemDate
+	    ]]>
+	</sql>
+
+	<insert id="insert_TblTransactionMessage" parameterType="TblTransactionMessage">
+    <![CDATA[
+        INSERT INTO tblTransactionMessage (
+        	fldId ,
+        	fldPacketType ,
+        	fldCardNo ,
+        	fldProcessCode ,
+        	fldTransactionAmount ,
+        	fldSystemTraceNumber ,
+        	fldLocalTime ,
+        	fldLocalDate ,
+        	fldExpirationDate ,
+        	fldServiceEntryMode ,
+        	fldServiceConditionCode ,
+        	fldAcquirInstitutionCode ,
+        	fldForwardInstitutionCode ,
+        	fldReferenceNumber ,
+        	fldResponseCode ,
+        	fldTerminalNo ,
+        	fldMerchantNo ,
+        	fldBatchNumber ,
+        	fldAdditionalAmount ,
+        	fldOperateNo ,
+        	fldInvoiceNo ,
+        	fldCardType ,
+        	fldIssueBank ,
+        	fldOriginalTransaction ,
+        	fldOriginalTransactionDate ,
+        	fldInstallmentPeriod ,
+        	fldInstallmentAmount ,
+        	fldSystem ,
+        	fldSystemDate 
+        ) VALUES (
+        	#{fldId} ,
+        	#{fldPacketType} ,
+        	#{fldCardNo} ,
+        	#{fldProcessCode} ,
+        	#{fldTransactionAmount} ,
+        	#{fldSystemTraceNumber} ,
+        	#{fldLocalTime} ,
+        	#{fldLocalDate} ,
+        	#{fldExpirationDate} ,
+        	#{fldServiceEntryMode} ,
+        	#{fldServiceConditionCode} ,
+        	#{fldAcquirInstitutionCode} ,
+        	#{fldForwardInstitutionCode} ,
+        	#{fldReferenceNumber} ,
+        	#{fldResponseCode} ,
+        	#{fldTerminalNo} ,
+        	#{fldMerchantNo} ,
+        	#{fldBatchNumber} ,
+        	#{fldAdditionalAmount} ,
+        	#{fldOperateNo} ,
+        	#{fldInvoiceNo} ,
+        	#{fldCardType} ,
+        	#{fldIssueBank} ,
+        	#{fldOriginalTransaction} ,
+        	#{fldOriginalTransactionDate} ,
+        	#{fldInstallmentPeriod} ,
+        	#{fldInstallmentAmount} ,
+        	#{fldSystem} ,
+        	#{fldSystemDate} 
+        )
+    ]]>
+	</insert>
+
+	<update id="updateById_TblTransactionMessage" parameterType="TblTransactionMessage">
+        UPDATE tblTransactionMessage 
+        <set>
+	        <if test="fldPacketType != null">
+	        	fldPacketType = #{fldPacketType} ,
+			</if>
+	        <if test="fldCardNo != null">
+	        	fldCardNo = #{fldCardNo} ,
+			</if>
+	        <if test="fldProcessCode != null">
+	        	fldProcessCode = #{fldProcessCode} ,
+			</if>
+	        <if test="fldTransactionAmount != null">
+	        	fldTransactionAmount = #{fldTransactionAmount} ,
+			</if>
+	        <if test="fldSystemTraceNumber != null">
+	        	fldSystemTraceNumber = #{fldSystemTraceNumber} ,
+			</if>
+	        <if test="fldLocalTime != null">
+	        	fldLocalTime = #{fldLocalTime} ,
+			</if>
+	        <if test="fldLocalDate != null">
+	        	fldLocalDate = #{fldLocalDate} ,
+			</if>
+	        <if test="fldExpirationDate != null">
+	        	fldExpirationDate = #{fldExpirationDate} ,
+			</if>
+	        <if test="fldServiceEntryMode != null">
+	        	fldServiceEntryMode = #{fldServiceEntryMode} ,
+			</if>
+	        <if test="fldServiceConditionCode != null">
+	        	fldServiceConditionCode = #{fldServiceConditionCode} ,
+			</if>
+	        <if test="fldAcquirInstitutionCode != null">
+	        	fldAcquirInstitutionCode = #{fldAcquirInstitutionCode} ,
+			</if>
+	        <if test="fldForwardInstitutionCode != null">
+	        	fldForwardInstitutionCode = #{fldForwardInstitutionCode} ,
+			</if>
+	        <if test="fldReferenceNumber != null">
+	        	fldReferenceNumber = #{fldReferenceNumber} ,
+			</if>
+	        <if test="fldResponseCode != null">
+	        	fldResponseCode = #{fldResponseCode} ,
+			</if>
+	        <if test="fldTerminalNo != null">
+	        	fldTerminalNo = #{fldTerminalNo} ,
+			</if>
+	        <if test="fldMerchantNo != null">
+	        	fldMerchantNo = #{fldMerchantNo} ,
+			</if>
+	        <if test="fldBatchNumber != null">
+	        	fldBatchNumber = #{fldBatchNumber} ,
+			</if>
+	        <if test="fldAdditionalAmount != null">
+	        	fldAdditionalAmount = #{fldAdditionalAmount} ,
+			</if>
+	        <if test="fldOperateNo != null">
+	        	fldOperateNo = #{fldOperateNo} ,
+			</if>
+	        <if test="fldInvoiceNo != null">
+	        	fldInvoiceNo = #{fldInvoiceNo} ,
+			</if>
+	        <if test="fldCardType != null">
+	        	fldCardType = #{fldCardType} ,
+			</if>
+	        <if test="fldIssueBank != null">
+	        	fldIssueBank = #{fldIssueBank} ,
+			</if>
+	        <if test="fldOriginalTransaction != null">
+	        	fldOriginalTransaction = #{fldOriginalTransaction} ,
+			</if>
+	        <if test="fldOriginalTransactionDate != null">
+	        	fldOriginalTransactionDate = #{fldOriginalTransactionDate} ,
+			</if>
+	        <if test="fldInstallmentPeriod != null">
+	        	fldInstallmentPeriod = #{fldInstallmentPeriod} ,
+			</if>
+	        <if test="fldInstallmentAmount != null">
+	        	fldInstallmentAmount = #{fldInstallmentAmount} ,
+			</if>
+	        <if test="fldSystem != null">
+	        	fldSystem = #{fldSystem} ,
+			</if>
+	        <if test="fldSystemDate != null">
+	        	fldSystemDate = #{fldSystemDate} 
+			</if>
+	        
+	    </set>
+        WHERE 
+	        fldId = #{fldId} 
+	</update>
+	
+	<update id="update_TblTransactionMessage" parameterType="TblTransactionMessage">
+        UPDATE tblTransactionMessage 
+        <set>
+	        <if test="fldResponseCode != null">
+	        	fldResponseCode = #{fldResponseCode} ,
+			</if>
+	        <if test="fldInvoiceNo != null">
+	        	fldInvoiceNo = #{fldInvoiceNo} ,
+			</if>
+	        <if test="fldCardType != null">
+	        	fldCardType = #{fldCardType} ,
+			</if>
+	        <if test="fldIssueBank != null">
+	        	fldIssueBank = #{fldIssueBank} ,
+			</if>
+	        
+	    </set>
+        WHERE 
+	        fldSystemTraceNumber = #{fldSystemTraceNumber}
+	         and 
+	        fldBatchNumber = #{fldBatchNumber}
+	         and 
+	        fldTerminalNo = #{fldTerminalNo}
+	         and 
+	        fldMerchantNo = #{fldMerchantNo}
+	</update>
+
+	<delete id="deleteById_TblTransactionMessage">
+    <![CDATA[
+        DELETE FROM tblTransactionMessage WHERE
+        fldId = #{fldId} 
+    ]]>
+	</delete>
+	
+	<delete id="deleteByObj_TblTransactionMessage">
+    <![CDATA[
+        DELETE FROM tblTransactionMessage 
+    ]]>
+     <include refid="selectTblTransactionMessage_where" />
+	</delete>
+
+	<select id="selectByIdTblTransactionMessage" resultMap="TblTransactionMessageResult">
+		SELECT
+		<include refid="TblTransactionMessage_columns" />
+	    <![CDATA[
+	        FROM tblTransactionMessage 
+	        WHERE 
+		        fldId = #{fldId} 
+	    ]]>
+	</select>
+
+	<sql id="selectTblTransactionMessage_where">
+		<where>
+			
+			<if test="fldId != null and fldId != ''">
+				and fldId = #{fldId}
+			</if>
+			
+			<if test="fldPacketType != null and fldPacketType != ''">
+				and fldPacketType = #{fldPacketType}
+			</if>
+			
+			<if test="fldCardNo != null and fldCardNo != ''">
+				and fldCardNo = #{fldCardNo}
+			</if>
+			
+			<if test="fldProcessCode != null and fldProcessCode != ''">
+				and fldProcessCode = #{fldProcessCode}
+			</if>
+			
+			<if test="fldTransactionAmount != null and fldTransactionAmount != ''">
+				and fldTransactionAmount = #{fldTransactionAmount}
+			</if>
+			
+			<if test="fldSystemTraceNumber != null and fldSystemTraceNumber != ''">
+				and fldSystemTraceNumber = #{fldSystemTraceNumber}
+			</if>
+			
+			<if test="fldLocalTime != null and fldLocalTime != ''">
+				and fldLocalTime = #{fldLocalTime}
+			</if>
+			
+			<if test="fldLocalDate != null and fldLocalDate != ''">
+				and fldLocalDate = #{fldLocalDate}
+			</if>
+			
+			<if test="fldExpirationDate != null and fldExpirationDate != ''">
+				and fldExpirationDate = #{fldExpirationDate}
+			</if>
+			
+			<if test="fldServiceEntryMode != null and fldServiceEntryMode != ''">
+				and fldServiceEntryMode = #{fldServiceEntryMode}
+			</if>
+			
+			<if test="fldServiceConditionCode != null and fldServiceConditionCode != ''">
+				and fldServiceConditionCode = #{fldServiceConditionCode}
+			</if>
+			
+			<if test="fldAcquirInstitutionCode != null and fldAcquirInstitutionCode != ''">
+				and fldAcquirInstitutionCode = #{fldAcquirInstitutionCode}
+			</if>
+			
+			<if test="fldForwardInstitutionCode != null and fldForwardInstitutionCode != ''">
+				and fldForwardInstitutionCode = #{fldForwardInstitutionCode}
+			</if>
+			
+			<if test="fldReferenceNumber != null and fldReferenceNumber != ''">
+				and fldReferenceNumber = #{fldReferenceNumber}
+			</if>
+			
+			<if test="fldResponseCode != null and fldResponseCode != ''">
+				and fldResponseCode = #{fldResponseCode}
+			</if>
+			
+			<if test="fldTerminalNo != null and fldTerminalNo != ''">
+				and fldTerminalNo = #{fldTerminalNo}
+			</if>
+			
+			<if test="fldMerchantNo != null and fldMerchantNo != ''">
+				and fldMerchantNo = #{fldMerchantNo}
+			</if>
+			
+			<if test="fldBatchNumber != null and fldBatchNumber != ''">
+				and fldBatchNumber = #{fldBatchNumber}
+			</if>
+			
+			<if test="fldAdditionalAmount != null and fldAdditionalAmount != ''">
+				and fldAdditionalAmount = #{fldAdditionalAmount}
+			</if>
+			
+			<if test="fldOperateNo != null and fldOperateNo != ''">
+				and fldOperateNo = #{fldOperateNo}
+			</if>
+			
+			<if test="fldInvoiceNo != null and fldInvoiceNo != ''">
+				and fldInvoiceNo = #{fldInvoiceNo}
+			</if>
+			
+			<if test="fldCardType != null and fldCardType != ''">
+				and fldCardType = #{fldCardType}
+			</if>
+			
+			<if test="fldIssueBank != null and fldIssueBank != ''">
+				and fldIssueBank = #{fldIssueBank}
+			</if>
+			
+			<if test="fldOriginalTransaction != null and fldOriginalTransaction != ''">
+				and fldOriginalTransaction = #{fldOriginalTransaction}
+			</if>
+			
+			<if test="fldOriginalTransactionDate != null and fldOriginalTransactionDate != ''">
+				and fldOriginalTransactionDate = #{fldOriginalTransactionDate}
+			</if>
+			
+			<if test="fldInstallmentPeriod != null and fldInstallmentPeriod != ''">
+				and fldInstallmentPeriod = #{fldInstallmentPeriod}
+			</if>
+			
+			<if test="fldInstallmentAmount != null and fldInstallmentAmount != ''">
+				and fldInstallmentAmount = #{fldInstallmentAmount}
+			</if>
+			
+			<if test="fldSystem != null and fldSystem != ''">
+				and fldSystem = #{fldSystem}
+			</if>
+			<if test="fldSystemDateBegin != null">
+				and fldSystemDate >= #{fldSystemDateBegin}
+			</if>
+			<if test="fldSystemDateEnd != null">
+				and fldSystemDate &lt;= #{fldSystemDateEnd}
+			</if>
+		</where>
+	</sql>
+
+	<select id="select_TblTransactionMessagesCount" resultType="long">
+		SELECT count(*) FROM tblTransactionMessage
+		<include refid="selectTblTransactionMessage_where" />
+	</select>
+
+	<!-- 分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页 因为分页查询将传 #offset#,#pageSize#,#lastRows# 
+		三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现 -->
+	<select id="selectPage_TblTransactionMessages" resultMap="TblTransactionMessageResult">
+		SELECT
+		<include refid="TblTransactionMessage_columns" />
+		FROM tblTransactionMessage
+		<include refid="selectTblTransactionMessage_where" />
+	</select>
+
+	<select id="findByPKId_TblTransactionMessage" parameterType="long" resultMap="TblTransactionMessageResult">
+		SELECT
+		<include refid="TblTransactionMessage_columns_as" />
+		 FROM tblTransactionMessage
+		WHERE 
+		        fldId = #{pk_Id} 
+	</select>
+	
+	
+	<select id="findListByObj_TblTransactionMessage" resultMap="TblTransactionMessageResult">
+		SELECT
+		<include refid="TblTransactionMessage_columns" />
+		FROM tblTransactionMessage
+		<include refid="selectTblTransactionMessage_where" />
+	</select>
+</mapper>
+

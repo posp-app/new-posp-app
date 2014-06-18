@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+
+
+<mapper namespace="com.pay.posp.manage.dao.ITblTradeDao">
+	<resultMap id="TblTradeResult" type="TblTrade">
+		<result property="fldId" column="fldId" />
+		<result property="fldTradeDate" column="fldTradeDate" />
+		<result property="fldCardNo" column="fldCardNo" />
+		<result property="fldTerminalNo" column="fldTerminalNo" />
+		<result property="fldMerchantCode" column="fldMerchantCode" />
+		<result property="fldMerchantName" column="fldMerchantName" />
+		<result property="fldTerminalName" column="fldTerminalName" />
+		<result property="fldPosSerial" column="fldPosSerial" />
+		<result property="fldBatchNumber" column="fldBatchNumber" />
+		<result property="fldType" column="fldType" />
+		<result property="fldAmount" column="fldAmount" />
+		<result property="fldAfterAmount" column="fldAfterAmount" />
+		<result property="fldPayMoney" column="fldPayMoney" />
+		<result property="fldResponseCode" column="fldResponseCode" />
+		<result property="fldSystemDate" column="fldSystemDate" />
+		<result property="fldSystemTime" column="fldSystemTime" />
+		<result property="fldSettleFlag" column="fldSettleFlag" />
+		<result property="fldResultFlag" column="fldResultFlag" />
+		<result property="fldSettleDate" column="fldSettleDate" />
+		<result property="fldSystem" column="fldSystem" />
+		<result property="fldDayCutDate" column="fldDayCutDate" />
+		<result property="fldOperateUserNo" column="fldOperateUserNo" />
+		<result property="fldOperateDate" column="fldOperateDate" />
+	</resultMap>
+	<select id="selectAllTblTrade" resultMap="TblTradeResult">
+		SELECT * FROM
+		tblTrade
+	</select>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="TblTrade_columns">
+	    <![CDATA[
+        fldId ,fldTradeDate ,fldCardNo ,fldTerminalNo ,fldMerchantCode ,fldMerchantName ,fldTerminalName ,fldPosSerial ,fldBatchNumber ,fldType ,fldAmount ,fldAfterAmount ,fldPayMoney ,fldResponseCode ,fldSystemDate ,fldSystemTime ,fldSettleFlag ,fldResultFlag ,fldSettleDate ,fldSystem ,fldDayCutDate ,fldOperateUserNo ,fldOperateDate 
+	    ]]>
+	</sql>
+	
+	<sql id="TblTrade_columns_as">
+	    <![CDATA[
+        fldId as fldId,fldTradeDate as fldTradeDate,fldCardNo as fldCardNo,fldTerminalNo as fldTerminalNo,fldMerchantCode as fldMerchantCode,fldMerchantName as fldMerchantName,fldTerminalName as fldTerminalName,fldPosSerial as fldPosSerial,fldBatchNumber as fldBatchNumber,fldType as fldType,fldAmount as fldAmount,fldAfterAmount as fldAfterAmount,fldPayMoney as fldPayMoney,fldResponseCode as fldResponseCode,fldSystemDate as fldSystemDate,fldSystemTime as fldSystemTime,fldSettleFlag as fldSettleFlag,fldResultFlag as fldResultFlag,fldSettleDate as fldSettleDate,fldSystem as fldSystem,fldDayCutDate as fldDayCutDate,fldOperateUserNo as fldOperateUserNo,fldOperateDate as fldOperateDate
+	    ]]>
+	</sql>
+
+	<insert id="insert_TblTrade" parameterType="TblTrade">
+    <![CDATA[
+        INSERT INTO tblTrade (
+        	fldId ,
+        	fldTradeDate ,
+        	fldCardNo ,
+        	fldTerminalNo ,
+        	fldMerchantCode ,
+        	fldMerchantName ,
+        	fldTerminalName ,
+        	fldPosSerial ,
+        	fldBatchNumber ,
+        	fldType ,
+        	fldAmount ,
+        	fldAfterAmount ,
+        	fldPayMoney ,
+        	fldResponseCode ,
+        	fldSystemDate ,
+        	fldSystemTime ,
+        	fldSettleFlag ,
+        	fldResultFlag ,
+        	fldSettleDate ,
+        	fldSystem ,
+        	fldDayCutDate ,
+        	fldOperateUserNo ,
+        	fldOperateDate 
+        ) VALUES (
+        	#{fldId,jdbcType=nvarchar} ,
+        	#{fldTradeDate,jdbcType=datetime} ,
+        	#{fldCardNo,jdbcType=nvarchar} ,
+        	#{fldTerminalNo,jdbcType=nvarchar} ,
+        	#{fldMerchantCode,jdbcType=nvarchar} ,
+        	#{fldMerchantName,jdbcType=nvarchar} ,
+        	#{fldTerminalName,jdbcType=nvarchar} ,
+        	#{fldPosSerial,jdbcType=nvarchar} ,
+        	#{fldBatchNumber,jdbcType=nvarchar} ,
+        	#{fldType,jdbcType=nvarchar} ,
+        	#{fldAmount,jdbcType=money} ,
+        	#{fldAfterAmount,jdbcType=money} ,
+        	#{fldPayMoney,jdbcType=money} ,
+        	#{fldResponseCode,jdbcType=nvarchar} ,
+        	#{fldSystemDate,jdbcType=nvarchar} ,
+        	#{fldSystemTime,jdbcType=nvarchar} ,
+        	#{fldSettleFlag,jdbcType=int} ,
+        	#{fldResultFlag,jdbcType=int} ,
+        	#{fldSettleDate,jdbcType=datetime} ,
+        	#{fldSystem,jdbcType=int} ,
+        	#{fldDayCutDate,jdbcType=datetime} ,
+        	#{fldOperateUserNo,jdbcType=nvarchar} ,
+        	#{fldOperateDate,jdbcType=datetime} 
+        )
+    ]]>
+	</insert>
+
+	<update id="updateById_TblTrade" parameterType="TblTrade">
+        UPDATE tblTrade 
+        <set>
+	        <if test="fldTradeDate != null">
+	        	fldTradeDate = #{fldTradeDate} ,
+			</if>
+	        <if test="fldCardNo != null">
+	        	fldCardNo = #{fldCardNo} ,
+			</if>
+	        <if test="fldTerminalNo != null">
+	        	fldTerminalNo = #{fldTerminalNo} ,
+			</if>
+	        <if test="fldMerchantCode != null">
+	        	fldMerchantCode = #{fldMerchantCode} ,
+			</if>
+	        <if test="fldMerchantName != null">
+	        	fldMerchantName = #{fldMerchantName} ,
+			</if>
+	        <if test="fldTerminalName != null">
+	        	fldTerminalName = #{fldTerminalName} ,
+			</if>
+	        <if test="fldPosSerial != null">
+	        	fldPosSerial = #{fldPosSerial} ,
+			</if>
+	        <if test="fldBatchNumber != null">
+	        	fldBatchNumber = #{fldBatchNumber} ,
+			</if>
+	        <if test="fldType != null">
+	        	fldType = #{fldType} ,
+			</if>
+	        <if test="fldAmount != null">
+	        	fldAmount = #{fldAmount} ,
+			</if>
+	        <if test="fldAfterAmount != null">
+	        	fldAfterAmount = #{fldAfterAmount} ,
+			</if>
+	        <if test="fldPayMoney != null">
+	        	fldPayMoney = #{fldPayMoney} ,
+			</if>
+	        <if test="fldResponseCode != null">
+	        	fldResponseCode = #{fldResponseCode} ,
+			</if>
+	        <if test="fldSystemDate != null">
+	        	fldSystemDate = #{fldSystemDate} ,
+			</if>
+	        <if test="fldSystemTime != null">
+	        	fldSystemTime = #{fldSystemTime} ,
+			</if>
+	        <if test="fldSettleFlag != null">
+	        	fldSettleFlag = #{fldSettleFlag} ,
+			</if>
+	        <if test="fldResultFlag != null">
+	        	fldResultFlag = #{fldResultFlag} ,
+			</if>
+	        <if test="fldSettleDate != null">
+	        	fldSettleDate = #{fldSettleDate} ,
+			</if>
+	        <if test="fldSystem != null">
+	        	fldSystem = #{fldSystem} ,
+			</if>
+	        <if test="fldDayCutDate != null">
+	        	fldDayCutDate = #{fldDayCutDate} ,
+			</if>
+	        <if test="fldOperateUserNo != null">
+	        	fldOperateUserNo = #{fldOperateUserNo} ,
+			</if>
+	        <if test="fldOperateDate != null">
+	        	fldOperateDate = #{fldOperateDate} 
+			</if>
+	        
+	    </set>
+        WHERE 
+	        fldId = #{fldId} 
+	</update>
+
+	<delete id="deleteById_TblTrade">
+    <![CDATA[
+        DELETE FROM tblTrade WHERE
+        fldId = #{fldId} 
+    ]]>
+	</delete>
+	
+	<delete id="deleteByObj_TblTrade">
+    <![CDATA[
+        DELETE FROM tblTrade 
+    ]]>
+     <include refid="selectTblTrade_where" />
+	</delete>
+
+	<select id="selectByIdTblTrade" resultMap="TblTradeResult">
+		SELECT
+		<include refid="TblTrade_columns" />
+	    <![CDATA[
+	        FROM tblTrade 
+	        WHERE 
+		        fldId = #{fldId} 
+	    ]]>
+	</select>
+
+	<sql id="selectTblTrade_where">
+		<where>
+			
+			<if test="fldId != null and fldId != ''">
+				and fldId = #{fldId}
+			</if>
+			<if test="fldTradeDateBegin != null">
+				and fldTradeDate >= #{fldTradeDateBegin}
+			</if>
+			<if test="fldTradeDateEnd != null">
+				and fldTradeDate &lt;= #{fldTradeDateEnd}
+			</if>
+			
+			<if test="fldCardNo != null and fldCardNo != ''">
+				and fldCardNo = #{fldCardNo}
+			</if>
+			
+			<if test="fldTerminalNo != null and fldTerminalNo != ''">
+				and fldTerminalNo = #{fldTerminalNo}
+			</if>
+			
+			<if test="fldMerchantCode != null and fldMerchantCode != ''">
+				and fldMerchantCode = #{fldMerchantCode}
+			</if>
+			
+			<if test="fldMerchantName != null and fldMerchantName != ''">
+				and fldMerchantName = #{fldMerchantName}
+			</if>
+			
+			<if test="fldTerminalName != null and fldTerminalName != ''">
+				and fldTerminalName = #{fldTerminalName}
+			</if>
+			
+			<if test="fldPosSerial != null and fldPosSerial != ''">
+				and fldPosSerial = #{fldPosSerial}
+			</if>
+			
+			<if test="fldBatchNumber != null and fldBatchNumber != ''">
+				and fldBatchNumber = #{fldBatchNumber}
+			</if>
+			
+			<if test="fldType != null and fldType != ''">
+				and fldType = #{fldType}
+			</if>
+			
+			<if test="fldAmount != null and fldAmount != ''">
+				and fldAmount = #{fldAmount}
+			</if>
+			
+			<if test="fldAfterAmount != null and fldAfterAmount != ''">
+				and fldAfterAmount = #{fldAfterAmount}
+			</if>
+			
+			<if test="fldPayMoney != null and fldPayMoney != ''">
+				and fldPayMoney = #{fldPayMoney}
+			</if>
+			
+			<if test="fldResponseCode != null and fldResponseCode != ''">
+				and fldResponseCode = #{fldResponseCode}
+			</if>
+			
+			<if test="fldSystemDate != null and fldSystemDate != ''">
+				and fldSystemDate = #{fldSystemDate}
+			</if>
+			
+			<if test="fldSystemTime != null and fldSystemTime != ''">
+				and fldSystemTime = #{fldSystemTime}
+			</if>
+			
+			<if test="fldSettleFlag != null and fldSettleFlag != ''">
+				and fldSettleFlag = #{fldSettleFlag}
+			</if>
+			
+			<if test="fldResultFlag != null and fldResultFlag != ''">
+				and fldResultFlag = #{fldResultFlag}
+			</if>
+			<if test="fldSettleDateBegin != null">
+				and fldSettleDate >= #{fldSettleDateBegin}
+			</if>
+			<if test="fldSettleDateEnd != null">
+				and fldSettleDate &lt;= #{fldSettleDateEnd}
+			</if>
+			
+			<if test="fldSystem != null and fldSystem != ''">
+				and fldSystem = #{fldSystem}
+			</if>
+			<if test="fldDayCutDateBegin != null">
+				and fldDayCutDate >= #{fldDayCutDateBegin}
+			</if>
+			<if test="fldDayCutDateEnd != null">
+				and fldDayCutDate &lt;= #{fldDayCutDateEnd}
+			</if>
+			
+			<if test="fldOperateUserNo != null and fldOperateUserNo != ''">
+				and fldOperateUserNo = #{fldOperateUserNo}
+			</if>
+			<if test="fldOperateDateBegin != null">
+				and fldOperateDate >= #{fldOperateDateBegin}
+			</if>
+			<if test="fldOperateDateEnd != null">
+				and fldOperateDate &lt;= #{fldOperateDateEnd}
+			</if>
+		</where>
+	</sql>
+
+	<select id="select_TblTradesCount" resultType="long">
+		SELECT count(*) FROM tblTrade
+		<include refid="selectTblTrade_where" />
+	</select>
+
+	<!-- 分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页 因为分页查询将传 #offset#,#pageSize#,#lastRows# 
+		三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现 -->
+	<select id="selectPage_TblTrades" resultMap="TblTradeResult">
+		SELECT
+		<include refid="TblTrade_columns" />
+		FROM tblTrade
+		<include refid="selectTblTrade_where" />
+	</select>
+
+	<select id="findByPKId_TblTrade" parameterType="long" resultMap="TblTradeResult">
+		SELECT
+		<include refid="TblTrade_columns_as" />
+		 FROM tblTrade
+		WHERE 
+		        fldId = #{pk_Id} 
+	</select>
+	
+	
+	<select id="findListByObj_TblTrade" resultMap="TblTradeResult">
+		SELECT
+		<include refid="TblTrade_columns" />
+		FROM tblTrade
+		<include refid="selectTblTrade_where" />
+	</select>
+</mapper>
+

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ll-format 属性废弃，因为不定长域，域长度值，都是BCD值 -->
+<message-format name="share">
+	<head>
+		<package-length length="2" format="BCD"/>
+		<TPDU length="5" format="BCD" default-value="6000030000"/>
+	</head>
+	<bit-map format="B64" length="8"/>
+	<fields>
+		<field number="1" use="y" format="BCD" length="2"/>
+		<field number="2" use="y" format="LLVAR" ll-format="BCD" var-format="BCD" direction="right"/>
+		<field number="3" use="y" format="BCD" length="3"/>
+		<field number="4" use="y" format="BCD" length="6"/>
+		<field number="5" use="n" />
+		<field number="6" use="n" />
+		<field number="7" use="n" />
+		<field number="8" use="n" />
+		<field number="9" use="n" />
+		<field number="10" use="n" />
+		<field number="11" use="y" format="BCD" length="3"/>
+		<field number="12" use="y" format="BCD" length="3"/>
+		<field number="13" use="y" format="BCD" length="4"/>
+		<field number="14" use="y" format="BCD" length="2"/>
+		<field number="15" use="y" format="BCD" length="4"/>
+		<field number="16" use="n" />
+		<field number="17" use="n" />
+		<field number="18" use="n" />
+		<field number="19" use="n" />
+		<field number="20" use="n" />
+		<field number="21" use="n" />
+		<field number="22" use="y" format="BCD" length="2"/>
+		<field number="23" use="n" />
+		<field number="24" use="n" />
+		<field number="25" use="n" />
+		<field number="26" use="n" />
+		<field number="27" use="n" />
+		<field number="28" use="n" />
+		<field number="29" use="n" />
+		<field number="30" use="n" />
+		<field number="31" use="n" />
+		<field number="32" use="n" />
+		<field number="33" use="n" />
+		<field number="34" use="n" />
+		<field number="35" use="y" format="LLVAR" ll-format="BCD" var-format="BCD"  direction="left"/>
+		<field number="36" use="y" format="LLLVAR" ll-format="BCD" var-format="BCD"  direction="left"/>
+		<field number="37" use="y" format="ASCII" length="12"/>
+		<field number="38" use="y" format="ASCII" length="6"/>
+		<field number="39" use="y" format="ASCII" length="2"/>
+		<field number="40" use="n" />
+		<field number="41" use="y" format="ASCII" length="8"/>
+		<field number="42" use="y" format="ASCII" length="15"/>
+		<field number="43" use="n" />
+		<field number="44" use="n" />
+		<field number="45" use="n" />
+		<field number="46" use="n" />
+		<field number="47" use="n" />
+		<field number="48" use="n" />
+		<field number="49" use="n" />
+		<field number="50" use="n" />
+		<field number="51" use="n" />
+		<field number="52" use="y" format="B64" length="8"/>
+		<field number="53" use="n" />
+		<field number="54" use="y" format="LLLVAR" ll-format="BCD" var-format="ASCII"  direction="left"/>
+		<field number="55" use="n" />
+		<field number="56" use="n" />
+		<field number="57" use="n" />
+		<field number="58" use="n" />
+		<field number="59" use="n" />
+		<field number="60" use="y" format="B64" length="8"  />
+		<field number="61" use="y" format="B64" length="8"/>
+		<field number="62" use="y" format="LLLVAR" ll-format="BCD" var-format="ASCII"  direction="left"/>
+		<field number="63" use="y" format="B64" length="120"/>
+		<field number="64" use="y" format="B64" length="8"/>
+	</fields>
+	
+	<trans>
+	
+		<tran type="0800" proc="900000">
+			<field number="1" source-type="D" request="M" default-value="0800"/>
+			<field number="3" source-type="C" request="M" />
+			<field number="11" source-type="C" request="M" />
+			<field number="41" source-type="C" request="M" />
+			<field number="42" source-type="C" request="M" />
+		</tran>
+		
+		<tran type="0810" proc="900000">
+			<field number="1" source-type="D" request="M" default-value="0810"/>
+			<field number="3" source-type="C" request="D" />
+			<field number="11" source-type="C" request="M" />
+			<field number="12" source-type="P" request="M" />
+			<field number="13" source-type="P" request="M" />
+			<field number="39" source-type="D" request="M" default-value="00"/>
+			<field number="41" source-type="C" request="M" />
+			<field number="42" source-type="C" request="M" />
+			<field number="63" source-type="P" request="M" />
+			<field number="64" source-type="D" request="M" default-value="85FB09B4F09B5E31"/>
+		</tran>
+		
+		<tran type="0800" proc="910000">
+			<field number="1" source-type="D" request="M" default-value="0800"/>
+			<field number="3" source-type="D" request="M" default-value="910000"/>
+			<field number="11" source-type="C" request="M" />
+			<field number="41" source-type="C" request="M" />
+			<field number="42" source-type="C" request="M" />
+			<field number="64" source-type="C" request="M" />
+		</tran>
+		
+		<tran type="0810" proc="910000">
+			<field number="1" source-type="D" request="M" default-value="0810"/>
+			<field number="3" source-type="D" request="M" default-value="910000"/>
+			<field number="11" source-type="C" request="M" />
+			<field number="12" source-type="P" request="M" />
+			<field number="13" source-type="P" request="M" />
+			<field number="39" source-type="D" request="M" default-value="00"/>
+			<field number="41" source-type="C" request="M" />
+			<field number="42" source-type="C" request="M" />
+			<field number="60" source-type="P" request="M" />
+			<field number="61" source-type="P" request="M" />
+			<field number="62" source-type="D" request="M" default-value="1948853684214419"/>
+			<field number="64" source-type="D" request="M" default-value="85FB09B4F09B5E31"/>
+		</tran>
+		<tran type="0200" proc="000000">
+			<field number="1" source-type="D" request="M" default-value="0200"/>
+			<field number="2" source-type="C" request="M"/>
+			<field number="3" source-type="C" request="M" />
+			<field number="4" source-type="C" request="M" />
+			<field number="11" source-type="C" request="M" />
+			<field number="22" source-type="C" request="M" />
+			<field number="35" source-type="C" request="M" />
+			<field number="36" source-type="C" request="M" />
+			<field number="41" source-type="C" request="M" />
+			<field number="42" source-type="C" request="M" />
+			<field number="52" source-type="C" request="M" />
+			<field number="62" source-type="C" request="M" />
+			<field number="64" source-type="C" request="M" />
+		</tran>
+		<tran type="0210"  proc="000000">
+			<field number="1" source-type="D" request="M" default-value="0210"/>
+			<field number="2" source-type="C" request="M"/>
+			<field number="3" source-type="C" request="M" />
+			<field number="11" source-type="C" request="M" />
+			<field number="12" source-type="P" request="M" />
+			<field number="13" source-type="P" request="M" />
+			<field number="37" source-type="D" request="M" default-value="000000000000"/>
+			<field number="38" source-type="D" request="M" default-value="000000"/>
+			<field number="39" source-type="D" request="M" default-value="00"/>
+			<field number="41" source-type="C" request="M" />
+			<field number="42" source-type="C" request="M" />
+			<field number="54" source-type="D" request="M" default-value="000000000000"/>
+			<field number="62" source-type="C" request="M" />
+			<field number="64" source-type="P" request="M" />
+		</tran>
+		<tran type="0150" proc="310000">
+			<field number="1" source-type="D" request="M" default-value="0150"/>
+			<field number="2" source-type="C" request="M"/>
+			<field number="3" source-type="C" request="M" />
+			<field number="11" source-type="C" request="M" />
+			<field number="22" source-type="C" request="M" />
+			<field number="35" source-type="C" request="M" />
+			<field number="36" source-type="C" request="M" />
+			<field number="41" source-type="C" request="M" />
+			<field number="42" source-type="C" request="M" />
+			<field number="52" source-type="C" request="M" />
+			<field number="62" source-type="C" request="M" />
+			<field number="64" source-type="C" request="M" />
+		</tran>
+		
+		<tran type="0160" proc="310000">
+			<field number="1" source-type="D" request="M" default-value="0160"/>
+			<field number="2" source-type="C" request="M"/>
+			<field number="3" source-type="C" request="M" />
+			<field number="11" source-type="C" request="M" />
+			<field number="12" source-type="P" request="M" />
+			<field number="13" source-type="P" request="M" />
+			<field number="39" source-type="D" request="M" default-value="00"/>
+			<field number="41" source-type="C" request="M" />
+			<field number="42" source-type="C" request="M" />
+			<field number="54" source-type="D" request="M" default-value="000000000000"/>
+			<field number="62" source-type="C" request="M" />
+			<field number="64" source-type="P" request="M" />
+		</tran>
+		<tran type="0400"  proc="000000">
+			<field number="1" source-type="D" request="M" default-value="0400"/>
+			<field number="2" source-type="C" request="M"/>
+			<field number="3" source-type="C" request="M" />
+			<field number="4" source-type="C" request="M" />
+			<field number="11" source-type="C" request="M" />
+			<field number="22" source-type="C" request="M" />
+			<field number="35" source-type="C" request="M" />
+			<field number="36" source-type="C" request="M" />
+			<field number="37" source-type="C" request="M" />
+			<field number="41" source-type="C" request="M" />
+			<field number="42" source-type="C" request="M" />
+			<field number="52" source-type="C" request="M" />
+			<field number="62" source-type="C" request="M" />
+			<field number="64" source-type="C" request="M" />
+		</tran>
+		
+		<tran type="0410" proc="000000">
+			<field number="1" source-type="D" request="M" default-value="0410"/>
+			<field number="2" source-type="C" request="M"/>
+			<field number="3" source-type="C" request="M" />
+			<field number="11" source-type="C" request="M" />
+			<field number="12" source-type="P" request="M" />
+			<field number="13" source-type="P" request="M" />
+			<field number="37" source-type="C" request="M" />
+			<field number="38" source-type="D" request="M" default-value="000000"/>
+			<field number="39" source-type="D" request="M" default-value="00"/>
+			<field number="41" source-type="C" request="M" />
+			<field number="42" source-type="C" request="M" />
+			<field number="54" source-type="D" request="M" default-value="000000000000"/>
+			<field number="62" source-type="C" request="M" />
+			<field number="64" source-type="P" request="M" />
+		</tran>
+	</trans>
+</message-format>

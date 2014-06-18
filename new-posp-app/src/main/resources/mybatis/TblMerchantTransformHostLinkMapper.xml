@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+
+
+<mapper namespace="com.pay.posp.manage.dao.ITblMerchantTransformHostLinkDao">
+	<resultMap id="TblMerchantTransformHostLinkResult" type="TblMerchantTransformHostLink">
+		<result property="fldId" column="fldId" />
+		<result property="fldMerchantGroupCode" column="fldMerchantGroupCode" />
+		<result property="fldTransformHostCode" column="fldTransformHostCode" />
+		<result property="fldCreateUserNo" column="fldCreateUserNo" />
+		<result property="fldCreateDate" column="fldCreateDate" />
+		<result property="fldOperateUserNo" column="fldOperateUserNo" />
+		<result property="fldOperateDate" column="fldOperateDate" />
+	</resultMap>
+	<select id="selectAllTblMerchantTransformHostLink" resultMap="TblMerchantTransformHostLinkResult">
+		SELECT * FROM
+		tblMerchantTransformHostLink
+	</select>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="TblMerchantTransformHostLink_columns">
+	    <![CDATA[
+        fldId ,fldMerchantGroupCode ,fldTransformHostCode ,fldCreateUserNo ,fldCreateDate ,fldOperateUserNo ,fldOperateDate 
+	    ]]>
+	</sql>
+	
+	<sql id="TblMerchantTransformHostLink_columns_as">
+	    <![CDATA[
+        fldId as fldId,fldMerchantGroupCode as fldMerchantGroupCode,fldTransformHostCode as fldTransformHostCode,fldCreateUserNo as fldCreateUserNo,fldCreateDate as fldCreateDate,fldOperateUserNo as fldOperateUserNo,fldOperateDate as fldOperateDate
+	    ]]>
+	</sql>
+
+	<insert id="insert_TblMerchantTransformHostLink" parameterType="TblMerchantTransformHostLink">
+    <![CDATA[
+        INSERT INTO tblMerchantTransformHostLink (
+        	fldId ,
+        	fldMerchantGroupCode ,
+        	fldTransformHostCode ,
+        	fldCreateUserNo ,
+        	fldCreateDate ,
+        	fldOperateUserNo ,
+        	fldOperateDate 
+        ) VALUES (
+        	#{fldId,jdbcType=int identity} ,
+        	#{fldMerchantGroupCode,jdbcType=nvarchar} ,
+        	#{fldTransformHostCode,jdbcType=nvarchar} ,
+        	#{fldCreateUserNo,jdbcType=nvarchar} ,
+        	#{fldCreateDate,jdbcType=datetime} ,
+        	#{fldOperateUserNo,jdbcType=nvarchar} ,
+        	#{fldOperateDate,jdbcType=datetime} 
+        )
+    ]]>
+	</insert>
+
+	<update id="updateById_TblMerchantTransformHostLink" parameterType="TblMerchantTransformHostLink">
+        UPDATE tblMerchantTransformHostLink 
+        <set>
+	        <if test="fldMerchantGroupCode != null">
+	        	fldMerchantGroupCode = #{fldMerchantGroupCode} ,
+			</if>
+	        <if test="fldTransformHostCode != null">
+	        	fldTransformHostCode = #{fldTransformHostCode} ,
+			</if>
+	        <if test="fldCreateUserNo != null">
+	        	fldCreateUserNo = #{fldCreateUserNo} ,
+			</if>
+	        <if test="fldCreateDate != null">
+	        	fldCreateDate = #{fldCreateDate} ,
+			</if>
+	        <if test="fldOperateUserNo != null">
+	        	fldOperateUserNo = #{fldOperateUserNo} ,
+			</if>
+	        <if test="fldOperateDate != null">
+	        	fldOperateDate = #{fldOperateDate} 
+			</if>
+	        
+	    </set>
+        WHERE 
+	        fldId = #{fldId} 
+	</update>
+
+	<delete id="deleteById_TblMerchantTransformHostLink">
+    <![CDATA[
+        DELETE FROM tblMerchantTransformHostLink WHERE
+        fldId = #{fldId} 
+    ]]>
+	</delete>
+	
+	<delete id="deleteByObj_TblMerchantTransformHostLink">
+    <![CDATA[
+        DELETE FROM tblMerchantTransformHostLink 
+    ]]>
+     <include refid="selectTblMerchantTransformHostLink_where" />
+	</delete>
+
+	<select id="selectByIdTblMerchantTransformHostLink" resultMap="TblMerchantTransformHostLinkResult">
+		SELECT
+		<include refid="TblMerchantTransformHostLink_columns" />
+	    <![CDATA[
+	        FROM tblMerchantTransformHostLink 
+	        WHERE 
+		        fldId = #{fldId} 
+	    ]]>
+	</select>
+
+	<sql id="selectTblMerchantTransformHostLink_where">
+		<where>
+			
+			<if test="fldId != null and fldId != ''">
+				and fldId = #{fldId}
+			</if>
+			
+			<if test="fldMerchantGroupCode != null and fldMerchantGroupCode != ''">
+				and fldMerchantGroupCode = #{fldMerchantGroupCode}
+			</if>
+			
+			<if test="fldTransformHostCode != null and fldTransformHostCode != ''">
+				and fldTransformHostCode = #{fldTransformHostCode}
+			</if>
+			
+			<if test="fldCreateUserNo != null and fldCreateUserNo != ''">
+				and fldCreateUserNo = #{fldCreateUserNo}
+			</if>
+			
+			<if test="fldOperateUserNo != null and fldOperateUserNo != ''">
+				and fldOperateUserNo = #{fldOperateUserNo}
+			</if>
+		</where>
+	</sql>
+
+	<select id="select_TblMerchantTransformHostLinksCount" resultType="long">
+		SELECT count(*) FROM tblMerchantTransformHostLink
+		<include refid="selectTblMerchantTransformHostLink_where" />
+	</select>
+
+	<!-- 分页查询已经使用Dialect进行分页,也可以不使用Dialect直接编写分页 因为分页查询将传 #offset#,#pageSize#,#lastRows# 
+		三个参数,不同的数据库可以根于此三个参数属性应用不同的分页实现 -->
+	<select id="selectPage_TblMerchantTransformHostLinks" resultMap="TblMerchantTransformHostLinkResult">
+		SELECT
+		<include refid="TblMerchantTransformHostLink_columns" />
+		FROM tblMerchantTransformHostLink
+		<include refid="selectTblMerchantTransformHostLink_where" />
+	</select>
+
+	<select id="findByPKId_TblMerchantTransformHostLink" parameterType="long" resultMap="TblMerchantTransformHostLinkResult">
+		SELECT
+		<include refid="TblMerchantTransformHostLink_columns_as" />
+		 FROM tblMerchantTransformHostLink
+		WHERE 
+		        fldId = #{pk_Id} 
+	</select>
+	
+	
+	<select id="findListByObj_TblMerchantTransformHostLink" resultMap="TblMerchantTransformHostLinkResult">
+		SELECT
+		<include refid="TblMerchantTransformHostLink_columns" />
+		FROM tblMerchantTransformHostLink
+		<include refid="selectTblMerchantTransformHostLink_where" />
+	</select>
+</mapper>
+
