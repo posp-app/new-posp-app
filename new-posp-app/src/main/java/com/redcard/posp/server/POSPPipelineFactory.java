@@ -18,5 +18,5 @@ public class POSPPipelineFactory implements ChannelPipelineFactory {
 		ChannelPipeline p = pipeline();
 		p.addLast(ApplicationContent.HANDLER_POSP_IN_BOUND,new POSPInboundHandler());
 		return p;
-	}
+	} 
 }
