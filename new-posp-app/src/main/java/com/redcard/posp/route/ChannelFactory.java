@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.redcard.posp.cache.ApplicationContextCache;
-import com.redcard.posp.handler.BonusOutboundHandler;
+import com.redcard.posp.handler.SupDataOutboundHandler;
 import com.redcard.posp.handler.ShareOutboundHandler;
 import com.redcard.posp.support.ApplicationContent;
 import com.redcard.posp.support.ApplicationKey;
@@ -42,9 +42,9 @@ public class ChannelFactory {
 		//ClientSocketChannelFactory cf;
 		ClientBootstrap cb = new ClientBootstrap(ApplicationContextCache.clientSocketChannelFactory);
 		logger.debug("获取目标通道：IP=["+ip+"];PORT=["+port+"];protocol=["+protocolType+"]");
-		if (protocolType.equals(ApplicationKey.PROTOCOL_TYPE_WIN_POINT)) {
+		if (ApplicationKey.PROTOCOL_TYPE_SUPDATA.equals(protocolType)) {
 			cb.getPipeline()
-			.addLast(ApplicationContent.HANDLER_POSP_OUT_BOUND, new BonusOutboundHandler(inBoundChannel));		
+			.addLast(ApplicationContent.HANDLER_POSP_OUT_BOUND, new SupDataOutboundHandler(inBoundChannel));		
 		} else {
 			cb.getPipeline()
 			.addLast(ApplicationContent.HANDLER_POSP_OUT_BOUND, new ShareOutboundHandler(inBoundChannel));

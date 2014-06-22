@@ -32,6 +32,10 @@ public class MessageFactory {
 		return new Message(buf,ApplicationContextCache.inputMessageFormat);
 	}
 	
+	public static Message getSupDataMessage(byte[] buf) throws Exception{
+		return new SupDataMessage(buf,ApplicationContextCache.applicationMessageFormat.get(ApplicationKey.PROTOCOL_TYPE_SUPDATA));
+	}
+	
 	/*public static Message getOutputMessage(byte[] buf,String name) throws Exception {
 		return new Message
 	}*/

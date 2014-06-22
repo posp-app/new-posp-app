@@ -43,6 +43,11 @@ public class ApplicationContent {
 	public static final String MSG_PROCESS_CODE_000000 = "000000";
 	public static final String MSG_PROCESS_CODE_920000 = "920000";
 	
+	public static final String MSG_TYPE_SUP_DATA_SALE = "01";
+	public static final String MSG_TYPE_SUP_DATA_REVERSAL = "41";
+	public static final String MSG_TYPE_SUP_DATA_BALANCE = "11";
+	public static final String MSG_TYPE_SUP_DATA_VOID = "31";
+	
 	
 	public static final String MODEL_TRANSACTION_MESSAGE = "TM_";
 	

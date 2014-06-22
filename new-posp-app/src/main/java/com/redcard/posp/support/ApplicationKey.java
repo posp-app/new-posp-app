@@ -23,7 +23,8 @@ public class ApplicationKey {
 	public static final String TYPE = "type";
 	public static final String PROCCESS = "proc";
 	public static final String PROTOCOL_TYPE = "PROTOCOL_TYPE";
-	public static final String PROTOCOL_TYPE_WIN_POINT = "PROTOCOL_TYPE_WIN_POINT";
+	public static final String PROTOCOL_TYPE_SUPDATA = "PROTOCOL_TYPE_WIN_POINT";
+	public static final String PROTOCOL_TYPE_SHARE = "PROTOCOL_TYPE_SHARE";
 
 	public static final String SERVER = "server";
 	public static final String RECEIVER_PORT = "receiverPort";

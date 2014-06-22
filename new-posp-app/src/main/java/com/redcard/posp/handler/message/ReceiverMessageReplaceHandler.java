@@ -6,16 +6,11 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
 
-import com.opensymphony.oscache.util.StringUtil;
-import com.redcard.posp.common.MacUtil;
-import com.redcard.posp.common.TypeConvert;
-import com.redcard.posp.handler.secret.redcard.SecretKeyFactory;
+import com.redcard.posp.handler.DefaultMessageHandler;
 import com.redcard.posp.manage.model.TblMerchantPos;
 import com.redcard.posp.manage.service.impl.ManageCacheService;
 import com.redcard.posp.message.Message;
-import com.redcard.posp.support.ApplicationContextInit;
 import com.redcard.posp.support.ResultCode;
-import com.redcard.posp.support.SecuritySupporter;
 
 /**
  * 
@@ -43,14 +38,15 @@ public class ReceiverMessageReplaceHandler implements IMessageHandler {
 				return;
 			} else {
 				//替换mac 64域//其他报文，首先做mac校验。
-				int mabLength = msg.buf.length-9-8;
+				/*int mabLength = msg.buf.length-9-8;
 				byte[] mab = new byte[mabLength];
 				System.arraycopy(msg.buf, 9, mab, 0, mabLength);
 				msg.mab = mab;
 				String mabString = TypeConvert.bytes2HexString(mab);
 				TblMerchantPos pos = ManageCacheService.findPos(msg.getTerminalIdentification());
 				String workMac = SecretKeyFactory.getDesWorkKey(pos.getFldMacKey(),pos.getFldMasterKey());
-				String targetMac = MacUtil.redCardMac(workMac, null, mabString);
+				String targetMac = MacUtil.redCardMac(workMac, null, mabString);*/
+				String targetMac = DefaultMessageHandler.getMAC(msg);
 				msg.setBCDField(64, targetMac);
 				
 			}

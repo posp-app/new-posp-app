@@ -57,6 +57,9 @@ public class ApplicationContextInit {
 	public static String terminalMasterKey = "11111111111111112222222222222222";
 	public static String targetMasterKey   = "11111111111111112222222222222222";
 	public static String NET_CODE = "001";
+	
+	public static String SUPDATA_OPERATOR = "111111";
+	public static String SUPDATA_OPERATOR_PASSWORD = "123456";
 
 	/**
 	 * 系统初始化

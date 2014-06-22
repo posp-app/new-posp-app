@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import com.opensymphony.oscache.util.StringUtil;
+import com.redcard.posp.common.CommonUtil;
 import com.redcard.posp.common.DecodeUtil;
 import com.redcard.posp.common.SecurityUtil;
 import com.redcard.posp.common.TypeConvert;
@@ -62,6 +63,10 @@ public class Message implements Serializable {
 	 * MAC 元数据
 	 */
 	public byte[] mab;
+	
+	public Message() throws Exception{
+		
+	}
 	
 	public Message(MessageFormat format) throws Exception {
 		this.format = format;
@@ -202,6 +207,12 @@ public class Message implements Serializable {
 			}
 		}
  	}
+	public void setByteField(int fieldNumber,byte[] value) {
+		this.field[fieldNumber-1] = value;
+		if (fieldNumber>1){
+			SecurityUtil.setBinaryOne(bitMap, fieldNumber);
+		}
+	}
 	public void setASCField(int fieldNumber,String value) {
 		byte[] temp = value.getBytes();
 		this.field[fieldNumber-1] = temp;
@@ -710,7 +721,7 @@ public class Message implements Serializable {
 	 * 系统跟踪号
 	 * @return
 	 */
-	public String getSystemTraceNumber() {
+	public String getOriginalSystemSequence() {
 		String field62 = get62Field().trim();;
 		if (field62 == null || field62.equals("")||field62.length()<10){
 			return "";
@@ -947,6 +958,25 @@ public class Message implements Serializable {
 		return messageBytes;
 	}
 	
+	public byte[] toSupDataMessgeBytes() {
+		int length = 0;
+		for (byte[] f:this.field) {
+			if (f!=null) {
+				length = length+f.length;
+			}
+		}
+		byte[] messageBytes = new byte[length];
+		int posi = 0;
+		for (byte[] f:this.field) {
+			//遍历所以域，组装整个消息包
+			if (f!=null) {
+				System.arraycopy(f, 0, messageBytes, posi, f.length);
+				posi = posi + f.length;
+			}
+		}
+		return messageBytes;
+	}
+	
 	/*public void setFieldValue(int number,String value){
 		
 	}*/
@@ -986,6 +1016,7 @@ public class Message implements Serializable {
 		sb.append("bitMap=["+TypeConvert.bytes2HexString(bitMap)+"]\r");
 		for (int i=1;i<=field.length;i++) {
 			if (!StringUtils.isEmpty(getFieldOrgString(i))) {
+				//System.out.println(i+":-------------["+TypeConvert.bytes2HexString(field[i-1])+"]----------------");
 				sb.append("Field["+i+"]="+getFieldOrgString(i)+"\n");
 			}
 		}

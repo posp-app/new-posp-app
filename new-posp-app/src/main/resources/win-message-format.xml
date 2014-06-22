@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ll-format 属性废弃，因为不定长域，域长度值，都是BCD值 -->
+<message-format name="PROTOCOL_TYPE_WIN_POINT">
+	<head>
+		<package-length length="2" format="BCD"/>
+		<TPDU length="5" format="BCD" default-value="6000000003"/>
+	</head>
+	<bit-map format="B64" length="8"/>
+	<fields>
+		<field number="1" mapField="1" use="y" format="ASCII" length="2"/>
+		<field number="2" mapField="2" use="y" format="ASCII" length="19"/>
+		<field number="3" mapField="" use="y" format="ASCII" length="8"/>
+		<field number="4" mapField="35" use="y" format="ASCII" length="40"/>
+		<field number="5" mapField="36" use="y" format="ASCII" length="101"/>
+		<field number="6" mapField="4" use="y" format="ASCII" length="12"/>
+		<field number="7" mapField="" use="y" format="ASCII" length="12"/>
+		<field number="8" mapField="11" use="y" format="ASCII" length="6"/>
+		<field number="9" mapField="" use="y" format="ASCII" length="6"/>
+		<field number="10" mapField="37" use="y" format="ASCII" length="12"/>
+		<field number="11" mapField="38" use="y" format="ASCII" length="6"/>
+		<field number="12" mapField="39" use="y" format="ASCII" length="2"/>
+		<field number="13" mapField="" use="y" format="ASCII" length="20"/>
+		<field number="14" mapField="41" use="y" format="ASCII" length="8"/>
+		<field number="15" mapField="42" use="y" format="ASCII" length="15"/>
+		<field number="16" mapField="16" use="y" format="ASCII" length="6"/>
+		<field number="17" mapField="" use="y" format="ASCII" length="18"/>
+		<field number="18" mapField="" use="y" format="ASCII" length="5"/>
+		<field number="19" mapField="" use="y" format="ASCII" length="6"/>
+		<field number="20" mapField="" use="y" format="ASCII" length="6"/>
+		<field number="21" mapField="" use="y" format="ASCII" length="6"/>
+		<field number="22" mapField="" use="y" format="ASCII" length="3"/>
+		<field number="23" mapField="" use="y" format="ASCII" length="12"/>
+		<field number="24" mapField="" use="y" format="ASCII" length="3"/>
+		<field number="25" mapField="" use="y" format="ASCII" length="3"/>
+		<field number="26" mapField="" use="y" format="ASCII" length="12"/>
+		<field number="27" mapField="" use="y" format="ASCII" length="10"/>
+		<field number="28" mapField="" use="y" format="ASCII" length="2"/>
+		<field number="29" mapField="" use="y" format="ASCII" length="4"/>
+		<field number="30" mapField="" use="y" format="ASCII" length="6"/>
+		<field number="31" mapField="" use="y" format="ASCII" length="4"/>
+		<field number="32" mapField="" use="y" format="ASCII" length="40"/>
+		<field number="33" use="n" />
+		<field number="34" use="n" />
+		<field number="35" use="n" />
+		<field number="36" use="n" />
+		<field number="37" use="n" />
+		<field number="38" use="n" />
+		<field number="39" use="n" />
+		<field number="40" use="n" />
+		<field number="41" use="n" />
+		<field number="42" use="n" />
+		<field number="43" use="n" />
+		<field number="44" use="n" />
+		<field number="45" use="n" />
+		<field number="46" use="n" />
+		<field number="47" use="n" />
+		<field number="48" use="n" />
+		<field number="49" use="n" />
+		<field number="50" use="n" />
+		<field number="51" use="n" />
+		<field number="52" use="n" />
+		<field number="53" use="n" />
+		<field number="54" use="n" />
+		<field number="55" use="n" />
+		<field number="56" use="n" />
+		<field number="57" use="n" />
+		<field number="58" use="n" />
+		<field number="59" use="n" />
+		<field number="60" use="n" />
+		<field number="61" use="n" />
+		<field number="62" use="n" />
+		<field number="63" use="n" />
+		<field number="64" use="n" />
+	</fields>
+	
+	<trans>
+		
+		<!-- 查询 -->
+		<tran type="11" proc="000000">
+			<field number="1" source-type="D" request="M" default-value="11"/>
+			<field number="3" source-type="C" request="M" />
+			<field number="11" source-type="C" request="M" />
+			<field number="41" source-type="C" request="M" />
+			<field number="42" source-type="C" request="M" />
+		</tran>
+		<!-- 交易 -->
+		<tran type="01" proc="000000">
+			<field number="1" source-type="D" request="M" default-value="01"/>
+			<field number="3" source-type="C" request="D" />
+			<field number="11" source-type="C" request="M" />
+			<field number="12" source-type="P" request="M" />
+			<field number="13" source-type="P" request="M" />
+			<field number="39" source-type="D" request="M" default-value="00"/>
+			<field number="41" source-type="C" request="M" />
+			<field number="42" source-type="C" request="M" />
+			<field number="63" source-type="P" request="M" />
+			<field number="64" source-type="D" request="M" default-value="85FB09B4F09B5E31"/>
+		</tran>
+		<!-- 交易撤销 -->
+		<tran type="31" proc="000000">
+			<field number="1" source-type="D" request="M" default-value="31"/>
+			<field number="3" source-type="D" request="M" default-value="910000"/>
+			<field number="11" source-type="C" request="M" />
+			<field number="41" source-type="C" request="M" />
+			<field number="42" source-type="C" request="M" />
+			<field number="64" source-type="C" request="M" />
+		</tran>
+	</trans>
+</message-format>

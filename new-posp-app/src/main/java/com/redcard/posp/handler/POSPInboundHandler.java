@@ -19,8 +19,10 @@ import com.redcard.posp.common.TypeConvert;
 import com.redcard.posp.handler.message.MessageLoggerHandler;
 import com.redcard.posp.handler.message.MessageReplaceHandler;
 import com.redcard.posp.handler.message.MessageValidityHandler;
+import com.redcard.posp.message.IMessageConverter;
 import com.redcard.posp.message.Message;
 import com.redcard.posp.message.MessageFactory;
+import com.redcard.posp.message.SupDataMessageConverter;
 import com.redcard.posp.route.ChannelFactory;
 import com.redcard.posp.support.ApplicationContent;
 import com.redcard.posp.support.ApplicationException;
@@ -63,12 +65,25 @@ public class POSPInboundHandler extends SimpleChannelUpstreamHandler {
 			handler.addHandler(ApplicationContent.MESSAGE_HANDLER_NAME_REPLACE, new MessageReplaceHandler());
 			handler.handler(msg, inBoundChannel, cb);
 			Map<String,String> param = handler.getParam();
+			/**
+			 * 测试用的
+			 */
+			/*Map<String,String> param = new Hashtable<String,String>();
+			param.put(ApplicationKey.IP, "10.0.0.91");
+			param.put(ApplicationKey.PORT, "91");
+			param.put(ApplicationKey.PROTOCOL_TYPE, "");*/
 			if (!handler.isContinue() ||param.isEmpty()) {
-				DefaultMessageHandler.returnOrgMessage(msg, inBoundChannel, ResultCode.RESULT_CODE_93.getCode());
+				//DefaultMessageHandler.returnOrgMessage(msg, inBoundChannel, ResultCode.RESULT_CODE_93.getCode());
 				return;
 			}
 			//这里从本读消息转换为目标消息。就是要送出去的渠道消息
-			final Message targetMSG = msg;
+			IMessageConverter converter = new SupDataMessageConverter();
+			final Message targetMSG = converter.input2output(msg);
+			/**
+			 * 测试用
+			 */
+			param.put(ApplicationKey.PROTOCOL_TYPE,ApplicationKey.PROTOCOL_TYPE_SUPDATA);
+			final String messageProtocal = param.get(ApplicationKey.PROTOCOL_TYPE);
 			final ChannelFuture f = ChannelFactory.createChannel(param,inBoundChannel);
 			f.addListener(new ChannelFutureListener() {
 				public void operationComplete(ChannelFuture future)
@@ -78,8 +93,13 @@ public class POSPInboundHandler extends SimpleChannelUpstreamHandler {
 						// Begin to accept incoming traffic.
 						inBoundChannel.setReadable(true);
 						ChannelBuffer outCB = ChannelBuffers.dynamicBuffer();
-						outCB.writeBytes(targetMSG.toMessgeBytes());
-						logger.info("发送到渠道  Bytes=["+TypeConvert.bytes2HexString(targetMSG.toMessgeBytes())+"]");
+						if (ApplicationKey.PROTOCOL_TYPE_SUPDATA.equals(messageProtocal)) {
+							outCB.writeBytes(targetMSG.toSupDataMessgeBytes());
+							logger.info("发送到渠道  Bytes=["+TypeConvert.bytes2HexString(targetMSG.toSupDataMessgeBytes())+"]");
+						} else {
+							outCB.writeBytes(targetMSG.toMessgeBytes());
+							logger.info("发送到渠道  Bytes=["+TypeConvert.bytes2HexString(targetMSG.toMessgeBytes())+"]");
+						}
 						logger.info("发送到渠道  域值：\r\n"+targetMSG.to8583FormatString());
 						f.getChannel().write(outCB);
 					} else {

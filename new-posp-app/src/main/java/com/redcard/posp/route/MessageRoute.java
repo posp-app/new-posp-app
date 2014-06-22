@@ -66,14 +66,14 @@ public class MessageRoute implements IRouter {
 			r.setResultCode (ResultCode.RESULT_CODE_59);
 			return r;
 		}
-		//如果是签到，不校验终端，因为没有终端域
+		/*//如果是签到，不校验终端，因为没有终端域
 		if (message.getMSGType().equals(ApplicationContent.MSG_TYPE_SIGN_ON_REQ)) {
 			Map<String,String> para = new Hashtable<String,String>();
 			para.put(ApplicationKey.MESSAGE_TYPE, message.getMSGType());
 			r.setResultCode(ResultCode.RESULT_CODE_00);
 			r.setObject(para);
 			return r;
-		}	
+		}	*/
 		
 		TblMerchantPos posNO = ManageCacheService.findPos(m,terminalNO);
 		if (posNO == null) {

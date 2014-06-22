@@ -30,11 +30,11 @@ public class MessageReplaceHandler implements IMessageHandler{
 	private boolean isContinue = true;
 	
 	public void handler(Message msg, Channel inBoundChannel, ChannelBuffer cb) {
-		TblProxyHost host = ManageCacheService.findProxyHostByMerchantNo(msg.getCardAcceptorIdentification());
+		/*TblProxyHost host = ManageCacheService.findProxyHostByMerchantNo(msg.getCardAcceptorIdentification());
 		if (host ==null) {
 			isContinue = false;
 			return;
-		}
+		}*/
 		TblMerchantPos merchantPos = ManageCacheService.findPos(msg.getTerminalIdentification());
 		if (merchantPos ==null) {
 			isContinue = false;

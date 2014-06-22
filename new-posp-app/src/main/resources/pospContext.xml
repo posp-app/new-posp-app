@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <context>
 	<node name="0001"/>
-	<server receiverPort="7002" maskCardNO="n"/>
+	<server receiverPort="91" maskCardNO="n"/>
 	<inputMessageFormat name="redcard" />
 	<outs>
 		<out name="share" class="com.redcard.posp.message.ShareMessageConverter"/>

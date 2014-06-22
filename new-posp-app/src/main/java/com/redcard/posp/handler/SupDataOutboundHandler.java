@@ -11,21 +11,24 @@ import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.redcard.posp.common.TypeConvert;
 import com.redcard.posp.handler.message.ReceiverMessageLoggerHandler;
 import com.redcard.posp.handler.message.ReceiverMessageReplaceHandler;
 import com.redcard.posp.handler.message.ReceiverMessageValidityHandler;
+import com.redcard.posp.message.IMessageConverter;
 import com.redcard.posp.message.Message;
 import com.redcard.posp.message.MessageFactory;
+import com.redcard.posp.message.SupDataMessageConverter;
 import com.redcard.posp.support.ApplicationContent;
 
-public class BonusOutboundHandler extends SimpleChannelUpstreamHandler {
+public class SupDataOutboundHandler extends SimpleChannelUpstreamHandler {
 	private static Logger logger = LoggerFactory.getLogger(ShareOutboundHandler.class);
 
 	private final Channel inboundChannel;
 	
 	private String messageID = "";
 
-	public BonusOutboundHandler(Channel inboundChannel) {
+	public SupDataOutboundHandler(Channel inboundChannel) {
 		this.inboundChannel = inboundChannel;
 	}
 
@@ -33,24 +36,25 @@ public class BonusOutboundHandler extends SimpleChannelUpstreamHandler {
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e)
 			throws Exception {
 		ChannelBuffer cb = (ChannelBuffer) e.getMessage();
-		logger.info("接收到赢点平台消息, bytes=[" + ChannelBuffers.hexDump(cb)+"]");
+		logger.info("接收到商银通平台消息, bytes=[" + ChannelBuffers.hexDump(cb)+"]");
 		//Message msg = MessageFactory.getMessage(cb.array(), ApplicationContent.MESSAGE_IO_O);
-		Message wpMessage = MessageFactory.getOutputMessage(cb.array());
-		
+		Message supDataMessage = MessageFactory.getSupDataMessage(cb.array());
+		IMessageConverter converter = new SupDataMessageConverter();
+		Message inputMessage = converter.output2input(supDataMessage);
 		DefaultMessageHandler handler = new DefaultMessageHandler();
 		handler.addHandler(ApplicationContent.MESSAGE_HANDLER_NAME_LOGGER, new ReceiverMessageLoggerHandler());
 		handler.addHandler(ApplicationContent.MESSAGE_HANDLER_NAME_VALIDITY, new ReceiverMessageValidityHandler());
 		handler.addHandler(ApplicationContent.MESSAGE_HANDLER_NAME_REPLACE, new ReceiverMessageReplaceHandler());
-		handler.handler(wpMessage, inboundChannel, cb);
+		handler.handler(inputMessage, inboundChannel, cb);
 		if (!handler.isContinue()) {
 			return;
 		}
-		Message inputMessage = 
 		byte[] allBytes = inputMessage.toMessgeBytes();
+		logger.debug("返回给POS的数据包;Bytes=["+TypeConvert.bytes2HexString(allBytes)+"]");
+		logger.debug("返回给POS的8583格式数据："+inputMessage.to8583FormatString());
 		ChannelBuffer retCB = ChannelBuffers.dynamicBuffer();
 		retCB.writeBytes(allBytes);
 		inboundChannel.write(retCB);
-		//inboundChannel.write(cb);
 		
 	}
 

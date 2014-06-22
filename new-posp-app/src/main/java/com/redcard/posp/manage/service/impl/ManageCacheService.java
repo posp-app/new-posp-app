@@ -139,6 +139,7 @@ public class ManageCacheService {
 	
 	public static TblProxyHost findProxyHostByMerchantNo(String merchantNo) {
 		for (TblProxyHost h:proxyHost){
+			System.out.println("=======>>>>>>"+h.getFldMerchantNo());
 			if (h.getFldMerchantNo().equals(merchantNo)) {
 				return h;
 			}

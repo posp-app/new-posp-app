@@ -2,6 +2,8 @@ package com.redcard.posp.manage.model;
 
 import java.io.Serializable;
 
+import com.redcard.posp.support.ApplicationKey;
+
 
 
 
@@ -42,7 +44,7 @@ public class TblProxyHost  implements Serializable{
 	
 	private String fldTerminalNo;
 	private String fldMerchantNo;
-	private String protocolType;
+	private String protocolType = ApplicationKey.PROTOCOL_TYPE_SHARE;
 
 	
 	public String getProtocolType() {

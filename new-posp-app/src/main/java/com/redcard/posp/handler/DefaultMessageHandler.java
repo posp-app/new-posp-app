@@ -47,19 +47,19 @@ public class DefaultMessageHandler implements IMessageHandler{
 	
 	private boolean isContinue = true;
 	
-	Map<String,String> param = new Hashtable<String,String>();
+	private Map<String,String> param = new Hashtable<String,String>();
 
 	
 	public void addHandler(String name,IMessageHandler handler){
 		handlers.put(name,handler);
-		if (handler.getParam()!=null) {
-			param.putAll(handler.getParam());
-		}
 	}
 	
 	public void handler(Message msg,Channel inBoundChannel,ChannelBuffer cb) {
 		for (IMessageHandler h:handlers.values()) {
 			h.handler(msg, inBoundChannel, cb);
+			if (h.getParam()!=null) {
+				param.putAll(h.getParam());
+			}
 			if (!h.isContinue()) {
 				isContinue = false;
 				return;
@@ -167,7 +167,6 @@ public class DefaultMessageHandler implements IMessageHandler{
 	}
 
 	public Map<String, String> getParam() {
-		// TODO Auto-generated method stub
-		return null;
+		return param;
 	}
 }
