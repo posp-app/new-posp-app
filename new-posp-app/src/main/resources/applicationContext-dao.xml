@@ -50,4 +50,8 @@
 		scope="prototype">
 		<property name="sqlSessionTemplate" ref="sqlSession" />
 	</bean>
+	<bean id="tblCardDao" class="com.redcard.posp.manage.dao.impl.TblCardDaoImpl"
+		scope="prototype">
+		<property name="sqlSessionTemplate" ref="sqlSession" />
+	</bean>
 </beans>

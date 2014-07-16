@@ -80,6 +80,13 @@
 			<ref bean="tblTransformCardDao" />
 		</property>
 	</bean>
+	<bean id="tblCardService"
+		class="com.redcard.posp.manage.service.impl.TblCardServiceImpl"
+		scope="prototype">
+		<property name="tblCardDao">
+			<ref bean="tblCardDao" />
+		</property>
+	</bean>
 	
 	
 	

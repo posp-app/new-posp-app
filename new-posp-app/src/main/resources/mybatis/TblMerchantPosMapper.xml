@@ -26,9 +26,10 @@
 		<result property="fldOperateDate" column="fldOperateDate" />
 		<result property="fldCreateUserNo" column="fldCreateUserNo" />
 		<result property="fldCreateDate" column="fldCreateDate" />
+		<result property="fldBatchNo" column="fldBatchNo"/>
 	</resultMap>
 	<select id="selectAllTblMerchantPos" resultMap="TblMerchantPosResult">
-		SELECT TblMerchantPos,fldMerchantCode,fldStatus,fldPinKey,fldMacKey,fldMasterKey,fldCPUKey,fldEncryptKey FROM
+		SELECT TblMerchantPos,fldMerchantCode,fldStatus,fldPinKey,fldMacKey,fldMasterKey,fldCPUKey,fldEncryptKey,fldBatchNo FROM
 		tblMerchantPos
 	</select>
 
@@ -36,7 +37,8 @@
 	<sql id="TblMerchantPos_columns">
 	    <![CDATA[
         fldTerminalNo ,fldMerchantCode ,fldSelfNo ,fldName ,fldStatus ,fldType ,fldContacter ,fldPhone ,fldAddress ,fldPinKey ,fldMacKey ,
-        fldMasterKey,fldCPUKey,fldMacFlag ,fldEncryptKey,fldSystem ,fldOperateUserNo ,fldOperateDate ,fldCreateUserNo ,fldCreateDate 
+        fldMasterKey,fldCPUKey,fldMacFlag ,fldEncryptKey,fldSystem ,fldOperateUserNo ,fldOperateDate ,fldCreateUserNo ,fldCreateDate,
+        fldBatchNo 
 	    ]]>
 	</sql>
 	
@@ -45,7 +47,8 @@
         fldTerminalNo as fldTerminalNo,fldMerchantCode as fldMerchantCode,fldSelfNo as fldSelfNo,fldName as fldName,
         fldStatus as fldStatus,fldType as fldType,fldContacter as fldContacter,fldPhone as fldPhone,fldAddress as fldAddress,
         fldPinKey as fldPinKey,fldMacKey as fldMacKey,fldMasterKey as fldMasterKey,fldCPUKey as fldCPUKey,
-        fldMacFlag as fldMacFlag,fldEncryptKey as fldEncryptKey,fldSystem as fldSystem,fldOperateUserNo as fldOperateUserNo,fldOperateDate as fldOperateDate,fldCreateUserNo as fldCreateUserNo,fldCreateDate as fldCreateDate
+        fldMacFlag as fldMacFlag,fldEncryptKey as fldEncryptKey,fldSystem as fldSystem,fldOperateUserNo as fldOperateUserNo,fldOperateDate as fldOperateDate,
+        fldCreateUserNo as fldCreateUserNo,fldCreateDate as fldCreateDate,fldBatchNo as fldBatchNo
 	    ]]>
 	</sql>
 
@@ -71,7 +74,8 @@
         	fldOperateUserNo ,
         	fldOperateDate ,
         	fldCreateUserNo ,
-        	fldCreateDate 
+        	fldCreateDate,
+        	fldBatchNo
         ) VALUES (
         	#{fldTerminalNo,jdbcType=nvarchar} ,
         	#{fldMerchantCode,jdbcType=nvarchar} ,
@@ -92,7 +96,8 @@
         	#{fldOperateUserNo,jdbcType=nvarchar} ,
         	#{fldOperateDate,jdbcType=datetime} ,
         	#{fldCreateUserNo,jdbcType=nvarchar} ,
-        	#{fldCreateDate,jdbcType=datetime} 
+        	#{fldCreateDate,jdbcType=datetime} ,
+        	#{fldBatchNo,jdbcType=nvarchar}
         )
     ]]>
 	</insert>
@@ -154,6 +159,9 @@
 	        <if test="fldCreateUserNo != null">
 	        	fldCreateUserNo = #{fldCreateUserNo} ,
 			</if>
+	        <if test="fldBatchNo != null">
+	        	fldBatchNo = #{fldBatchNo} ,
+			</if>
 	        <if test="fldCreateDate != null">
 	        	fldCreateDate = #{fldCreateDate} 
 			</if>
@@ -180,6 +188,9 @@
 			</if>
 	        <if test="fldCPUKey != null">
 	        	fldCPUKey = #{fldCPUKey} ,
+			</if>
+	        <if test="fldBatchNo != null">
+	        	fldBatchNo = #{fldBatchNo} ,
 			</if>
 	        <if test="fldMacFlag != null">
 	        	fldMacFlag = #{fldMacFlag} ,
@@ -284,6 +295,11 @@
 			
 			<if test="fldCreateUserNo != null and fldCreateUserNo != ''">
 				and fldCreateUserNo = #{fldCreateUserNo}
+			</if>
+			
+			
+	        <if test="fldBatchNo != null and fldBatchNo != ''">
+	        	fldBatchNo = #{fldBatchNo} 
 			</if>
 		</where>
 	</sql>

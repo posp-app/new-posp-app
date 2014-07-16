@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- ll-format 属性废弃，因为不定长域，域长度值，都是BCD值 -->
-<message-format name="PROTOCOL_TYPE_WIN_POINT">
+<message-format name="PROTOCOL_TYPE_SUP_DATA">
 	<head>
 		<package-length length="2" format="BCD"/>
 		<TPDU length="5" format="BCD" default-value="6000000003"/>

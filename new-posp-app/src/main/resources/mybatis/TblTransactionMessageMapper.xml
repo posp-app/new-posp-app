@@ -35,6 +35,11 @@
 		<result property="fldInstallmentAmount" column="fldInstallmentAmount" />
 		<result property="fldSystem" column="fldSystem" />
 		<result property="fldSystemDate" column="fldSystemDate" />
+		<result property="fldReversalIndicate" column="fldReversalIndicate" />
+		<result property="fldRevokeIndicate" column="fldRevokeIndicate" />
+		<result property="fldCancelIndicate" column="fldCancelIndicate" />
+		<result property="fldType" column="fldType" />
+		<result property="fldOriginalId" column="fldOriginalId" />
 	</resultMap>
 	<select id="selectAllTblTransactionMessage" resultMap="TblTransactionMessageResult">
 		SELECT * FROM
@@ -44,13 +49,16 @@
 	<!-- 用于select查询公用抽取的列 -->
 	<sql id="TblTransactionMessage_columns">
 	    <![CDATA[
-        fldId ,fldPacketType ,fldCardNo ,fldProcessCode ,fldTransactionAmount ,fldSystemTraceNumber ,fldLocalTime ,fldLocalDate ,fldExpirationDate ,fldServiceEntryMode ,fldServiceConditionCode ,fldAcquirInstitutionCode ,fldForwardInstitutionCode ,fldReferenceNumber ,fldResponseCode ,fldTerminalNo ,fldMerchantNo ,fldBatchNumber ,fldAdditionalAmount ,fldOperateNo ,fldInvoiceNo ,fldCardType ,fldIssueBank ,fldOriginalTransaction ,fldOriginalTransactionDate ,fldInstallmentPeriod ,fldInstallmentAmount ,fldSystem ,fldSystemDate 
+        fldId ,fldType,fldReversalIndicate,fldRevokeIndicate,fldCancelIndicate,fldOriginalId,fldPacketType ,fldCardNo ,fldProcessCode ,fldTransactionAmount ,fldSystemTraceNumber ,fldLocalTime ,fldLocalDate ,fldExpirationDate ,fldServiceEntryMode ,fldServiceConditionCode ,fldAcquirInstitutionCode ,fldForwardInstitutionCode ,fldReferenceNumber ,fldResponseCode ,fldTerminalNo ,fldMerchantNo ,fldBatchNumber ,fldAdditionalAmount ,fldOperateNo ,fldInvoiceNo ,fldCardType ,fldIssueBank ,fldOriginalTransaction ,fldOriginalTransactionDate ,fldInstallmentPeriod ,fldInstallmentAmount ,fldSystem ,fldSystemDate 
 	    ]]>
 	</sql>
 	
 	<sql id="TblTransactionMessage_columns_as">
 	    <![CDATA[
-        fldId as fldId,fldPacketType as fldPacketType,fldCardNo as fldCardNo,fldProcessCode as fldProcessCode,fldTransactionAmount as fldTransactionAmount,fldSystemTraceNumber as fldSystemTraceNumber,fldLocalTime as fldLocalTime,fldLocalDate as fldLocalDate,fldExpirationDate as fldExpirationDate,fldServiceEntryMode as fldServiceEntryMode,fldServiceConditionCode as fldServiceConditionCode,fldAcquirInstitutionCode as fldAcquirInstitutionCode,fldForwardInstitutionCode as fldForwardInstitutionCode,fldReferenceNumber as fldReferenceNumber,fldResponseCode as fldResponseCode,fldTerminalNo as fldTerminalNo,fldMerchantNo as fldMerchantNo,fldBatchNumber as fldBatchNumber,fldAdditionalAmount as fldAdditionalAmount,fldOperateNo as fldOperateNo,fldInvoiceNo as fldInvoiceNo,fldCardType as fldCardType,fldIssueBank as fldIssueBank,fldOriginalTransaction as fldOriginalTransaction,fldOriginalTransactionDate as fldOriginalTransactionDate,fldInstallmentPeriod as fldInstallmentPeriod,fldInstallmentAmount as fldInstallmentAmount,fldSystem as fldSystem,fldSystemDate as fldSystemDate
+        fldId as fldId,
+        fldType as fldType,
+        fldReversalIndicate as fldReversalIndicate,fldRevokeIndicate as fldRevokeIndicate,fldCancelIndicate,fldOriginalId as fldOriginalId,
+        fldPacketType as fldPacketType,fldCardNo as fldCardNo,fldProcessCode as fldProcessCode,fldTransactionAmount as fldTransactionAmount,fldSystemTraceNumber as fldSystemTraceNumber,fldLocalTime as fldLocalTime,fldLocalDate as fldLocalDate,fldExpirationDate as fldExpirationDate,fldServiceEntryMode as fldServiceEntryMode,fldServiceConditionCode as fldServiceConditionCode,fldAcquirInstitutionCode as fldAcquirInstitutionCode,fldForwardInstitutionCode as fldForwardInstitutionCode,fldReferenceNumber as fldReferenceNumber,fldResponseCode as fldResponseCode,fldTerminalNo as fldTerminalNo,fldMerchantNo as fldMerchantNo,fldBatchNumber as fldBatchNumber,fldAdditionalAmount as fldAdditionalAmount,fldOperateNo as fldOperateNo,fldInvoiceNo as fldInvoiceNo,fldCardType as fldCardType,fldIssueBank as fldIssueBank,fldOriginalTransaction as fldOriginalTransaction,fldOriginalTransactionDate as fldOriginalTransactionDate,fldInstallmentPeriod as fldInstallmentPeriod,fldInstallmentAmount as fldInstallmentAmount,fldSystem as fldSystem,fldSystemDate as fldSystemDate
 	    ]]>
 	</sql>
 
@@ -85,6 +93,11 @@
         	fldInstallmentPeriod ,
         	fldInstallmentAmount ,
         	fldSystem ,
+        	fldReversalIndicate,
+        	fldCancelIndicate,
+        	fldRevokeIndicate,
+        	fldOriginalId,
+        	fldType,
         	fldSystemDate 
         ) VALUES (
         	#{fldId} ,
@@ -115,6 +128,11 @@
         	#{fldInstallmentPeriod} ,
         	#{fldInstallmentAmount} ,
         	#{fldSystem} ,
+        	#{fldReversalIndicate} ,
+        	#{fldCancelIndicate} ,
+        	#{fldRevokeIndicate} ,
+        	#{fldOriginalId} ,
+        	#{fldType},
         	#{fldSystemDate} 
         )
     ]]>
@@ -204,6 +222,21 @@
 	        <if test="fldSystem != null">
 	        	fldSystem = #{fldSystem} ,
 			</if>
+	        <if test="fldReversalIndicate != null">
+	        	fldReversalIndicate = #{fldReversalIndicate} ,
+			</if>
+	        <if test="fldCancelIndicate != null">
+	        	fldCancelIndicate = #{fldCancelIndicate} ,
+			</if>
+	        <if test="fldRevokeIndicate != null">
+	        	fldRevokeIndicate = #{fldRevokeIndicate} ,
+			</if>
+	        <if test="fldOriginalId != null">
+	        	fldOriginalId = #{fldOriginalId} ,
+			</if>
+	        <if test="fldType != null">
+	        	fldType = #{fldType} ,
+			</if>
 	        <if test="fldSystemDate != null">
 	        	fldSystemDate = #{fldSystemDate} 
 			</if>
@@ -229,6 +262,28 @@
 	        	fldIssueBank = #{fldIssueBank} ,
 			</if>
 	        
+	        <if test="fldReversalIndicate != null">
+	        	fldReversalIndicate = #{fldReversalIndicate} ,
+			</if>
+	        <if test="fldCancelIndicate != null">
+	        	fldCancelIndicate = #{fldCancelIndicate} ,
+			</if>
+	        <if test="fldRevokeIndicate != null">
+	        	fldRevokeIndicate = #{fldRevokeIndicate} ,
+			</if>
+	        <if test="fldType != null">
+	        	fldType = #{fldType} ,
+			</if>
+	        <if test="fldOriginalId != null">
+	        	fldOriginalId = #{fldOriginalId} ,
+			</if>
+			<if test="fldLocalTime != null and fldLocalTime != ''">
+				fldLocalTime = #{fldLocalTime},
+			</if>
+	        <if test="fldReferenceNumber != null">
+	        	fldReferenceNumber = #{fldReferenceNumber} ,
+			</if>
+	        
 	    </set>
         WHERE 
 	        fldSystemTraceNumber = #{fldSystemTraceNumber}
@@ -238,6 +293,8 @@
 	        fldTerminalNo = #{fldTerminalNo}
 	         and 
 	        fldMerchantNo = #{fldMerchantNo}
+	         and 
+	        fldLocalDate = #{fldLocalDate}
 	</update>
 
 	<delete id="deleteById_TblTransactionMessage">
@@ -378,13 +435,24 @@
 			<if test="fldSystem != null and fldSystem != ''">
 				and fldSystem = #{fldSystem}
 			</if>
-			<if test="fldSystemDateBegin != null">
-				and fldSystemDate >= #{fldSystemDateBegin}
+			<if test="fldReversalIndicate != null and fldReversalIndicate != ''">
+				and fldReversalIndicate = #{fldReversalIndicate}
 			</if>
-			<if test="fldSystemDateEnd != null">
-				and fldSystemDate &lt;= #{fldSystemDateEnd}
+			<if test="fldCancelIndicate != null and fldCancelIndicate != ''">
+				and fldCancelIndicate = #{fldCancelIndicate}
+			</if>
+			<if test="fldRevokeIndicate != null and fldRevokeIndicate != ''">
+				and fldRevokeIndicate = #{fldRevokeIndicate}
+			</if>
+			<if test="fldOriginalId != null and fldOriginalId != ''">
+				and fldOriginalId = #{fldOriginalId}
+			</if>
+			
+	        <if test="fldType != null and fldType !=''">
+	        	fldType = #{fldType} 
 			</if>
 		</where>
+		 order by fldSystemDate desc
 	</sql>
 
 	<select id="select_TblTransactionMessagesCount" resultType="long">

@@ -3,6 +3,7 @@
 	<node name="0001"/>
 	<server receiverPort="91" maskCardNO="n"/>
 	<inputMessageFormat name="redcard" />
+	<defaultHostCode code="3"/>
 	<outs>
 		<out name="share" class="com.redcard.posp.message.ShareMessageConverter"/>
 		<out name="bonus" class="com.redcard.posp.message.BonusMessageConverter"/>
