@@ -36,6 +36,19 @@ public class RedCardAutoFieldContent implements IAutoContent {
 			TblMerchantPos pos = ManageCacheService.findPos(terminalNo);
 			return SecretKeyFactory.createPinKey(pos.getFldMasterKey());
 		}
+		if (62 == number) {
+			//当前的批次号+1
+			TblMerchantPos pos = ManageCacheService.findPos(terminalNo);
+			String currentBatchNo = pos.getFldBatchNo();
+			int iCurrentBatchNo = Integer.parseInt(currentBatchNo)+1;
+			if (iCurrentBatchNo>999999) {
+				iCurrentBatchNo = 1;
+			}
+			String nextBatchNo = CommonUtil.addLeftZero(Integer.toString(iCurrentBatchNo), 6);
+			/*String result = CommonUtil.addLeftZero(Integer.toString(nextBatchNo.length()), 4)+
+					nextBatchNo;*/
+			return nextBatchNo;
+		}
 		if (63 == number) {
 			return SecretKeyFactory.createDownload63FieldValue();
 		}

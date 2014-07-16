@@ -31,5 +31,6 @@ public interface ITblTransactionMessageDao {
 	
 	public void update(TblTransactionMessage tblTransactionMessage);
 	
+	public void updateById(TblTransactionMessage tblTransactionMessage);
 }
 

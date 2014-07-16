@@ -19,6 +19,7 @@ import com.redcard.posp.handler.message.ReceiverMessageValidityHandler;
 import com.redcard.posp.message.Message;
 import com.redcard.posp.message.MessageFactory;
 import com.redcard.posp.support.ApplicationContent;
+import com.redcard.posp.support.ResultCode;
 
 public class ShareOutboundHandler extends SimpleChannelUpstreamHandler {
 	
@@ -47,6 +48,10 @@ public class ShareOutboundHandler extends SimpleChannelUpstreamHandler {
 		handler.handler(inputMessage, inboundChannel, cb);
 		if (!handler.isContinue()) {
 			return;
+		}
+		if (!ResultCode.RESULT_CODE_00.getCode().equals(inputMessage.getResponseCode())) {
+
+			//inputMessage.setBCDField(37, "");
 		}
 		logger.debug("返回给POS的数据包;Bytes=["+TypeConvert.bytes2HexString(inputMessage.toMessgeBytes())+"]");
 		logger.debug("返回给POS的8583格式数据："+inputMessage.to8583FormatString());

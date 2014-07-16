@@ -22,8 +22,12 @@ public class ApplicationKey {
 	public static final String TRAN = "tran";
 	public static final String TYPE = "type";
 	public static final String PROCCESS = "proc";
+	public static final String DEFAULT_HOST_CODE = "defaultHostCode";
+	public static final String CODE = "code";
+	public static final String PIN_KEY = "PIN_KEY";
+	public static final String MAC_KEY = "MAC_KEY";
 	public static final String PROTOCOL_TYPE = "PROTOCOL_TYPE";
-	public static final String PROTOCOL_TYPE_SUPDATA = "PROTOCOL_TYPE_WIN_POINT";
+	public static final String PROTOCOL_TYPE_SUPDATA = "PROTOCOL_TYPE_SUP_DATA";
 	public static final String PROTOCOL_TYPE_SHARE = "PROTOCOL_TYPE_SHARE";
 
 	public static final String SERVER = "server";

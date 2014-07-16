@@ -43,6 +43,19 @@ public class ApplicationContent {
 	public static final String MSG_PROCESS_CODE_000000 = "000000";
 	public static final String MSG_PROCESS_CODE_920000 = "920000";
 	
+	public static final String SYSTEM_TRANSACTION_TYPE_00 = "00";
+	public static final String SYSTEM_TRANSACTION_TYPE_10 = "10";
+	public static final String SYSTEM_TRANSACTION_TYPE_11 = "11";
+	public static final String SYSTEM_TRANSACTION_TYPE_20 = "20";
+	public static final String SYSTEM_TRANSACTION_TYPE_30 = "30";
+	public static final String SYSTEM_TRANSACTION_TYPE_40 = "40";
+	public static final String SYSTEM_TRANSACTION_TYPE_41 = "41";
+	public static final String SYSTEM_TRANSACTION_TYPE_50 = "50";
+	public static final String SYSTEM_TRANSACTION_TYPE_51 = "51";
+	public static final String SYSTEM_TRANSACTION_TYPE_90 = "90";
+	public static final String SYSTEM_TRANSACTION_TYPE_91 = "91";
+	public static final String SYSTEM_TRANSACTION_TYPE_92 = "92";
+	
 	public static final String MSG_TYPE_SUP_DATA_SALE = "01";
 	public static final String MSG_TYPE_SUP_DATA_REVERSAL = "41";
 	public static final String MSG_TYPE_SUP_DATA_BALANCE = "11";
@@ -56,4 +69,11 @@ public class ApplicationContent {
 	
 	public static final boolean TRAN_LOCK_UP = true;
 	public static final boolean TRAN_LOCK_DOWN = false;
+	
+	public static final int INDICATE_SUCCESS = 1;
+	public static final int INDICATE_FAIL = 0;
+	
+	public static final String INDICATE_REVOKE = "INDICATE_REVOKE";
+	public static final String INDICATE_REVERSAL = "INDICATE_REVERSAL";
+	public static final String INDICATE_CANCEL = "INDICATE_CANCEL";
 }

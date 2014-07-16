@@ -22,9 +22,9 @@ public class SecretKeyFactory {
 		return MacUtil.DES_1(key, masterWorkKey, 1);
 	}
 	
-	public static String getPin(String pinKey,String masterKey,String pinDate,String account) {
+	public static String getPin(String pinKey,String masterKey,String pinData,String account) {
 		String pinWorkKey = getDesWorkKey(pinKey,masterKey);
-		String pinBlock = MacUtil.DES_1(pinDate, pinWorkKey, 1);
+		String pinBlock = MacUtil.DES_1(pinData, pinWorkKey, 1);
 		//logger.debug("POS上送的P-BLOCK=["+pinBlock+"]");
 		String pan = account.substring(account.length()-14,account.length()-2);
 		//logger.debug("POS上送的PAN=["+pan+"]");
@@ -34,6 +34,16 @@ public class SecretKeyFactory {
 		return TypeConvert.bytes2HexString(pin.getBytes())+TypeConvert.bytes2HexString(ex);
 	}
 	
+	public static String transferredPin(String pinKey,String masterKey,
+			String workPinKey,String pinData) {
+		String pinWorkKey = getDesWorkKey(pinKey,masterKey);
+		String pinBlock = MacUtil.DES_1(pinData, pinWorkKey, 1);
+		//logger.debug("POS上送的P-BLOCK=["+pinBlock+"]");
+		String result = MacUtil.DES_1(pinBlock, workPinKey, 0);
+		System.out.println("target-pin="+result);
+		return result;
+	}
+	
 	public static String createDownloadKey(){
 		//随机生成密钥明文
 		StringBuilder sb = new StringBuilder();
@@ -41,7 +51,8 @@ public class SecretKeyFactory {
 		String target = MacUtil.DES_1(secretKey, masterKey, 0);
 		String checkValueKey = MacUtil.DES_1(CHECK_VALUE_KEY, secretKey, 0); 
 		sb.append(target+checkValueKey.substring(0,8));
-		secretKey = CommonUtil.getRandom(secretLength32);
+//		secretKey = CommonUtil.getRandom(secretLength32);
+		secretKey = "25B0E912424D0F1C7997907D1BC116E8";
 		target = MacUtil.DES_1(secretKey.substring(0,16), masterKey, 0)+MacUtil.DES_1(secretKey.substring(16), masterKey, 0);
 		checkValueKey = MacUtil.DES_3(CHECK_VALUE_KEY,secretKey,  0);
 		sb.append(target+checkValueKey.substring(0,8));
@@ -69,6 +80,7 @@ public class SecretKeyFactory {
 		//随机生成密钥明文
 		StringBuilder sb = new StringBuilder();
 		String secretKey = CommonUtil.getRandom(secretLength32);
+//		String secretKey = "25B0E912424D0F1C7997907D1BC116E8";
 		String target = MacUtil.DES_1(secretKey.substring(0,16), masterKey, 0)+MacUtil.DES_1(secretKey.substring(16), masterKey, 0);
 		String checkValueKey = MacUtil.DES_3(CHECK_VALUE_KEY,secretKey,  0);
 		sb.append(target+checkValueKey.substring(0,8));

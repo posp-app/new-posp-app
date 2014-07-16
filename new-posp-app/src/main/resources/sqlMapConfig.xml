@@ -14,6 +14,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	        <typeAlias alias="TblTrade"  type="com.redcard.posp.manage.model.TblTrade"/>
 	        <typeAlias alias="TblTransactionMessage"  type="com.redcard.posp.manage.model.TblTransactionMessage"/>
 	        <typeAlias alias="TblTransformCard"  type="com.redcard.posp.manage.model.TblTransformCard"/>
+	        <typeAlias alias="TblCard"  type="com.redcard.posp.manage.model.TblCard"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/TblMerchantBrandMapper.xml" />
@@ -26,6 +27,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="mybatis/TblTradeMapper.xml" />
 		<mapper resource="mybatis/TblTransactionMessageMapper.xml" />
 		<mapper resource="mybatis/TblTransformCardMapper.xml" />
+		<mapper resource="mybatis/TblCardMapper.xml" />
 	</mappers>
 </configuration> 
 

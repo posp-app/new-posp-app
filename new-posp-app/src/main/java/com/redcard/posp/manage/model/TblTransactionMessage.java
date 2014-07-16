@@ -70,6 +70,30 @@ public class TblTransactionMessage  implements Serializable{
 	/** 变量 fldSystemDate . */
 	private java.util.Date fldSystemDate;
 	//columns END
+	
+	/**
+	 * 冲正标记
+	 */
+	private int fldReversalIndicate;
+	
+	/**
+	 * 撤销标记
+	 */
+	private int fldRevokeIndicate;
+	
+	/**
+	 * 退货标记
+	 */
+	private int fldCancelIndicate;
+	
+	/**
+	 * 交易类型
+	 */
+	private String fldType;
+	/**
+	 * 原交易流水号
+	 */
+	private String fldOriginalId;
 
 	/**
 	* TblTransactionMessage 的构造函数
@@ -257,6 +281,36 @@ public class TblTransactionMessage  implements Serializable{
 	}
 	public void setFldSystemDate(java.util.Date fldSystemDate) {
 		this.fldSystemDate = fldSystemDate;
+	}
+	public int getFldReversalIndicate() {
+		return fldReversalIndicate;
+	}
+	public void setFldReversalIndicate(int fldReversalIndicate) {
+		this.fldReversalIndicate = fldReversalIndicate;
+	}
+	public int getFldRevokeIndicate() {
+		return fldRevokeIndicate;
+	}
+	public void setFldRevokeIndicate(int fldRevokeIndicate) {
+		this.fldRevokeIndicate = fldRevokeIndicate;
+	}
+	public int getFldCancelIndicate() {
+		return fldCancelIndicate;
+	}
+	public void setFldCancelIndicate(int fldCancelIndicate) {
+		this.fldCancelIndicate = fldCancelIndicate;
+	}
+	public String getFldType() {
+		return fldType;
+	}
+	public void setFldType(String fldType) {
+		this.fldType = fldType;
+	}
+	public String getFldOriginalId() {
+		return fldOriginalId;
+	}
+	public void setFldOriginalId(String fldOriginalId) {
+		this.fldOriginalId = fldOriginalId;
 	}
 
 

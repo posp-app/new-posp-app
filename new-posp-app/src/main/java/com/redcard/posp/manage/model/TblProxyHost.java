@@ -42,16 +42,15 @@ public class TblProxyHost  implements Serializable{
 	private java.util.Date fldCreateDate;
 	//columns END
 	
-	private String fldTerminalNo;
-	private String fldMerchantNo;
-	private String protocolType = ApplicationKey.PROTOCOL_TYPE_SHARE;
+	private String fldProtocolType = ApplicationKey.PROTOCOL_TYPE_SHARE;
 
 	
-	public String getProtocolType() {
-		return protocolType;
+	
+	public String getFldProtocolType() {
+		return fldProtocolType;
 	}
-	public void setProtocolType(String protocolType) {
-		this.protocolType = protocolType;
+	public void setFldProtocolType(String fldProtocolType) {
+		this.fldProtocolType = fldProtocolType;
 	}
 	/**
 	* TblProxyHost 的构造函数
@@ -143,18 +142,6 @@ public class TblProxyHost  implements Serializable{
 	}
 	public void setFldCreateDate(java.util.Date fldCreateDate) {
 		this.fldCreateDate = fldCreateDate;
-	}
-	public String getFldTerminalNo() {
-		return fldTerminalNo;
-	}
-	public void setFldTerminalNo(String fldTerminalNo) {
-		this.fldTerminalNo = fldTerminalNo;
-	}
-	public String getFldMerchantNo() {
-		return fldMerchantNo;
-	}
-	public void setFldMerchantNo(String fldMerchantNo) {
-		this.fldMerchantNo = fldMerchantNo;
 	}
 	public String getFldEncryptKey() {
 		return fldEncryptKey;

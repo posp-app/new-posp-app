@@ -60,6 +60,8 @@ public class ApplicationContextInit {
 	
 	public static String SUPDATA_OPERATOR = "111111";
 	public static String SUPDATA_OPERATOR_PASSWORD = "123456";
+	
+	public static String defaultHostCode = "3";
 
 	/**
 	 * 系统初始化
@@ -294,6 +296,10 @@ public class ApplicationContextInit {
 			if (ele !=null) {
 				ApplicationContextInit.nodeName = ele.attributeValue(ApplicationKey.NAME);
 			}
+			ele =docRoot.element(ApplicationKey.DEFAULT_HOST_CODE);
+			if (ele !=null) {
+				ApplicationContextInit.defaultHostCode= ele.attributeValue(ApplicationKey.CODE);
+			}
 		} catch (FileNotFoundException e) {
 			logger.error("载入应用配置文件[" + MESSAGE_FORMAT_PATH + "\\"
 					+ CONTEXT_FILE + "]失败。" + e.getMessage());
@@ -337,6 +343,7 @@ public class ApplicationContextInit {
 	public static Result loadCache() throws Exception {
 		Result r = new Result(ResultCode.POSP_RESULT_CODE_9998.getCode(),
 				ResultCode.POSP_RESULT_CODE_9998.getMessage(),null);
+		ManageCacheService.merchantGroupList.clear();
 		ManageCacheService.merchantGroupList.addAll(ApplicationContentSpringProvider.getInstance()
 				.getMerchantGroupService().findAll());
 		for (TblMerchantGroup mg:ManageCacheService.merchantGroupList) {
@@ -366,9 +373,10 @@ public class ApplicationContextInit {
 					.getMerchantTransformHostLinkService().getTblMerchantTransformHostLinkListByObj(hostLink);
 			mg.getHost().addAll(th);
 		}
-		
+		ManageCacheService.cardHostList.clear();
 		ManageCacheService.cardHostList.addAll(ApplicationContentSpringProvider.getInstance()
 				.getTransforCardService().findAll());
+		ManageCacheService.proxyHost.clear();
 		ManageCacheService.proxyHost.addAll(ApplicationContentSpringProvider.getInstance()
 				.getProxyHostService().findAll());
 		if (ManageCacheService.merchantGroupList == null ||

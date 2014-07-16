@@ -58,5 +58,10 @@ public class TblTransactionMessageDaoImpl extends AbstractiBatisDAO implements I
 		this.getSqlSession().update("update_"+"TblTransactionMessage",
 					tblTransactionMessage);
 	}
-	
+
+
+	public void updateById(TblTransactionMessage tblTransactionMessage) {
+		this.getSqlSession().update("updateById_"+"TblTransactionMessage",
+				tblTransactionMessage);
+	}
 }

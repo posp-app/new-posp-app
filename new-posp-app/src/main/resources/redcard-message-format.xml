@@ -68,7 +68,7 @@
 		<field number="59" use="n" />
 		<field number="60" use="y" format="B64" length="8"  />
 		<field number="61" use="y" format="B64" length="8"/>
-		<field number="62" use="y" format="B64" length="8"/>
+		<field number="62" use="y" format="LLLVAR" ll-format="BCD" var-format="ASCII"  direction="left"/>
 		<field number="63" use="y" format="B64" length="120"/>
 		<field number="64" use="y" format="B64" length="8"/>
 	</fields>
@@ -116,7 +116,7 @@
 			<field number="42" source-type="C" request="M" />
 			<field number="60" source-type="P" request="M" />
 			<field number="61" source-type="P" request="M" />
-			<field number="62" source-type="D" request="M" default-value="0006000000000000"/>
+			<field number="62" source-type="P" request="M" default-value="0006000000000000"/>
 			<field number="64" source-type="C" request="M" />
 		</tran>
 		<tran type="0200" proc="000000">

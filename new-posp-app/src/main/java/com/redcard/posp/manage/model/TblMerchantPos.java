@@ -50,6 +50,8 @@ public class TblMerchantPos  implements Serializable{
 	private String fldCreateUserNo;
 	/** 变量 fldCreateDate . */
 	private java.util.Date fldCreateDate;
+	
+	private String fldBatchNo;
 	//columns END
 
 	/**
@@ -184,6 +186,12 @@ public class TblMerchantPos  implements Serializable{
 	}
 	public void setFldCPUKey(String fldCPUKey) {
 		this.fldCPUKey = fldCPUKey;
+	}
+	public String getFldBatchNo() {
+		return fldBatchNo;
+	}
+	public void setFldBatchNo(String fldBatchNo) {
+		this.fldBatchNo = fldBatchNo;
 	}
 
 

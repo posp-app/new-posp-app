@@ -8,8 +8,11 @@ import org.jboss.netty.channel.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.redcard.posp.common.CommonUtil;
+import com.redcard.posp.common.MacUtil;
 import com.redcard.posp.common.TypeConvert;
 import com.redcard.posp.handler.DefaultMessageHandler;
+import com.redcard.posp.handler.secret.redcard.SecretKeyFactory;
 import com.redcard.posp.manage.model.TblMerchantPos;
 import com.redcard.posp.manage.service.impl.ManageCacheService;
 import com.redcard.posp.message.FormatMetadata;
@@ -67,20 +70,21 @@ public class MessageValidityHandler implements IMessageHandler {
 			return;
 		} else {
 			//其他报文，首先做mac校验。
-			/*int mabLength = msg.buf.length-9-8;
-			byte[] mab = new byte[mabLength];
-			System.arraycopy(msg.buf, 9, mab, 0, mabLength);
-			msg.mab = mab;
-			String mabString = TypeConvert.bytes2HexString(mab);
-			TblMerchantPos pos = ManageCacheService.findPos(msg.getTerminalIdentification());
-			String workMac = SecretKeyFactory.getDesWorkKey(pos.getFldMacKey(),pos.getFldMasterKey());
-			String mac = MacUtil.redCardMac(workMac, null, mabString);*/
+//			int mabLength = msg.buf.length-9-8;
+//			byte[] mab = new byte[mabLength];
+//			System.arraycopy(msg.buf, 9, mab, 0, mabLength);
+//			msg.mab = mab;
+//			String mabString = TypeConvert.bytes2HexString(mab);
+//			TblMerchantPos pos = ManageCacheService.findPos(msg.getTerminalIdentification());
+//			String workMac = SecretKeyFactory.getDesWorkKey(pos.getFldMacKey(),pos.getFldMasterKey());
+//			String mac = MacUtil.redCardMac(workMac, null, mabString);
 			String mac = DefaultMessageHandler.getMAC(msg);
 			if (!mac.substring(0, 16).equals(msg.getMAC().substring(0, 16))){
 				//mac校验错误，直接返回
 				logger.info("MSG type=["+msg.getMSGType()+"]交易MAC校验错误。计算MAC["+mac+"]");
 				result.setResultCode(ResultCode.RESULT_CODE_58);
 				isContinue = false;
+				DefaultMessageHandler.returnOrgMessage(msg, inBoundChannel, result.getCode());
 				return;
 				
 			}else {
@@ -170,6 +174,17 @@ public class MessageValidityHandler implements IMessageHandler {
 			pos.setFldMerchantCode(msg.getCardAcceptorIdentification());
 			pos.setFldMacKey(m.getMacKey());
 			pos.setFldPinKey(m.getPinKey());
+			//当前上送的批次号+1
+			/*String currentBatchNo = msg.getBatchNumber();
+			int iCurrentBatchNo = Integer.parseInt(currentBatchNo)+1;
+			if (iCurrentBatchNo>999999) {
+				iCurrentBatchNo = 1;
+			}
+			String nextBatchNo = CommonUtil.addLeftZero(Integer.toString(iCurrentBatchNo), 6);
+			m.setASCField(62, CommonUtil.addLeftZero(Integer.toString(nextBatchNo.length()), 4)+
+					nextBatchNo);*/
+			logger.info(m.get62Field().substring(4));
+			pos.setFldBatchNo(m.get62Field().substring(4));
 			//logger.debug("pos mac key=["+pos.getFldMacKey()+"]");
 			//logger.debug("pos pin key=["+pos.getFldPinKey()+"]");
 			ApplicationContentSpringProvider.getInstance().getMerchantPosService()
@@ -178,7 +193,10 @@ public class MessageValidityHandler implements IMessageHandler {
 			if (p!=null) {
 				p.setFldMacKey(m.getMacKey());
 				p.setFldPinKey(m.getPinKey());
+				p.setFldBatchNo(pos.getFldBatchNo());
 			}
+			//返回新的批次号
+			
 		}
 		
 		byte[] allBytes = m.toMessgeBytes();
@@ -196,5 +214,13 @@ public class MessageValidityHandler implements IMessageHandler {
 
 	public Map<String, String> getParam() {
 		return param;
+	}
+
+	public void setParam(Map<String, String> param) {
+		if (this.param!=null) {
+			this.param.putAll(param);
+		} else {
+			this.param = param;
+		}
 	}
 }

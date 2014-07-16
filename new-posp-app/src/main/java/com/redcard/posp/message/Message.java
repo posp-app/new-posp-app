@@ -350,7 +350,7 @@ public class Message implements Serializable {
 	/**
 	 * 获取受卡方所在地日期 13域
 	 * 
-	 * @return 受卡方所在地日期(MMDD)
+	 * @return 受卡方所在地日期(YYYYMMDD)
 	 */
 	public String getSystemDate() {
 		return getFieldValue(13);
@@ -500,7 +500,7 @@ public class Message implements Serializable {
 	 * @return 应答码
 	 */
 	public String getResponseCode() {
-		return getFieldValue(39);
+		return getFieldOrgString(39);
 	}
 
 	/**
@@ -641,15 +641,12 @@ public class Message implements Serializable {
 		return getFieldValue(61);
 	}
 	/**
-	 * 批次号 60.1
+	 * 批次号 62
 	 * @return
 	 */
 	public String getBatchNumber() {
-		String original = getOriginalMessage().trim();
-		if (original == null || original.equals("")||original.length()<6){
-			return "";
-		}
-		return original.substring(0,6);
+		String batchNumber = get62Field().trim();
+		return batchNumber;
 	}
 	/**
 	 * 操作员号 60.2
@@ -722,7 +719,7 @@ public class Message implements Serializable {
 	 * @return
 	 */
 	public String getOriginalSystemSequence() {
-		String field62 = get62Field().trim();;
+		String field62 = get62Field().trim();
 		if (field62 == null || field62.equals("")||field62.length()<10){
 			return "";
 		}
@@ -875,6 +872,7 @@ public class Message implements Serializable {
 				resultValue = getUncertainFieldFromASC(length,fm.getCharset(), field).trim();
 			} else {
 				resultValue = getFieldFromASC(fm.getCharset(),field).trim();
+				//System.out.println("++++++++++++++++>>>>>>>>>>>"+resultValue);
 			}
 			if (fm.getFormat().startsWith(ApplicationKey.LL)) {
 				if (resultValue.length()>length) {

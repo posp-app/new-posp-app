@@ -20,8 +20,7 @@
 		<result property="fldOperateDate" column="fldOperateDate" />
 		<result property="fldCreateUserNo" column="fldCreateUserNo" />
 		<result property="fldCreateDate" column="fldCreateDate" />
-		<result property="fldTerminalNo" column="fldTerminalNo" />
-		<result property="fldMerchantNo" column="fldMerchantNo" />
+		<result property="fldProtocolType" column="fldProtocolType" />
 	</resultMap>
 	<select id="selectAllTblProxyHost" resultMap="TblProxyHostResult">
 		SELECT * FROM
@@ -31,7 +30,8 @@
 	<!-- 用于select查询公用抽取的列 -->
 	<sql id="TblProxyHost_columns">
 	    <![CDATA[
-        fldHostCode ,fldHostName ,fldHostIp ,fldHostPort ,fldStatus ,fldOrgCode ,fldPinKey ,fldMacKey ,fldEncryptKey,fldSystem ,fldOperateUserNo ,fldOperateDate ,fldCreateUserNo ,fldCreateDate,fldTerminalNo,fldMerchantNo
+        fldHostCode ,fldHostName ,fldHostIp ,fldHostPort ,fldStatus ,fldOrgCode ,fldPinKey ,fldMacKey ,fldEncryptKey,fldSystem ,fldOperateUserNo ,fldOperateDate ,
+        fldCreateUserNo ,fldCreateDate,fldProtocolType
 	    ]]>
 	</sql>
 	
@@ -41,7 +41,7 @@
         fldPinKey as fldPinKey,fldMacKey as fldMacKey,fldEncryptKey as fldEncryptKey,fldSystem as fldSystem,
         fldOperateUserNo as fldOperateUserNo,fldOperateDate as fldOperateDate,
         fldCreateUserNo as fldCreateUserNo,fldCreateDate as fldCreateDate,
-        fldTerminalNo as fldTerminalNo,fldMerchantNo as fldMerchantNo
+        fldProtocolType as fldProtocolType
 	    ]]>
 	</sql>
 
@@ -61,9 +61,8 @@
         	fldOperateUserNo ,
         	fldOperateDate ,
         	fldCreateUserNo ,
-        	fldTerminalNo ,
-        	fldMerchantNo ,
-        	fldCreateDate 
+        	fldCreateDate ,
+        	fldProtocolType
         ) VALUES (
         	#{fldHostCode,jdbcType=nvarchar} ,
         	#{fldHostName,jdbcType=nvarchar} ,
@@ -78,9 +77,8 @@
         	#{fldOperateUserNo,jdbcType=nvarchar} ,
         	#{fldOperateDate,jdbcType=datetime} ,
         	#{fldCreateUserNo,jdbcType=nvarchar} ,
-        	#{fldTerminalNo,jdbcType=nvarchar} ,
-        	#{fldMerchantNo,jdbcType=nvarchar} ,
-        	#{fldCreateDate,jdbcType=datetime} 
+        	#{fldCreateDate,jdbcType=datetime} ,
+        	#{fldProtocolType,jdbcType=nvarchar}
         )
     ]]>
 	</insert>
@@ -124,14 +122,11 @@
 	        <if test="fldCreateUserNo != null">
 	        	fldCreateUserNo = #{fldCreateUserNo} ,
 			</if>
-	        <if test="fldTerminalNo != null">
-	        	fldTerminalNo = #{fldTerminalNo} ,
-			</if>
-	        <if test="fldMerchantNo != null">
-	        	fldMerchantNo = #{fldMerchantNo} ,
-			</if>
 	        <if test="fldOrgCode != null">
 	        	fldOrgCode = #{fldOrgCode} ,
+			</if>
+	        <if test="fldProtocolType != null">
+	        	fldProtocolType = #{fldProtocolType} ,
 			</if>
 	        <if test="fldCreateDate != null">
 	        	fldCreateDate = #{fldCreateDate} 
@@ -207,14 +202,6 @@
 				and fldStatus = #{fldStatus}
 			</if>
 			
-			<if test="fldTerminalNo != null and fldTerminalNo != ''">
-				and fldTerminalNo = #{fldTerminalNo}
-			</if>
-			
-			<if test="fldMerchantNo != null and fldMerchantNo != ''">
-				and fldMerchantNo = #{fldMerchantNo}
-			</if>
-			
 			<if test="fldOrgCode != null and fldOrgCode != ''">
 				and fldOrgCode = #{fldOrgCode}
 			</if>
@@ -227,7 +214,7 @@
 				and fldMacKey = #{fldMacKey}
 			</if>
 	        <if test="fldEncryptKey != null and fldEncryptKey != ''">
-	        	fldEncryptKey = #{fldEncryptKey} 
+	        	and fldEncryptKey = #{fldEncryptKey} 
 			</if>
 			
 			<if test="fldSystem != null and fldSystem != ''">
@@ -236,6 +223,10 @@
 			
 			<if test="fldOperateUserNo != null and fldOperateUserNo != ''">
 				and fldOperateUserNo = #{fldOperateUserNo}
+			</if>
+			
+	        <if test="fldProtocolType != null and fldProtocolType != ''">
+	        	and fldProtocolType = #{fldProtocolType} 
 			</if>
 			
 			<if test="fldCreateUserNo != null and fldCreateUserNo != ''">

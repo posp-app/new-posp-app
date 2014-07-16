@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import com.redcard.posp.common.CommonUtil;
+import com.redcard.posp.manage.service.ITblCardService;
 import com.redcard.posp.manage.service.ITblMerchantGroupService;
 import com.redcard.posp.manage.service.ITblMerchantGroupTradeTypeService;
 import com.redcard.posp.manage.service.ITblMerchantPosService;
@@ -79,6 +80,9 @@ public class ApplicationContentSpringProvider {
 	}
 	public ITblTransformCardService getTransforCardService() {
 		return (ITblTransformCardService)getBean("tblTransformCardService");
+	}
+	public ITblCardService getCardService() {
+		return (ITblCardService)getBean("tblCardService");
 	}
 	public MessageServiceImpl getMessageService() {
 		return (MessageServiceImpl)getBean("messageService");

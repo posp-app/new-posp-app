@@ -76,14 +76,17 @@ public class POSPInboundHandler extends SimpleChannelUpstreamHandler {
 				//DefaultMessageHandler.returnOrgMessage(msg, inBoundChannel, ResultCode.RESULT_CODE_93.getCode());
 				return;
 			}
-			//这里从本读消息转换为目标消息。就是要送出去的渠道消息
-			IMessageConverter converter = new SupDataMessageConverter();
-			final Message targetMSG = converter.input2output(msg);
 			/**
 			 * 测试用
 			 */
-			param.put(ApplicationKey.PROTOCOL_TYPE,ApplicationKey.PROTOCOL_TYPE_SUPDATA);
+			//param.put(ApplicationKey.PROTOCOL_TYPE,ApplicationKey.PROTOCOL_TYPE_SUPDATA);
 			final String messageProtocal = param.get(ApplicationKey.PROTOCOL_TYPE);
+			if (ApplicationKey.PROTOCOL_TYPE_SUPDATA.equals(messageProtocal)) {
+				//这里从本读消息转换为目标消息。就是要送出去的渠道消息
+				IMessageConverter converter = new SupDataMessageConverter();
+				msg = converter.input2output(msg);
+			}
+			final Message targetMSG = msg;
 			final ChannelFuture f = ChannelFactory.createChannel(param,inBoundChannel);
 			f.addListener(new ChannelFutureListener() {
 				public void operationComplete(ChannelFuture future)
@@ -93,12 +96,13 @@ public class POSPInboundHandler extends SimpleChannelUpstreamHandler {
 						// Begin to accept incoming traffic.
 						inBoundChannel.setReadable(true);
 						ChannelBuffer outCB = ChannelBuffers.dynamicBuffer();
+						//throw new Exception("-----------------------");
 						if (ApplicationKey.PROTOCOL_TYPE_SUPDATA.equals(messageProtocal)) {
 							outCB.writeBytes(targetMSG.toSupDataMessgeBytes());
-							logger.info("发送到渠道  Bytes=["+TypeConvert.bytes2HexString(targetMSG.toSupDataMessgeBytes())+"]");
+							logger.info("发送到上联（商银通）渠道  Bytes=["+TypeConvert.bytes2HexString(targetMSG.toSupDataMessgeBytes())+"]");
 						} else {
 							outCB.writeBytes(targetMSG.toMessgeBytes());
-							logger.info("发送到渠道  Bytes=["+TypeConvert.bytes2HexString(targetMSG.toMessgeBytes())+"]");
+							logger.info("发送到上联渠道  Bytes=["+TypeConvert.bytes2HexString(targetMSG.toMessgeBytes())+"]");
 						}
 						logger.info("发送到渠道  域值：\r\n"+targetMSG.to8583FormatString());
 						f.getChannel().write(outCB);

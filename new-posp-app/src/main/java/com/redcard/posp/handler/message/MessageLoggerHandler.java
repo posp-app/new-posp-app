@@ -37,5 +37,10 @@ public class MessageLoggerHandler implements IMessageHandler {
 		return null;
 	}
 
+	public void setParam(Map<String, String> param) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }

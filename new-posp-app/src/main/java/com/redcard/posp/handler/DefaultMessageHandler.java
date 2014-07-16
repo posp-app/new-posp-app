@@ -1,6 +1,6 @@
 package com.redcard.posp.handler;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -47,7 +47,7 @@ public class DefaultMessageHandler implements IMessageHandler{
 	
 	private boolean isContinue = true;
 	
-	private Map<String,String> param = new Hashtable<String,String>();
+	private Map<String,String> param = new HashMap<String,String>();
 
 	
 	public void addHandler(String name,IMessageHandler handler){
@@ -56,6 +56,7 @@ public class DefaultMessageHandler implements IMessageHandler{
 	
 	public void handler(Message msg,Channel inBoundChannel,ChannelBuffer cb) {
 		for (IMessageHandler h:handlers.values()) {
+			h.setParam(param);
 			h.handler(msg, inBoundChannel, cb);
 			if (h.getParam()!=null) {
 				param.putAll(h.getParam());
@@ -122,6 +123,7 @@ public class DefaultMessageHandler implements IMessageHandler{
 		//System.arraycopy(msg.buf, 9, mab, 0, mabLength);
 		msg.mab = mab;
 		String mabString = TypeConvert.bytes2HexString(mab);
+		logger.debug("MAB=["+mabString+"]");;
 		return mabString;
 	}
 	
@@ -168,5 +170,57 @@ public class DefaultMessageHandler implements IMessageHandler{
 
 	public Map<String, String> getParam() {
 		return param;
+	}
+	
+	public void setParam(Map<String, String> param) {
+		if (this.param!=null) {
+			this.param.putAll(param);
+		} else {
+			this.param = param;
+		}
+	}
+	
+	/**
+	 * 确定是那种数据字典的交易类型
+	 * 消费 10 
+		消费撤销 11
+		冲正 30 
+		签到 90
+		下载主密钥 91 
+		余额查询 92
+
+	 * @param msg
+	 * @return
+	 */
+	public static String msgTransactionType(Message msg) {
+		if ((ApplicationContent.MSG_TYPE_SALE_REQ.equals(msg.getMSGType())||
+				ApplicationContent.MSG_TYPE_SALE_RESP.equals(msg.getMSGType()))&&
+				ApplicationContent.MSG_PROCESS_CODE_000000.equals(msg.getTransactionCode())){
+			return ApplicationContent.SYSTEM_TRANSACTION_TYPE_10;
+		}
+		if ((ApplicationContent.MSG_TYPE_VOID_REQ.equals(msg.getMSGType())||
+				ApplicationContent.MSG_TYPE_VOID_RESP.equals(msg.getMSGType()))){
+			return ApplicationContent.SYSTEM_TRANSACTION_TYPE_11;
+		}
+		if ((ApplicationContent.MSG_TYPE_REVERSAL_REQ.equals(msg.getMSGType())||
+				ApplicationContent.MSG_TYPE_REVERSAL_RESP.equals(msg.getMSGType()))){
+			return ApplicationContent.SYSTEM_TRANSACTION_TYPE_30;
+		}
+		if ((ApplicationContent.MSG_TYPE_SIGN_ON_REQ.equals(msg.getMSGType())||
+				ApplicationContent.MSG_TYPE_SIGN_ON_RESP.equals(msg.getMSGType()))&&
+				ApplicationContent.MSG_PROCESS_CODE_910000.equals(msg.getTransactionCode())){
+			return ApplicationContent.SYSTEM_TRANSACTION_TYPE_90;
+		}
+		if ((ApplicationContent.MSG_TYPE_SIGN_ON_REQ.equals(msg.getMSGType())||
+				ApplicationContent.MSG_TYPE_SIGN_ON_RESP.equals(msg.getMSGType()))&&
+				ApplicationContent.MSG_PROCESS_CODE_900000.equals(msg.getTransactionCode())){
+			return ApplicationContent.SYSTEM_TRANSACTION_TYPE_91;
+		}
+		if ((ApplicationContent.MSG_TYPE_BALANCE_REQ.equals(msg.getMSGType())||
+				ApplicationContent.MSG_TYPE_BALANCE_RESP.equals(msg.getMSGType()))&&
+				ApplicationContent.MSG_PROCESS_CODE_310000.equals(msg.getTransactionCode())){
+			return ApplicationContent.SYSTEM_TRANSACTION_TYPE_92;
+		}
+		return "00";
 	}
 }

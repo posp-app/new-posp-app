@@ -1,5 +1,6 @@
 package com.redcard.posp.route;
 
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -47,7 +48,6 @@ public class MessageRoute implements IRouter {
 		String terminalNO = message.getTerminalIdentification();
 		String messageType = message.getMSGType();
 		String process = message.getTransactionCode();
-		String cardNO = message.getAccount();
 		TblMerchantGroup merchantGroup = ManageCacheService.findMerchantGroup(merchant);
 		if (merchantGroup == null) {
 			logger.error("找不到商户["+merchant+"]对应的商户集合(未知商户号)");
@@ -66,15 +66,17 @@ public class MessageRoute implements IRouter {
 			r.setResultCode (ResultCode.RESULT_CODE_59);
 			return r;
 		}
-		/*//如果是签到，不校验终端，因为没有终端域
+		//如果是签到，不校验终端，因为没有终端域
 		if (message.getMSGType().equals(ApplicationContent.MSG_TYPE_SIGN_ON_REQ)) {
 			Map<String,String> para = new Hashtable<String,String>();
 			para.put(ApplicationKey.MESSAGE_TYPE, message.getMSGType());
 			r.setResultCode(ResultCode.RESULT_CODE_00);
 			r.setObject(para);
 			return r;
-		}	*/
+		}
 		
+		//@TODO 异常未捕获
+		String cardNO = message.getAccount().substring(0,19);
 		TblMerchantPos posNO = ManageCacheService.findPos(m,terminalNO);
 		if (posNO == null) {
 			logger.error("商户["+m.getFldCode()+"]下没有终端["+terminalNO+"]");
@@ -98,12 +100,14 @@ public class MessageRoute implements IRouter {
 			r.setResultCode(ResultCode.RESULT_CODE_60);	
 			return r;
 		}
-		Map<String,String> para = new Hashtable<String,String>();
+		Map<String,String> para = new HashMap<String,String>();
 		para.put(ApplicationKey.IP, proxyHost.getFldHostIp());
 		para.put(ApplicationKey.PORT, Integer.toString(proxyHost.getFldHostPort()));
 		para.put(ApplicationKey.MESSAGE_TYPE, message.getMSGType());
 		para.put(ApplicationKey.PROCCESS, message.getTransactionCode());
-		para.put(ApplicationKey.PROTOCOL_TYPE, proxyHost.getProtocolType());
+		para.put(ApplicationKey.PROTOCOL_TYPE, proxyHost.getFldProtocolType());
+		para.put(ApplicationKey.PIN_KEY, proxyHost.getFldPinKey());
+		para.put(ApplicationKey.MAC_KEY, proxyHost.getFldMacKey());
 		r.setResultCode(ResultCode.RESULT_CODE_00);
 		r.setObject(para);
 		return r;

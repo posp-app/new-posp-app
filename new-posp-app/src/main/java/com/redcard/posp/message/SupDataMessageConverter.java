@@ -11,7 +11,9 @@ import com.redcard.posp.cache.ApplicationContextCache;
 import com.redcard.posp.common.CommonUtil;
 import com.redcard.posp.common.DecodeUtil;
 import com.redcard.posp.common.TypeConvert;
+import com.redcard.posp.manage.model.TblTransactionMessage;
 import com.redcard.posp.support.ApplicationContent;
+import com.redcard.posp.support.ApplicationContentSpringProvider;
 import com.redcard.posp.support.ApplicationContextInit;
 import com.redcard.posp.support.ApplicationKey;
 
@@ -58,10 +60,12 @@ public class SupDataMessageConverter implements IMessageConverter {
 		if (!StringUtil.isEmpty(input.getAccount())){
 			setLengthField(m,2,input.getAccount(),19);
 		}
-		byte[] t = new byte[8];
-		System.arraycopy(DecodeUtil.str2Bcd(input.getPINDate().substring(0,12)), 0, 
-				t, 0, DecodeUtil.str2Bcd(input.getPINDate().substring(0,12)).length);
-		m.setByteField(3, t);
+		if (!StringUtil.isEmpty(input.getPINDate())){
+			byte[] t = new byte[8];
+			System.arraycopy(DecodeUtil.str2Bcd(input.getPINDate().substring(0,12)), 0, 
+					t, 0, DecodeUtil.str2Bcd(input.getPINDate().substring(0,12)).length);
+			m.setByteField(3, t);
+		}
 		if (!StringUtil.isEmpty(input.getTrack2())){
 			setLengthField(m,4,input.getTrack2().replace("D", "="),40);
 		}
@@ -78,16 +82,29 @@ public class SupDataMessageConverter implements IMessageConverter {
 		m.setASCField(19, ApplicationContextInit.SUPDATA_OPERATOR);
 		m.setASCField(20, ApplicationContextInit.SUPDATA_OPERATOR_PASSWORD);
 		if (input.getMSGType().equals(ApplicationContent.MSG_TYPE_SALE_REQ)) {
-			m.setASCField(16, input.getBatchNumber());
 		} else if (input.getMSGType().equals(ApplicationContent.MSG_TYPE_REVERSAL_REQ)){
-			m.setASCField(9, input.getOriginalSystemSequence());
-			m.setASCField(27, input.getOriginalTransactionDate());
-			m.setASCField(28, getSupDataMessageType(input.getMessageTypeCode()));
+			m.setASCField(8, "A"+input.getSystemSequence().substring(1));
+			m.setASCField(9, input.getSystemSequence());
+			//m.setASCField(27, input.getSystemDate());
+			String type = "00";
+			if (ApplicationContent.MSG_PROCESS_CODE_000000.equals(input.getTransactionCode())) {
+				type = getSupDataMessageType(ApplicationContent.MSG_TYPE_SALE_REQ);
+			} else {
+				type = getSupDataMessageType(ApplicationContent.MSG_TYPE_VOID_REQ);
+			}
+			m.setASCField(28, type);
 		} else if (input.getMSGType().equals(ApplicationContent.MSG_TYPE_BALANCE_REQ)){
 		} else if (input.getMSGType().equals(ApplicationContent.MSG_TYPE_VOID_REQ)){
 			m.setASCField(9, input.getOriginalSystemSequence());
+			TblTransactionMessage tm = ApplicationContentSpringProvider.getInstance()
+					.getMessageService().findOrginal(input);
+			//通过原交易流水，去数据库中查原交易，找出原交易类型
 			//m.setASCField(27, input.getOriginalTransactionDate());
-			m.setASCField(28, getSupDataMessageType(input.getMessageTypeCode()));
+			m.setASCField(28, getSupDataMessageType(ApplicationContent.MSG_TYPE_SALE_REQ));
+			if (tm!=null) {
+				m.setASCField(9, tm.getFldSystemTraceNumber());
+				m.setASCField(27, tm.getFldLocalDate().substring(4,8)+tm.getFldLocalTime());			
+			}
 			
 		}
 		logger.info("convert to byte["+TypeConvert.bytes2HexString(m.toSupDataMessgeBytes())+"]");
@@ -100,24 +117,32 @@ public class SupDataMessageConverter implements IMessageConverter {
 	public Message output2input(Message output) throws Exception {
 		Message m = new Message(ApplicationContextCache.inputMessageFormat);
 		SupDataMessage o = (SupDataMessage)output;
-		m.setBCDField(2, o.getAccount());
+		if (!StringUtil.isEmpty(o.getAccount())) {
+			m.setBCDField(2, "19"+o.getAccount()+"0");
+		}
 		m.setBCDField(11, o.getSystemSequence());
 		m.setBCDField(12, o.getSystemTime());
 		m.setBCDField(13, new SimpleDateFormat("yyyy").format(new Date())+o.getSystemDate());
 		m.setASCField(39, o.getResponseCode());
 		m.setASCField(41, o.getTerminalIdentification());
 		m.setASCField(42, o.getCardAcceptorIdentification());
-		int length = o.getBalanceAmount().getBytes().length+2;
-		byte[] t = new byte[length];
-		System.arraycopy(DecodeUtil.str2Bcd(CommonUtil.addLeftZero(Integer.toString(o.getBalanceAmount().length()),4)), 0, t, 0, 2);
-		System.arraycopy(o.getBalanceAmount().getBytes(), 0, t,2, o.getBalanceAmount().getBytes().length);
-		//System.out.println("-------------["+TypeConvert.bytes2HexString(t)+"]----------------");
-		m.setByteField(54, t);
-		length = o.getBatchNumber().getBytes().length+2;
-		t = new byte[length];
-		System.arraycopy(DecodeUtil.str2Bcd(CommonUtil.addLeftZero(Integer.toString(o.getBatchNumber().length()),4)), 0, t, 0, 2);
-		System.arraycopy(o.getBatchNumber().getBytes(), 0, t,2, o.getBatchNumber().getBytes().length);
-		m.setByteField(62, t);
+		if (!StringUtil.isEmpty(o.getBalanceAmount())) {
+			String balanceAmount = "0"+o.getBalanceAmount();
+			int length = balanceAmount.getBytes().length+2;
+			byte[] t = new byte[length];
+			System.arraycopy(DecodeUtil.str2Bcd(CommonUtil.addLeftZero(Integer.toString(balanceAmount.length()),4)), 0, t, 0, 2);
+			System.arraycopy(balanceAmount.getBytes(), 0, t,2, balanceAmount.getBytes().length);
+			//System.out.println("-------------["+TypeConvert.bytes2HexString(t)+"]----------------");
+			m.setByteField(54, t);
+		}
+		if (!StringUtil.isEmpty(o.getBatchNumber())) {
+			int length = o.getBatchNumber().getBytes().length+2;
+			byte[] t = new byte[length];
+			System.arraycopy(DecodeUtil.str2Bcd(CommonUtil.addLeftZero(Integer.toString(o.getBatchNumber().length()),4)), 0, t, 0, 2);
+			System.arraycopy(o.getBatchNumber().getBytes(), 0, t,2, o.getBatchNumber().getBytes().length);
+			m.setByteField(62, t);
+		}
+		m.setBCDField(64, "00000000");
 		if (ApplicationContent.MSG_TYPE_SUP_DATA_SALE.equals(o.getMSGType())) {
 			m.setBCDField(1, ApplicationContent.MSG_TYPE_SALE_RESP);
 			m.setBCDField(3, ApplicationContent.MSG_PROCESS_CODE_000000);

@@ -65,7 +65,7 @@ public class SignService {
 		logger.info("POSP签到服务启动完成。");*/
 	}
 	
-	public static void signAll() {
+	/*public static void signAll() {
 		List<TblProxyHost> allHost = ApplicationContentSpringProvider.getInstance()
 				.getProxyHostService().findAll();
 		for (TblProxyHost h:allHost) {
@@ -90,7 +90,7 @@ public class SignService {
 				});
 			}
 		}
-	}
+	}*/
 	/**
 	 * 
 	 * @param acquiringCode 受理机构代码  （机构号）

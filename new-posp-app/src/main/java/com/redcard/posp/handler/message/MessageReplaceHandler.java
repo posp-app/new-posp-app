@@ -6,13 +6,13 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.Channel;
 
 import com.opensymphony.oscache.util.StringUtil;
+import com.redcard.posp.common.MacUtil;
+import com.redcard.posp.handler.DefaultMessageHandler;
 import com.redcard.posp.handler.secret.redcard.SecretKeyFactory;
 import com.redcard.posp.manage.model.TblMerchantPos;
-import com.redcard.posp.manage.model.TblProxyHost;
 import com.redcard.posp.manage.service.impl.ManageCacheService;
 import com.redcard.posp.message.Message;
-import com.redcard.posp.support.ApplicationContextInit;
-import com.redcard.posp.support.SecuritySupporter;
+import com.redcard.posp.support.ApplicationKey;
 
 /**
  * 
@@ -29,6 +29,8 @@ public class MessageReplaceHandler implements IMessageHandler{
 
 	private boolean isContinue = true;
 	
+	private Map<String,String> param = null;
+	
 	public void handler(Message msg, Channel inBoundChannel, ChannelBuffer cb) {
 		/*TblProxyHost host = ManageCacheService.findProxyHostByMerchantNo(msg.getCardAcceptorIdentification());
 		if (host ==null) {
@@ -42,13 +44,26 @@ public class MessageReplaceHandler implements IMessageHandler{
 		}
 		// 替换pin ，52域 个人识别码
 		if (!StringUtil.isEmpty(msg.getPINDate())) {
-			msg.setBCDField(52, SecretKeyFactory.getPin(merchantPos.getFldPinKey(),merchantPos.getFldMasterKey(),
-					msg.getPINDate(),msg.getAccount()));
+			String pinKey = param.get(ApplicationKey.PIN_KEY);
+			if (pinKey == null||pinKey.length()==0) {
+				msg.setBCDField(52, SecretKeyFactory.getPin(merchantPos.getFldPinKey(),merchantPos.getFldMasterKey(),
+						msg.getPINDate(),msg.getAccount()));
+			} else {
+				msg.setBCDField(52, SecretKeyFactory.transferredPin(merchantPos.getFldPinKey(),merchantPos.getFldMasterKey(),
+						pinKey,msg.getPINDate()));
+			}
 		}
 		//替换mac 64域
 		if (!StringUtil.isEmpty(msg.getMAC())) {
 			//String targetMac = SecuritySupporter.transferredMac(msg.mab,host.getFldMacKey(),ApplicationContextInit.targetMasterKey);
-			msg.setBCDField(64, "");
+			String macKey = param.get(ApplicationKey.MAC_KEY);
+			if (macKey ==null||macKey.length()==0) {
+				msg.setBCDField(64, "");
+			} else {
+				String mabString = DefaultMessageHandler.getMAB(msg);
+				String mac = MacUtil.redCardMac(macKey, null, mabString);
+				msg.setBCDField(64, mac);
+			}
 		}
 	}
 
@@ -57,8 +72,15 @@ public class MessageReplaceHandler implements IMessageHandler{
 	}
 
 	public Map<String, String> getParam() {
-		// TODO Auto-generated method stub
-		return null;
+		return param;
+	}
+
+	public void setParam(Map<String, String> param) {
+		if (this.param!=null) {
+			this.param.putAll(param);
+		} else {
+			this.param = param;
+		}
 	}
 
 }

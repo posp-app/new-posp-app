@@ -21,17 +21,26 @@ public class ReceiverMessageValidityHandler implements IMessageHandler {
 	private static Logger logger = LoggerFactory.getLogger(ReceiverMessageValidityHandler.class);
 	
 	private boolean isContinue = true;
+	
+	private Map<String,String> param = null;
 
 	public void handler(Message msg, Channel inBoundChannel, ChannelBuffer cb) {
 
 	}
 
-public boolean isContinue() {
-	return isContinue;
-}
-
-public Map<String, String> getParam() {
-	// TODO Auto-generated method stub
-	return null;
-}
+	public boolean isContinue() {
+		return isContinue;
+	}
+	
+	public Map<String, String> getParam() {
+		return param;
+	}
+	
+	public void setParam(Map<String, String> param) {
+		if (this.param!=null) {
+			this.param.putAll(param);
+		} else {
+			this.param = param;
+		}
+	}
 }

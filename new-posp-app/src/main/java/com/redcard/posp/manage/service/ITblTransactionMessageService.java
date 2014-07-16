@@ -43,5 +43,6 @@ public interface ITblTransactionMessageService {
 	 * 查询所有
 	 */
 	public List<TblTransactionMessage> findAll();
+	public String updateAndfindOrginalId(String indicateType,int result,TblTransactionMessage tblTransactionMessage);
 		
 }

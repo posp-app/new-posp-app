@@ -99,10 +99,10 @@ public class SupDataMessage extends Message {
 	public String getOperateNewPassword() {
 		return getFieldValue(21);
 	}
-	public String getCardBank() {
+	public String getCardType() {
 		return getFieldValue(22);
 	}
-	public String getCardBankName() {
+	public String getIssueBank() {
 		return getFieldValue(23);
 	}
 	public String getBatSettle() {

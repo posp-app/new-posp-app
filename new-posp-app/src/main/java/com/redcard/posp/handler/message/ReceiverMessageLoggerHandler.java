@@ -24,6 +24,9 @@ import com.redcard.posp.support.ApplicationContentSpringProvider;
 public class ReceiverMessageLoggerHandler implements IMessageHandler{
 
 	private static Logger logger = LoggerFactory.getLogger(ReceiverMessageLoggerHandler.class);
+	
+	private Map<String,String> param = null;
+	
 	public void handler(Message msg, Channel inBoundChannel, ChannelBuffer cb) {
 		logger.info("接收到上联系统消息,域值：\r\n"+msg.to8583FormatString());
 		ApplicationContentSpringProvider.getInstance().getMessageService().updateTransactionMessage(msg);
@@ -34,7 +37,14 @@ public class ReceiverMessageLoggerHandler implements IMessageHandler{
 	}
 
 	public Map<String, String> getParam() {
-		// TODO Auto-generated method stub
-		return null;
+		return param;
+	}
+
+	public void setParam(Map<String, String> param) {
+		if (this.param!=null) {
+			this.param.putAll(param);
+		} else {
+			this.param = param;
+		}
 	}
 }

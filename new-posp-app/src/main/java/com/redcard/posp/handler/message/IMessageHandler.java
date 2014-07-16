@@ -24,4 +24,6 @@ public interface IMessageHandler {
 	public boolean isContinue();
 	
 	public Map<String,String> getParam();
+	
+	public void setParam(Map<String,String> param);
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.redcard.posp.manage.model.TblCard;
 import com.redcard.posp.manage.model.TblMerchant;
 import com.redcard.posp.manage.model.TblMerchantGroup;
 import com.redcard.posp.manage.model.TblMerchantGroupTradeType;
@@ -13,6 +14,8 @@ import com.redcard.posp.manage.model.TblMerchantTransformHostLink;
 import com.redcard.posp.manage.model.TblProxyHost;
 import com.redcard.posp.manage.model.TblTransformCard;
 import com.redcard.posp.support.ApplicationContent;
+import com.redcard.posp.support.ApplicationContentSpringProvider;
+import com.redcard.posp.support.ApplicationContextInit;
 
 public class ManageCacheService {
 	
@@ -101,19 +104,52 @@ public class ManageCacheService {
 	 * @return
 	 */
 	public static TblProxyHost getCardHost(TblMerchantGroup merchantGroup,TblMerchant merchant,String cardNO){
+		/*TblCard card = new TblCard();
+		card.setFldCardNo(cardNO);
+		TblCard t = ApplicationContentSpringProvider.getInstance().getCardService().findByCardNo(card);
+		if (t!=null) {
+			TblProxyHost tph = new TblProxyHost();
+			tph.setFldHostCode(t.getFldHostCode());
+			tph.setFldProtocolType(null);
+			List<TblProxyHost> tList= ApplicationContentSpringProvider.getInstance().getProxyHostService().getTblProxyHostListByObj(tph);
+			if (tList !=null && tList.size()>0) {
+				return tList.get(0);
+			}
+		}*/
 		TblTransformCard cardHost = null;
 		for (TblTransformCard tc:cardHostList){
 			if (cardRegMarch(cardNO,tc.getFldCardRule())) {
 				cardHost = tc;
+				break;
 			}
 		}
 		if (cardHost == null) {
+			TblCard card = new TblCard();
+			card.setFldCardNo(cardNO);
+			TblCard t = ApplicationContentSpringProvider.getInstance().getCardService().findByCardNo(card);
+			if (t!=null) {
+				TblProxyHost tph = new TblProxyHost();
+				tph.setFldHostCode(t.getFldHostCode());
+				tph.setFldProtocolType(null);
+				List<TblProxyHost> tList= ApplicationContentSpringProvider.getInstance().getProxyHostService().getTblProxyHostListByObj(tph);
+				if (tList !=null && tList.size()>0) {
+					return tList.get(0);
+				}
+			}
+			TblProxyHost tph = new TblProxyHost();
+			tph.setFldHostCode(ApplicationContextInit.defaultHostCode);
+			tph.setFldProtocolType(null);
+			List<TblProxyHost> tList= ApplicationContentSpringProvider.getInstance().getProxyHostService().getTblProxyHostListByObj(tph);
+			if (tList !=null && tList.size()>0) {
+				return tList.get(0);
+			}
 			return null;
 		}
 		for (TblMerchantTransformHostLink mth:merchantGroup.getHost()){
 			if (mth.getFldTransformHostCode().equals(cardHost.getFldHostCode())) {
 				for (TblProxyHost host:proxyHost) {
 					if (host.getFldHostCode().equals(mth.getFldTransformHostCode())) {
+						//System.out.println("------------"+host.getFldHostCode());
 						return host;
 					}
 				}
@@ -128,7 +164,7 @@ public class ManageCacheService {
 		return mat.find();
 	}
 	
-	public static void updateProxyHostKey(TblProxyHost tblProxyHost){
+	/*public static void updateProxyHostKey(TblProxyHost tblProxyHost){
 		for (TblProxyHost h:proxyHost){
 			if (h.getFldMerchantNo().equals(tblProxyHost.getFldMerchantNo())) {
 				h.setFldMacKey(tblProxyHost.getFldMacKey());
@@ -139,12 +175,12 @@ public class ManageCacheService {
 	
 	public static TblProxyHost findProxyHostByMerchantNo(String merchantNo) {
 		for (TblProxyHost h:proxyHost){
-			System.out.println("=======>>>>>>"+h.getFldMerchantNo());
+			//System.out.println("=======>>>>>>"+h.getFldMerchantNo());
 			if (h.getFldMerchantNo().equals(merchantNo)) {
 				return h;
 			}
 		}
 		return null;
-	}
+	}*/
 	
 }
