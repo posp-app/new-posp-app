@@ -133,7 +133,7 @@ public class ManageCacheService {
 				tph.setFldProtocolType(null);
 				List<TblProxyHost> tList= ApplicationContentSpringProvider.getInstance().getProxyHostService().getTblProxyHostListByObj(tph);
 				if (tList !=null && tList.size()>0) {
-					return tList.get(0);
+					return tList.get(0).getFldStatus() == ApplicationContent.STATUS_STOPED?null:tList.get(0);
 				}
 			}
 			TblProxyHost tph = new TblProxyHost();
@@ -141,7 +141,7 @@ public class ManageCacheService {
 			tph.setFldProtocolType(null);
 			List<TblProxyHost> tList= ApplicationContentSpringProvider.getInstance().getProxyHostService().getTblProxyHostListByObj(tph);
 			if (tList !=null && tList.size()>0) {
-				return tList.get(0);
+				return tList.get(0).getFldStatus() == ApplicationContent.STATUS_STOPED?null:tList.get(0);
 			}
 			return null;
 		}
@@ -150,7 +150,7 @@ public class ManageCacheService {
 				for (TblProxyHost host:proxyHost) {
 					if (host.getFldHostCode().equals(mth.getFldTransformHostCode())) {
 						//System.out.println("------------"+host.getFldHostCode());
-						return host;
+						return host.getFldStatus() == ApplicationContent.STATUS_STOPED?null:host;
 					}
 				}
 			}

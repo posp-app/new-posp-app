@@ -70,6 +70,8 @@ public class ApplicationKey {
 	public static final String OUTPUT_MESSAGE_FORMAT="outputMessageFormat";
 	public static final String OUTS = "outs";
 	public static final String OUT = "out";
+	public static final String KEY = "key";
+	public static final String CPU = "cpu";
 	
 	
 }

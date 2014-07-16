@@ -62,6 +62,8 @@ public class ApplicationContextInit {
 	public static String SUPDATA_OPERATOR_PASSWORD = "123456";
 	
 	public static String defaultHostCode = "3";
+	
+	public static String keyCPU = "00000000000000000000000000000000";
 
 	/**
 	 * 系统初始化
@@ -299,6 +301,10 @@ public class ApplicationContextInit {
 			ele =docRoot.element(ApplicationKey.DEFAULT_HOST_CODE);
 			if (ele !=null) {
 				ApplicationContextInit.defaultHostCode= ele.attributeValue(ApplicationKey.CODE);
+			}
+			ele =docRoot.element(ApplicationKey.KEY);
+			if (ele !=null) {
+				ApplicationContextInit.keyCPU= ele.attributeValue(ApplicationKey.CPU);
 			}
 		} catch (FileNotFoundException e) {
 			logger.error("载入应用配置文件[" + MESSAGE_FORMAT_PATH + "\\"

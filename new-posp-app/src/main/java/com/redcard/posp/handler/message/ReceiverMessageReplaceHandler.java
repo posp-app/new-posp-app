@@ -67,10 +67,10 @@ public class ReceiverMessageReplaceHandler implements IMessageHandler {
 		} else {
 			//msg.setASCField(37, "");
 			//msg.setASCField(64, "");
-			byte[] allBytes = msg.toMessgeBytes();
+			/*byte[] allBytes = msg.toMessgeBytes();
 			ChannelBuffer retCB = ChannelBuffers.dynamicBuffer();
 			retCB.writeBytes(allBytes);
-			inBoundChannel.write(retCB);
+			inBoundChannel.write(retCB);*/
 
 			/*String type = msg.getMSGType();
 			type = type.substring(0,2)+(Integer.parseInt(type.substring(2))-10);

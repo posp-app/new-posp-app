@@ -52,7 +52,7 @@ public class SecretKeyFactory {
 		String checkValueKey = MacUtil.DES_1(CHECK_VALUE_KEY, secretKey, 0); 
 		sb.append(target+checkValueKey.substring(0,8));
 //		secretKey = CommonUtil.getRandom(secretLength32);
-		secretKey = "25B0E912424D0F1C7997907D1BC116E8";
+		secretKey = ApplicationContextInit.keyCPU;//"25B0E912424D0F1C7997907D1BC116E8";
 		target = MacUtil.DES_1(secretKey.substring(0,16), masterKey, 0)+MacUtil.DES_1(secretKey.substring(16), masterKey, 0);
 		checkValueKey = MacUtil.DES_3(CHECK_VALUE_KEY,secretKey,  0);
 		sb.append(target+checkValueKey.substring(0,8));

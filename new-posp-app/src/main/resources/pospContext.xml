@@ -4,6 +4,7 @@
 	<server receiverPort="91" maskCardNO="n"/>
 	<inputMessageFormat name="redcard" />
 	<defaultHostCode code="3"/>
+	<key cpu="25B0E912424D0F1C7997907D1BC116E8"/>
 	<outs>
 		<out name="share" class="com.redcard.posp.message.ShareMessageConverter"/>
 		<out name="bonus" class="com.redcard.posp.message.BonusMessageConverter"/>
