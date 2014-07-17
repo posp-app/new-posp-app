@@ -52,7 +52,7 @@ public class ShareOutboundHandler extends SimpleChannelUpstreamHandler {
 		if (!ResultCode.RESULT_CODE_00.getCode().equals(inputMessage.getResponseCode())) {
 
 			inputMessage.setBCDField(37, "303030303030303030303031");
-			inputMessage.setBCDField(64, DefaultMessageHandler.getMAC(inputMessage));
+			inputMessage.setBCDField(64, "");
 		}
 		logger.debug("返回给POS的数据包;Bytes=["+TypeConvert.bytes2HexString(inputMessage.toMessgeBytes())+"]");
 		logger.debug("返回给POS的8583格式数据："+inputMessage.to8583FormatString());
@@ -60,7 +60,7 @@ public class ShareOutboundHandler extends SimpleChannelUpstreamHandler {
 		ChannelBuffer retCB = ChannelBuffers.dynamicBuffer();
 		retCB.writeBytes(allBytes);
 		inboundChannel.write(retCB);
-		//inboundChannel.write(cb);
+        //inboundChannel.write(cb);
 		
 	}
 
