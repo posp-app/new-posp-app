@@ -41,8 +41,10 @@ public class MessageConverter implements IMessageConverter{
 		String msgType = msg.getMSGType();
 		String proccess = msg.getTransactionCode();
 		TransFormat inputTran = ApplicationContextCache.getTranFromInput(msgType,proccess);
-		TransFormat outputTran = ApplicationContextCache.getTranFromOutput(msgType,proccess);
+        //@TODO 不知道为什么需要传3个参数
+		TransFormat outputTran = ApplicationContextCache.getTranFromOutput(msgType,proccess,null);
 		MessageFormat inputMessageFormat = ApplicationContextCache.inputMessageFormat;
+        //@TODO 静态变量已经创建，但不知道有没有用
 		MessageFormat outputMessageFormat = ApplicationContextCache.outputMesssageFormat;
 		if (inputTran == null) {
 			throw new Exception("消息转换失败，接收端(input)没有找到对应消息类型【"+msgType+"】的定义");

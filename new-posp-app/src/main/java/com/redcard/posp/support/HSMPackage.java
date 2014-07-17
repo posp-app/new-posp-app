@@ -437,15 +437,17 @@ public class HSMPackage {
      * 私钥索引	2	N	“00”－“20”：密码机内保存新生成的密钥。
      * “99”：不保存新生成的密钥。
      */
+    @Deprecated
     public static byte[] makeRequest34(int nKeyLen, int nKeyIndex)
             throws IOException {
-        ByteArrayOutputStream byteArrayRetData = new ByteArrayOutputStream();
-        String strCommand = "34";
-        byteArrayRetData.write(strCommand.getBytes());
-        byteArrayRetData.write(StringUtils.Int2String(nKeyLen, 4).getBytes());
-        byteArrayRetData.write(StringUtils.Int2String(nKeyIndex, 2).getBytes());
-
-        return byteArrayRetData.toByteArray();
+//        ByteArrayOutputStream byteArrayRetData = new ByteArrayOutputStream();
+//        String strCommand = "34";
+//        byteArrayRetData.write(strCommand.getBytes());
+//        byteArrayRetData.write(StringUtils.Int2String(nKeyLen, 4).getBytes());
+//        byteArrayRetData.write(StringUtils.Int2String(nKeyIndex, 2).getBytes());
+//
+//        return byteArrayRetData.toByteArray();
+        return null;
     }
 
     /**
@@ -1188,22 +1190,24 @@ public class HSMPackage {
      * 终止信息分隔符	1C	可选项。如果显示消息尾域，则该域必须显示。值为“X’19”。
      * 消息尾	nA	可选项。最大长度为32个字符。
      */
+    @Deprecated
     public static byte[] makeRequestGI(String strDESKeyType, String strDESKey, String strPrivateKeyIndex)
             throws IOException {
-        ByteArrayOutputStream byteArrayRetData = new ByteArrayOutputStream();
-        String strCommand = "GI";
-        byteArrayRetData.write(strCommand.getBytes());
-        byteArrayRetData.write("0101".getBytes());
-        byteArrayRetData.write(strDESKeyType.getBytes());
-        byte[] bytesDESKey = TypeConvert.hexStringToByte(strDESKey);
-        byteArrayRetData.write(StringUtils.Int2String(bytesDESKey.length, 4).getBytes());
-        byteArrayRetData.write(bytesDESKey);
-        byteArrayRetData.write(";".getBytes());
-        byteArrayRetData.write(strPrivateKeyIndex.getBytes());
-        byteArrayRetData.write(";".getBytes());
-        byteArrayRetData.write(TypeConvert.hexStringToByte("585830"));
-
-        return byteArrayRetData.toByteArray();
+//        ByteArrayOutputStream byteArrayRetData = new ByteArrayOutputStream();
+//        String strCommand = "GI";
+//        byteArrayRetData.write(strCommand.getBytes());
+//        byteArrayRetData.write("0101".getBytes());
+//        byteArrayRetData.write(strDESKeyType.getBytes());
+//        byte[] bytesDESKey = TypeConvert.hexStringToByte(strDESKey);
+//        byteArrayRetData.write(StringUtils.Int2String(bytesDESKey.length, 4).getBytes());
+//        byteArrayRetData.write(bytesDESKey);
+//        byteArrayRetData.write(";".getBytes());
+//        byteArrayRetData.write(strPrivateKeyIndex.getBytes());
+//        byteArrayRetData.write(";".getBytes());
+//        byteArrayRetData.write(TypeConvert.hexStringToByte("585830"));
+//
+//        return byteArrayRetData.toByteArray();
+        return null;
     }
 
     /**

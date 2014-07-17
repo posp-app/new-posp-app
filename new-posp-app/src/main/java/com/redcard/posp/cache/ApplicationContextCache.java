@@ -26,9 +26,9 @@ public class ApplicationContextCache {
 	
 	public static List<TransFormat> inputTrans = new ArrayList<TransFormat>();
 	
-	/*public static MessageFormat outputMesssageFormat = null;
+	public static MessageFormat outputMesssageFormat = null;
 	
-	public static List<TransFormat> outputTrans = new ArrayList<TransFormat>();*/
+	/*public static List<TransFormat> outputTrans = new ArrayList<TransFormat>();*/
 	
 	public static Map<OutMessageConfig,MessageFormat> allOutputMessageFormat = new Hashtable<OutMessageConfig,MessageFormat>();
 	public static Map<OutMessageConfig,List<TransFormat>> allOutputTrans = new Hashtable<OutMessageConfig,List<TransFormat>>();
