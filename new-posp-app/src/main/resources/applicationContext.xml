@@ -18,7 +18,7 @@
 	</bean>
 	
 	<!-- 扫描包 -->	
-	<context:component-scan base-package="com.pay.posp" />
+	<context:component-scan base-package="com.redcard.posp" />
 
 	<!-- 数据源 -->
 	<bean id="pospDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">

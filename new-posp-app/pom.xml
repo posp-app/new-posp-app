@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.redcard.pos</groupId>
-  <artifactId>new-posp-app</artifactId>
+  <artifactId>ruide-posp</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <description>new-posp-app</description>
-  <name>posp</name>
+  <description>ruide-posp</description>
+  <name>ruide-posp</name>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -114,20 +114,36 @@
 	</dependencies>
 
 	<build>  
-        <plugins>  
-            <plugin>  
-                <artifactId>maven-assembly-plugin</artifactId>  
-                <configuration>  
-                    <archive>  
-                        <manifest>  
-                            <mainClass>com.allen.capturewebdata.Main</mainClass>  
-                        </manifest>  
-                    </archive>  
-                    <descriptorRefs>  
-                        <descriptorRef>jar-with-dependencies</descriptorRef>  
-                    </descriptorRefs>  
-                </configuration>  
-            </plugin>  
+        <plugins>
+            <!-- jar打包相关插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                        </manifest>
+                    </archive>
+                    <excludes>
+                        <exclude>mybatis/**</exclude>
+                        <exclude>*</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.2.1</version>
+                <configuration>
+                    <filters>
+                        <filter>bin/assembly/filter.properties</filter>
+                    </filters>
+                    <descriptors>
+                        <descriptor>bin/assembly/distribution.xml</descriptor>
+                    </descriptors>
+                </configuration>
+            </plugin>
         </plugins>  
     </build>
 </project>

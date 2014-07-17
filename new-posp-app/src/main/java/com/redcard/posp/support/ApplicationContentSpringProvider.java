@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import com.redcard.posp.common.CommonUtil;
@@ -17,6 +18,7 @@ import com.redcard.posp.manage.service.ITblProxyHostService;
 import com.redcard.posp.manage.service.ITblTransactionMessageService;
 import com.redcard.posp.manage.service.ITblTransformCardService;
 import com.redcard.posp.manage.service.impl.MessageServiceImpl;
+import org.springframework.core.io.ClassPathResource;
 
 public class ApplicationContentSpringProvider {
 
@@ -33,8 +35,7 @@ public class ApplicationContentSpringProvider {
 	}
 
 	private void init() throws ExceptionInInitializerError {
-		applicationContext = new FileSystemXmlApplicationContext(ApplicationContextInit.MESSAGE_FORMAT_PATH + "\\"
-				+ SPRING_CONTEXT);
+        applicationContext = new ClassPathXmlApplicationContext("classpath:"+SPRING_CONTEXT);
 	}
 
 	public static ApplicationContentSpringProvider getInstance() {
