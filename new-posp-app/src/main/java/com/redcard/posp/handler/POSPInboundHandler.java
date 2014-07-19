@@ -74,7 +74,7 @@ public class POSPInboundHandler extends SimpleChannelUpstreamHandler {
 			param.put(ApplicationKey.IP, "10.0.0.91");
 			param.put(ApplicationKey.PORT, "91");
 			param.put(ApplicationKey.PROTOCOL_TYPE, "");*/
-			if (!handler.isContinue() ||param.isEmpty()) {
+			if (!handler.isContinue() || param.isEmpty()) {
 				//DefaultMessageHandler.returnOrgMessage(msg, inBoundChannel, ResultCode.RESULT_CODE_93.getCode());
 				return;
 			}

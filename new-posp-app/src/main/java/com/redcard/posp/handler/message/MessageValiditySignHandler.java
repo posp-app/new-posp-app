@@ -1,11 +1,15 @@
 package com.redcard.posp.handler.message;
 
 import com.redcard.posp.cache.ApplicationContextCache;
+import com.redcard.posp.handler.DefaultMessageHandler;
 import com.redcard.posp.handler.SignHandler;
+import com.redcard.posp.manage.model.TblProxyHost;
 import com.redcard.posp.message.Message;
 import com.redcard.posp.message.MessageFactory;
 import com.redcard.posp.support.ApplicationContent;
+import com.redcard.posp.support.ApplicationContentSpringProvider;
 import com.redcard.posp.support.ApplicationKey;
+import com.redcard.posp.support.ResultCode;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.jboss.netty.bootstrap.ClientBootstrap;
@@ -19,7 +23,9 @@ import sun.util.logging.resources.logging_es;
 import java.net.InetSocketAddress;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author cuijunrong(cuijunrong@hotmail.com)
@@ -37,6 +43,10 @@ public class MessageValiditySignHandler implements IMessageHandler {
     private Map<String, Object> param = null;
 
     public void handler(Message msg, Channel inBoundChannel, ChannelBuffer cb) {
+
+        if (msg.getMSGType().equals(ApplicationContent.MSG_TYPE_SIGN_ON_REQ)){
+            return;
+        }
 
         String ip = (String) param.get(ApplicationKey.IP);
         Integer port = Integer.parseInt((String) param.get(ApplicationKey.PORT));
@@ -62,8 +72,11 @@ public class MessageValiditySignHandler implements IMessageHandler {
                 final Message m = MessageFactory.createInputMessage(msg, ApplicationContent.MESSAGE_IO_I
                         , ApplicationContent.MSG_TYPE_SIGN_ON_REQ, ApplicationContent.MSG_PROCESS_CODE_910000);
                 ClientBootstrap clientBootstrap = new ClientBootstrap(ApplicationContextCache.clientSocketChannelFactory);
-
-                clientBootstrap.getPipeline().addLast(ApplicationContent.HANDLER_POSP_OUT_BOUND, new SignHandler());
+                clientBootstrap.setOption("connectTimeoutMillis", 5000);
+                AtomicBoolean atomicBoolean = new AtomicBoolean(false);
+                SignHandler signHandler = new SignHandler();
+                signHandler.setAtomicBoolean(atomicBoolean);
+                clientBootstrap.getPipeline().addLast(ApplicationContent.HANDLER_POSP_OUT_BOUND, signHandler);
 
                 final ChannelFuture f = clientBootstrap.connect(new InetSocketAddress(ip, port));
                 f.addListener(new ChannelFutureListener() {
@@ -80,13 +93,39 @@ public class MessageValiditySignHandler implements IMessageHandler {
                         }
                     }
                 });
+
+                logger.error("==================");
+                long start = System.currentTimeMillis();
+                while ((System.currentTimeMillis()-start)<5000 && !atomicBoolean.get()) {
+                    Thread.currentThread().sleep(100);
+                }
+                logger.error("==================");
+
+                if(!atomicBoolean.get()){
+                    isContinue = false;
+                    DefaultMessageHandler.returnOrgMessage(msg, inBoundChannel, ResultCode.RESULT_CODE_93.getCode());
+                    return;
+                }
+
+                TblProxyHost queryObject = new TblProxyHost();
+                queryObject.setFldHostPort(port);
+                queryObject.setFldHostIp(ip);
+                queryObject.setFldProtocolType(null);
+                List<TblProxyHost> tblProxyHostList = ApplicationContentSpringProvider.getInstance().getProxyHostService().getTblProxyHostListByObj(queryObject);
+                if (tblProxyHostList != null && tblProxyHostList.size() > 0) {
+                    param.put(ApplicationKey.PIN_KEY, tblProxyHostList.get(0).getFldPinKey());
+                    param.put(ApplicationKey.MAC_KEY, tblProxyHostList.get(0).getFldMacKey());
+                    param.put(ApplicationKey.PROXY_SIGN_DATE, tblProxyHostList.get(0).getFldSignDate());
+                }
+
+                isContinue = true;
             } catch (Exception e) {
                 e.printStackTrace();
+                isContinue = false;
+                DefaultMessageHandler.returnOrgMessage(msg, inBoundChannel, ResultCode.RESULT_CODE_90.getCode());
+            }finally {
+                logger.info("结束签到");
             }
-
-            isContinue = false;
-
-            logger.info("结束签到");
 
         }
 

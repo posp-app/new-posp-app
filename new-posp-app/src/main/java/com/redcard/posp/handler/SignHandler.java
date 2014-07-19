@@ -1,6 +1,7 @@
 package com.redcard.posp.handler;
 
 import com.redcard.posp.common.MacUtil;
+import com.redcard.posp.support.ApplicationKey;
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
@@ -18,10 +19,21 @@ import com.redcard.posp.support.ApplicationContentSpringProvider;
 import java.net.InetSocketAddress;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SignHandler extends SimpleChannelUpstreamHandler {
 
     private static Logger logger = LoggerFactory.getLogger(SignHandler.class);
+
+    private AtomicBoolean atomicBoolean = null;
+
+    public AtomicBoolean getAtomicBoolean() {
+        return atomicBoolean;
+    }
+
+    public void setAtomicBoolean(AtomicBoolean atomicBoolean) {
+        this.atomicBoolean = atomicBoolean;
+    }
 
     @Override
     public void messageReceived(ChannelHandlerContext ctx, MessageEvent e)
@@ -36,6 +48,7 @@ public class SignHandler extends SimpleChannelUpstreamHandler {
             TblProxyHost queryObject = new TblProxyHost();
             queryObject.setFldHostPort(socketAddress.getPort());
             queryObject.setFldHostIp(socketAddress.getHostString());
+            queryObject.setFldProtocolType(null);
             List<TblProxyHost> tblProxyHostList = ApplicationContentSpringProvider.getInstance().getProxyHostService().getTblProxyHostListByObj(queryObject);
             if (tblProxyHostList != null && tblProxyHostList.size() > 0) {
                 //签到，更新pinKey 和macKey
@@ -45,7 +58,7 @@ public class SignHandler extends SimpleChannelUpstreamHandler {
                     return;
                 }
 
-                if(tblProxyHost.getFldHostMasterKey().length()!=16 || tblProxyHost.getFldHostMasterKey().length()!=32){
+                if(tblProxyHost.getFldHostMasterKey().length()!=16 && tblProxyHost.getFldHostMasterKey().length()!=32){
                     logger.error("机构密钥长度错误，必须为16或32字节，当前长度为"+tblProxyHost.getFldHostMasterKey().length());
                     return;
                 }
@@ -74,6 +87,16 @@ public class SignHandler extends SimpleChannelUpstreamHandler {
         } else {
             logger.error("转发主机["+socketAddress+"]签到失败");
         }
+
+        e.getChannel().close();
+        e.getChannel().disconnect();
+        getAtomicBoolean().set(true);
+    }
+
+    @Override
+    public void channelClosed(ChannelHandlerContext ctx, ChannelStateEvent e)
+            throws Exception {
+        POSPInboundHandler.closeOnFlush(e.getChannel());
     }
 
     @Override
@@ -81,5 +104,6 @@ public class SignHandler extends SimpleChannelUpstreamHandler {
             throws Exception {
         logger.error(e.getCause().getMessage());
         e.getCause().printStackTrace();
+        POSPInboundHandler.closeOnFlush(e.getChannel());
     }
 }
