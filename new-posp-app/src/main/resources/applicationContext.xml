@@ -38,26 +38,6 @@
 		<property name="breakAfterAcquireFailure" value="false" />
 		<property name="testConnectionOnCheckout" value="false" />
 	</bean>
-	<!-- 
- 	<bean id="pospDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-		<property name="driverClass" value="org.h2.Driver"></property>
-		<property name="jdbcUrl" value="jdbc:h2:tcp://localhost/~/test"></property>
-		<property name="user" value="sa"/>
-		<property name="password" value=""/>
-		<property name="minPoolSize" value="1" />
-		<property name="maxPoolSize" value="12" />
-		<property name="maxIdleTime" value="1800" />
-		<property name="acquireIncrement" value="2" />
-		<property name="maxStatements" value="10" />
-		<property name="initialPoolSize" value="2" />
-		<property name="idleConnectionTestPeriod" value="1800" />
-		<property name="acquireRetryAttempts" value="30" />
-		<property name="acquireRetryDelay" value="100" />
-		<property name="breakAfterAcquireFailure" value="false" />
-		<property name="testConnectionOnCheckout" value="false" />
-	</bean>
- 	-->
- 	
 	<!-- 配置SQLSessionFactory -->
 	<bean id="pospSQLSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<!-- 加载数据源 -->
@@ -70,6 +50,6 @@
 	
 	<import resource="applicationContext-dao.xml" />
 	<import resource="applicationContext-service.xml" />
-	<!--<import resource="applicationContext-jms.xml" />-->
+	<import resource="applicationContext-jms.xml" />
 
 </beans>
