@@ -53,11 +53,12 @@ public class MessageFactory {
 		TransFormat targetTransFormat = null;
 		if (io == ApplicationContent.MESSAGE_IO_I) {
 			targetMessageFormat = ApplicationContextCache.inputMessageFormat;
-			targetTransFormat = ApplicationContextCache.getTranFromInput(type,process);
-		} /*else if (io == ApplicationContent.MESSAGE_IO_O) {
-			targetMessageFormat = ApplicationContextCache.outputMesssageFormat;
-			targetTransFormat = ApplicationContextCache.getTranFromOutput(type,process);
-		}*/
+			targetTransFormat = ApplicationContextCache.getTranFromInput(type, process);
+        }
+//        else if (io == ApplicationContent.MESSAGE_IO_O) {
+//			targetMessageFormat = ApplicationContextCache.outputMesssageFormat;
+//			targetTransFormat = ApplicationContextCache.getTranFromOutput(type,process);
+//		}
 		if (targetTransFormat == null) {
 			logger.error("未定义交易。");
 			throw new ApplicationException (ResultCode.RESULT_CODE_95);	

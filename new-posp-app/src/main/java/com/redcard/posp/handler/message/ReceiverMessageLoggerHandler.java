@@ -25,7 +25,7 @@ public class ReceiverMessageLoggerHandler implements IMessageHandler{
 
 	private static Logger logger = LoggerFactory.getLogger(ReceiverMessageLoggerHandler.class);
 	
-	private Map<String,String> param = null;
+	private Map<String,Object> param = null;
 	
 	public void handler(Message msg, Channel inBoundChannel, ChannelBuffer cb) {
 		logger.info("接收到上联系统消息,域值：\r\n"+msg.to8583FormatString());
@@ -36,11 +36,11 @@ public class ReceiverMessageLoggerHandler implements IMessageHandler{
 		return true;
 	}
 
-	public Map<String, String> getParam() {
+	public Map<String, Object> getParam() {
 		return param;
 	}
 
-	public void setParam(Map<String, String> param) {
+	public void setParam(Map<String, Object> param) {
 		if (this.param!=null) {
 			this.param.putAll(param);
 		} else {

@@ -24,15 +24,14 @@ public class ChannelFactory {
 
 	/**
 	 * 根据消息，得到要路由到哪个目标通道(地址)
-	 * @param message
 	 * @return
 	 * @throws Exception
 	 */
-	public  static ChannelFuture createChannel(Map<String,String> param,Channel inBoundChannel) 
+	public  static ChannelFuture createChannel(Map<String,Object> param,Channel inBoundChannel)
 			throws Exception {
-		return createChannel(param.get(ApplicationKey.IP),
-				Integer.parseInt(param.get(ApplicationKey.PORT)),
-				param.get(ApplicationKey.PROTOCOL_TYPE),
+		return createChannel(param.get(ApplicationKey.IP).toString(),
+				Integer.parseInt(param.get(ApplicationKey.PORT).toString()),
+				param.get(ApplicationKey.PROTOCOL_TYPE).toString(),
 				inBoundChannel);
 		//return createChannel(ApplicationContextInit.upLinkServerIP,ApplicationContextInit.upLinkServerPort,inBoundChannel);
 	}

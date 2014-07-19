@@ -72,6 +72,14 @@ public class ApplicationKey {
 	public static final String OUT = "out";
 	public static final String KEY = "key";
 	public static final String CPU = "cpu";
-	
-	
+
+    public static final Integer PROXY_SIGN_MODE_NONE = 0;
+    public static final Integer PROXY_SIGN_MODE_FIXED = 1;
+    public static final Integer PROXY_SIGN_MODE_ORG = 2;
+
+    public static final String PROXY_MODE = "proxy_mode";
+    public static final String PROXY_SIGN_DATE = "proxy_sign_date";
+    public static final String HOST_MASTER_KEY = "host_master_key";
+
+
 }

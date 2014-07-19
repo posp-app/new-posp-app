@@ -34,7 +34,8 @@ public class ApplicationContextInit {
 	
 	private static ApplicationContextInit instance;
 	private static Object lock = new Object();
-	
+
+    //@TODO 运行时需要改为 resources
 	public static final String MESSAGE_FORMAT_PATH = "src\\main\\resources";
 	public static final String CONTEXT_FILE = "pospContext.xml";
 	public static final String ID_CACHE_FILE = "IDBuilder.properties";

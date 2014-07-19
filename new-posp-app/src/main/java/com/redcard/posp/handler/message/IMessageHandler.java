@@ -23,7 +23,7 @@ public interface IMessageHandler {
 	
 	public boolean isContinue();
 	
-	public Map<String,String> getParam();
+	public Map<String,Object> getParam();
 	
-	public void setParam(Map<String,String> param);
+	public void setParam(Map<String,Object> param);
 }

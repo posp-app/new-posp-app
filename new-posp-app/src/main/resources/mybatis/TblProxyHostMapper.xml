@@ -21,7 +21,10 @@
 		<result property="fldCreateUserNo" column="fldCreateUserNo" />
 		<result property="fldCreateDate" column="fldCreateDate" />
 		<result property="fldProtocolType" column="fldProtocolType" />
-	</resultMap>
+        <result property="fldSignMode" column="fldSignMode" />
+        <result property="fldHostMasterKey" column="fldHostMasterKey" />
+        <result property="fldSignDate" column="fldSignDate" />
+    </resultMap>
 	<select id="selectAllTblProxyHost" resultMap="TblProxyHostResult">
 		SELECT * FROM
 		tblProxyHost
@@ -31,7 +34,7 @@
 	<sql id="TblProxyHost_columns">
 	    <![CDATA[
         fldHostCode ,fldHostName ,fldHostIp ,fldHostPort ,fldStatus ,fldOrgCode ,fldPinKey ,fldMacKey ,fldEncryptKey,fldSystem ,fldOperateUserNo ,fldOperateDate ,
-        fldCreateUserNo ,fldCreateDate,fldProtocolType
+        fldCreateUserNo ,fldCreateDate,fldProtocolType,fldSignMode,fldHostMasterKey,fldSignDate
 	    ]]>
 	</sql>
 	
@@ -41,7 +44,8 @@
         fldPinKey as fldPinKey,fldMacKey as fldMacKey,fldEncryptKey as fldEncryptKey,fldSystem as fldSystem,
         fldOperateUserNo as fldOperateUserNo,fldOperateDate as fldOperateDate,
         fldCreateUserNo as fldCreateUserNo,fldCreateDate as fldCreateDate,
-        fldProtocolType as fldProtocolType
+        fldProtocolType as fldProtocolType, fldSignMode as fldSignMode,
+        fldHostMasterKey as fldHostMasterKey, fldSignDate as fldSignDate
 	    ]]>
 	</sql>
 
@@ -131,6 +135,9 @@
 	        <if test="fldCreateDate != null">
 	        	fldCreateDate = #{fldCreateDate} 
 			</if>
+            <if test="fldSignDate != null">
+                fldSignDate = #{fldSignDate}
+            </if>
 	        
 	    </set>
         WHERE 

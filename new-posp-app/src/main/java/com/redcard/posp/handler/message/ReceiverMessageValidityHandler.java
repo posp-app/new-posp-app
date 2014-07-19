@@ -22,7 +22,7 @@ public class ReceiverMessageValidityHandler implements IMessageHandler {
 	
 	private boolean isContinue = true;
 	
-	private Map<String,String> param = null;
+	private Map<String,Object> param = null;
 
 	public void handler(Message msg, Channel inBoundChannel, ChannelBuffer cb) {
 
@@ -32,11 +32,11 @@ public class ReceiverMessageValidityHandler implements IMessageHandler {
 		return isContinue;
 	}
 	
-	public Map<String, String> getParam() {
+	public Map<String, Object> getParam() {
 		return param;
 	}
 	
-	public void setParam(Map<String, String> param) {
+	public void setParam(Map<String, Object> param) {
 		if (this.param!=null) {
 			this.param.putAll(param);
 		} else {

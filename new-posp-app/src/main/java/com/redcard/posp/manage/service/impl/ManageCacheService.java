@@ -164,16 +164,17 @@ public class ManageCacheService {
 		return mat.find();
 	}
 	
-	/*public static void updateProxyHostKey(TblProxyHost tblProxyHost){
+	public static void updateProxyHostKeyByCode(TblProxyHost tblProxyHost){
 		for (TblProxyHost h:proxyHost){
-			if (h.getFldMerchantNo().equals(tblProxyHost.getFldMerchantNo())) {
+			if (h.getFldHostCode().equals(tblProxyHost.getFldHostCode())) {
 				h.setFldMacKey(tblProxyHost.getFldMacKey());
 				h.setFldPinKey(tblProxyHost.getFldPinKey());
+                h.setFldSignDate(tblProxyHost.getFldSignDate());
 			}
 		}
 	}
 	
-	public static TblProxyHost findProxyHostByMerchantNo(String merchantNo) {
+	/*public static TblProxyHost findProxyHostByMerchantNo(String merchantNo) {
 		for (TblProxyHost h:proxyHost){
 			//System.out.println("=======>>>>>>"+h.getFldMerchantNo());
 			if (h.getFldMerchantNo().equals(merchantNo)) {

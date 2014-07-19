@@ -1,6 +1,7 @@
 package com.redcard.posp.manage.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import com.redcard.posp.support.ApplicationKey;
 
@@ -40,19 +41,33 @@ public class TblProxyHost  implements Serializable{
 	private String fldCreateUserNo;
 	/** 变量 fldCreateDate . */
 	private java.util.Date fldCreateDate;
-	//columns END
+
+    private Date fldSignDate;
+
+    private String fldHostMasterKey;
+
+    private Integer fldSignMode = ApplicationKey.PROXY_SIGN_MODE_NONE;
+
+    //columns END
 	
 	private String fldProtocolType = ApplicationKey.PROTOCOL_TYPE_SHARE;
 
-	
-	
 	public String getFldProtocolType() {
 		return fldProtocolType;
 	}
 	public void setFldProtocolType(String fldProtocolType) {
 		this.fldProtocolType = fldProtocolType;
 	}
-	/**
+
+    public Integer getFldSignMode() {
+        return fldSignMode;
+    }
+
+    public void setFldSignMode(Integer fldSignMode) {
+        this.fldSignMode = fldSignMode;
+    }
+
+    /**
 	* TblProxyHost 的构造函数
 	*/
 	public TblProxyHost() {
@@ -150,6 +165,20 @@ public class TblProxyHost  implements Serializable{
 		this.fldEncryptKey = fldEncryptKey;
 	}
 
+    public Date getFldSignDate() {
+        return fldSignDate;
+    }
 
+    public void setFldSignDate(Date fldSignDate) {
+        this.fldSignDate = fldSignDate;
+    }
+
+    public String getFldHostMasterKey() {
+        return fldHostMasterKey;
+    }
+
+    public void setFldHostMasterKey(String fldHostMasterKey) {
+        this.fldHostMasterKey = fldHostMasterKey;
+    }
 }
 

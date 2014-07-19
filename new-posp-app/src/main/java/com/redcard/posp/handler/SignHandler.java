@@ -1,11 +1,10 @@
 package com.redcard.posp.handler;
 
+import com.redcard.posp.common.MacUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
-import org.jboss.netty.channel.ChannelHandlerContext;
-import org.jboss.netty.channel.ExceptionEvent;
-import org.jboss.netty.channel.MessageEvent;
-import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
+import org.jboss.netty.channel.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,39 +15,71 @@ import com.redcard.posp.message.MessageFactory;
 import com.redcard.posp.support.ApplicationContent;
 import com.redcard.posp.support.ApplicationContentSpringProvider;
 
-public class SignHandler extends SimpleChannelUpstreamHandler {
-	
-	private static Logger logger = LoggerFactory.getLogger(SignHandler.class);
+import java.net.InetSocketAddress;
+import java.util.Date;
+import java.util.List;
 
-	@Override
-	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e)
-			throws Exception {
-		/*ChannelBuffer cb = (ChannelBuffer) e.getMessage();
-		logger.info("接收到快钱消息, bytes=[" + ChannelBuffers.hexDump(cb)+"]");
-		Message msg = MessageFactory.getMessage(cb.array(), ApplicationContent.MESSAGE_IO_O);
-		logger.info("接收到快钱消息,域值：\r\n"+msg.to8583FormatString());
-		ApplicationContentSpringProvider.getInstance().getMessageService().updateTransactionMessage(msg);
-		if (ApplicationContent.MSG_TYPE_SIGN_ON_RESP.equals(msg.getMSGType())) {
-			//签到，更新pinKey 和macKey 
-			//@Todo 这里校验checkValue
-			TblProxyHost tph = new TblProxyHost();
-			tph.setFldPinKey(msg.getPinKey());
-			tph.setFldMacKey(msg.getMacKey());
-			tph.setFldEncryptKey(msg.getEncryptKey());
-			tph.setFldTerminalNo(msg.getSendOrgCode());
-			tph.setFldMerchantNo(msg.getCardAcceptorIdentification());
-			tph.setFldOrgCode(msg.getAcquiringCode());
-			ApplicationContentSpringProvider.getInstance().getProxyHostService().updateByMerchantNo(tph);
-			ManageCacheService.updateProxyHostKey(tph);
-			
-		} else {
-			
-		}*/
-	}
-	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e)
-			throws Exception {
-		e.getCause().printStackTrace();
-		//logger.debug("exception caught:"+e.getCause().printStackTrace());
-	}
+public class SignHandler extends SimpleChannelUpstreamHandler {
+
+    private static Logger logger = LoggerFactory.getLogger(SignHandler.class);
+
+    @Override
+    public void messageReceived(ChannelHandlerContext ctx, MessageEvent e)
+            throws Exception {
+        ChannelBuffer cb = (ChannelBuffer) e.getMessage();
+        InetSocketAddress socketAddress = (InetSocketAddress) ctx.getChannel().getRemoteAddress();
+        logger.info("接收到来自[" + socketAddress + "]签到消息, bytes=[" + ChannelBuffers.hexDump(cb) + "]");
+        Message msg = MessageFactory.getInputMessage(cb.array());
+        logger.info("接收到签到消息,域值：\r\n" + msg.to8583FormatString());
+        if (ApplicationContent.MSG_TYPE_SIGN_ON_RESP.equals(msg.getMSGType())) {
+
+            TblProxyHost queryObject = new TblProxyHost();
+            queryObject.setFldHostPort(socketAddress.getPort());
+            queryObject.setFldHostIp(socketAddress.getHostString());
+            List<TblProxyHost> tblProxyHostList = ApplicationContentSpringProvider.getInstance().getProxyHostService().getTblProxyHostListByObj(queryObject);
+            if (tblProxyHostList != null && tblProxyHostList.size() > 0) {
+                //签到，更新pinKey 和macKey
+                TblProxyHost tblProxyHost = tblProxyHostList.get(0);
+                if(StringUtils.isBlank(tblProxyHost.getFldHostMasterKey())){
+                    logger.error("转发主机["+socketAddress+"] 的机构密钥为空");
+                    return;
+                }
+
+                if(tblProxyHost.getFldHostMasterKey().length()!=16 || tblProxyHost.getFldHostMasterKey().length()!=32){
+                    logger.error("机构密钥长度错误，必须为16或32字节，当前长度为"+tblProxyHost.getFldHostMasterKey().length());
+                    return;
+                }
+
+                String pinKey = null;
+                String macKey = null;
+
+                if(tblProxyHost.getFldHostMasterKey().length()==16){
+                    pinKey = MacUtil.DES_1(msg.getPinKey(),tblProxyHost.getFldHostMasterKey() , 1);
+                    macKey = MacUtil.DES_1(msg.getMacKey(),tblProxyHost.getFldHostMasterKey() , 1);
+                }else{
+                    pinKey = MacUtil.DES_3(msg.getPinKey(), tblProxyHost.getFldHostMasterKey(), 1);
+                    macKey = MacUtil.DES_3(msg.getMacKey(), tblProxyHost.getFldHostMasterKey(), 1);
+                }
+
+                TblProxyHost save = new TblProxyHost();
+                save.setFldHostCode(tblProxyHost.getFldHostCode());
+                save.setFldPinKey(pinKey);
+                save.setFldMacKey(macKey);
+                save.setFldSignDate(new Date());
+                save.setFldOperateDate(new Date());
+                ApplicationContentSpringProvider.getInstance().getProxyHostService().update(save);
+                //更新缓存中的转发主机的key
+                ManageCacheService.updateProxyHostKeyByCode(save);
+            }
+        } else {
+            logger.error("转发主机["+socketAddress+"]签到失败");
+        }
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e)
+            throws Exception {
+        logger.error(e.getCause().getMessage());
+        e.getCause().printStackTrace();
+    }
 }

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -100,7 +101,7 @@ public class MessageRoute implements IRouter {
 			r.setResultCode(ResultCode.RESULT_CODE_60);	
 			return r;
 		}
-		Map<String,String> para = new HashMap<String,String>();
+		Map<String,Object> para = new HashMap<String,Object>();
 		para.put(ApplicationKey.IP, proxyHost.getFldHostIp());
 		para.put(ApplicationKey.PORT, Integer.toString(proxyHost.getFldHostPort()));
 		para.put(ApplicationKey.MESSAGE_TYPE, message.getMSGType());
@@ -108,6 +109,9 @@ public class MessageRoute implements IRouter {
 		para.put(ApplicationKey.PROTOCOL_TYPE, proxyHost.getFldProtocolType());
 		para.put(ApplicationKey.PIN_KEY, proxyHost.getFldPinKey());
 		para.put(ApplicationKey.MAC_KEY, proxyHost.getFldMacKey());
+        para.put(ApplicationKey.PROXY_MODE,proxyHost.getFldSignMode().toString());
+        para.put(ApplicationKey.PROXY_SIGN_DATE, proxyHost.getFldSignDate());
+        para.put(ApplicationKey.HOST_MASTER_KEY, proxyHost.getFldHostMasterKey());
 		r.setResultCode(ResultCode.RESULT_CODE_00);
 		r.setObject(para);
 		return r;

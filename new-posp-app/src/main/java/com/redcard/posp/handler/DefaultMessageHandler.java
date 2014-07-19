@@ -47,7 +47,7 @@ public class DefaultMessageHandler implements IMessageHandler{
 	
 	private boolean isContinue = true;
 	
-	private Map<String,String> param = new HashMap<String,String>();
+	private Map<String,Object> param = new HashMap<String,Object>();
 
 	
 	public void addHandler(String name,IMessageHandler handler){
@@ -168,11 +168,11 @@ public class DefaultMessageHandler implements IMessageHandler{
 		}
 	}
 
-	public Map<String, String> getParam() {
+	public Map<String, Object> getParam() {
 		return param;
 	}
 	
-	public void setParam(Map<String, String> param) {
+	public void setParam(Map<String, Object> param) {
 		if (this.param!=null) {
 			this.param.putAll(param);
 		} else {

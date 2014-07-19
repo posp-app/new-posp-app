@@ -44,7 +44,7 @@ public class MessageValidityHandler implements IMessageHandler {
 	
 	private IRouter router = new MessageRoute();
 	
-	private Map<String,String> param = null;
+	private Map<String,Object> param = null;
 
 	@SuppressWarnings("unchecked")
 	public void handler(Message msg, Channel inBoundChannel, ChannelBuffer cb) {
@@ -55,7 +55,7 @@ public class MessageValidityHandler implements IMessageHandler {
 			isContinue = false;
 			return;
 		}
-		param = (Map<String,String>)result.getObject();
+		param = (Map<String,Object>)result.getObject();
 		//下载主密钥
 		if (msg.getMSGType().equals(ApplicationContent.MSG_TYPE_SIGN_ON_REQ)&&
 				ApplicationContent.MSG_PROCESS_CODE_900000.equals(msg.getTransactionCode())){
@@ -212,11 +212,11 @@ public class MessageValidityHandler implements IMessageHandler {
 	
 	}
 
-	public Map<String, String> getParam() {
+	public Map<String, Object> getParam() {
 		return param;
 	}
 
-	public void setParam(Map<String, String> param) {
+	public void setParam(Map<String, Object> param) {
 		if (this.param!=null) {
 			this.param.putAll(param);
 		} else {

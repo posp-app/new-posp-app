@@ -55,7 +55,7 @@ public class TblProxyHostDaoImpl extends AbstractiBatisDAO implements ITblProxyH
 	}
 	
 	public void update(TblProxyHost tblProxyHost){
-		this.getSqlSession().update("update_"+"TblProxyHost",
+		this.getSqlSession().update("updateById_"+"TblProxyHost",
 					tblProxyHost);
 	}
 	public void updateByMerchantNo(TblProxyHost tblProxyHost){

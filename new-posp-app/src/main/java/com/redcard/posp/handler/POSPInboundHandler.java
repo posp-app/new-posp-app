@@ -2,6 +2,7 @@ package com.redcard.posp.handler;
 
 import java.util.Map;
 
+import com.redcard.posp.handler.message.MessageValiditySignHandler;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
@@ -62,9 +63,10 @@ public class POSPInboundHandler extends SimpleChannelUpstreamHandler {
 			DefaultMessageHandler handler = new DefaultMessageHandler();
 			handler.addHandler(ApplicationContent.MESSAGE_HANDLER_NAME_LOGGER, new MessageLoggerHandler());
 			handler.addHandler(ApplicationContent.MESSAGE_HANDLER_NAME_VALIDITY, new MessageValidityHandler());
-			handler.addHandler(ApplicationContent.MESSAGE_HANDLER_NAME_REPLACE, new MessageReplaceHandler());
+            handler.addHandler(ApplicationContent.MESSAGE_HANDLER_NAME_VALIDITY_SIGN, new MessageValiditySignHandler());
+            handler.addHandler(ApplicationContent.MESSAGE_HANDLER_NAME_REPLACE, new MessageReplaceHandler());
 			handler.handler(msg, inBoundChannel, cb);
-			Map<String,String> param = handler.getParam();
+			Map<String,Object> param = handler.getParam();
 			/**
 			 * 测试用的
 			 */
@@ -80,7 +82,7 @@ public class POSPInboundHandler extends SimpleChannelUpstreamHandler {
 			 * 测试用
 			 */
 			//param.put(ApplicationKey.PROTOCOL_TYPE,ApplicationKey.PROTOCOL_TYPE_SUPDATA);
-			final String messageProtocal = param.get(ApplicationKey.PROTOCOL_TYPE);
+			final String messageProtocal = (String)param.get(ApplicationKey.PROTOCOL_TYPE);
 			if (ApplicationKey.PROTOCOL_TYPE_SUPDATA.equals(messageProtocal)) {
 				//这里从本读消息转换为目标消息。就是要送出去的渠道消息
 				IMessageConverter converter = new SupDataMessageConverter();

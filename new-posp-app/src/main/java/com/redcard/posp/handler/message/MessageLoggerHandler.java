@@ -32,12 +32,12 @@ public class MessageLoggerHandler implements IMessageHandler {
 		return true;
 	}
 
-	public Map<String, String> getParam() {
+	public Map<String, Object> getParam() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public void setParam(Map<String, String> param) {
+	public void setParam(Map<String, Object> param) {
 		// TODO Auto-generated method stub
 		
 	}

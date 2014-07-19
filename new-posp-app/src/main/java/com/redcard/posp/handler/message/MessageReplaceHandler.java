@@ -29,7 +29,7 @@ public class MessageReplaceHandler implements IMessageHandler{
 
 	private boolean isContinue = true;
 	
-	private Map<String,String> param = null;
+	private Map<String,Object> param = null;
 	
 	public void handler(Message msg, Channel inBoundChannel, ChannelBuffer cb) {
 		/*TblProxyHost host = ManageCacheService.findProxyHostByMerchantNo(msg.getCardAcceptorIdentification());
@@ -44,7 +44,7 @@ public class MessageReplaceHandler implements IMessageHandler{
 		}
 		// 替换pin ，52域 个人识别码
 		if (!StringUtil.isEmpty(msg.getPINDate())) {
-			String pinKey = param.get(ApplicationKey.PIN_KEY);
+			String pinKey = (String)param.get(ApplicationKey.PIN_KEY);
 			if (pinKey == null||pinKey.length()==0) {
 				msg.setBCDField(52, SecretKeyFactory.getPin(merchantPos.getFldPinKey(),merchantPos.getFldMasterKey(),
 						msg.getPINDate(),msg.getAccount()));
@@ -56,7 +56,7 @@ public class MessageReplaceHandler implements IMessageHandler{
 		//替换mac 64域
 		if (!StringUtil.isEmpty(msg.getMAC())) {
 			//String targetMac = SecuritySupporter.transferredMac(msg.mab,host.getFldMacKey(),ApplicationContextInit.targetMasterKey);
-			String macKey = param.get(ApplicationKey.MAC_KEY);
+			String macKey = (String)param.get(ApplicationKey.MAC_KEY);
 			if (macKey ==null||macKey.length()==0) {
 				msg.setBCDField(64, "");
 			} else {
@@ -71,11 +71,11 @@ public class MessageReplaceHandler implements IMessageHandler{
 		return isContinue;
 	}
 
-	public Map<String, String> getParam() {
+	public Map<String, Object> getParam() {
 		return param;
 	}
 
-	public void setParam(Map<String, String> param) {
+	public void setParam(Map<String, Object> param) {
 		if (this.param!=null) {
 			this.param.putAll(param);
 		} else {
