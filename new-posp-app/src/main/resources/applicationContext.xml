@@ -50,6 +50,6 @@
 	
 	<import resource="applicationContext-dao.xml" />
 	<import resource="applicationContext-service.xml" />
-	<import resource="applicationContext-jms.xml" />
+	<!--<import resource="applicationContext-jms.xml" />-->
 
 </beans>

@@ -220,7 +220,36 @@ public class Message implements Serializable {
 			SecurityUtil.setBinaryOne(bitMap, fieldNumber);
 		}
 	}
-	
+
+    public void setUnicertainAscField(int fieldNumber, String value) {
+        FormatMetadata fm = this.format.getFields().get(fieldNumber - 1);
+
+        if (fm.getUse().equals(ApplicationKey.USE_N)) {
+            return;
+        }
+
+        if(fieldNumber<=1){
+            return;
+        }
+
+        if (!fm.getFormat().startsWith(ApplicationKey.LL)) {
+            return;
+        }
+        int lLength = 1;
+
+        if (fm.getFormat().startsWith(ApplicationKey.LLL)) {
+            lLength = 2;
+        }
+
+        byte[] bLength = DecodeUtil.str2Bcd(CommonUtil.addLeftZero(value.length()+"",lLength*2));
+        byte[] temp = value.getBytes();
+        byte[] buf = new byte[temp.length + bLength.length];
+        System.arraycopy(bLength, 0, buf, 0, bLength.length);
+        System.arraycopy(temp, 0, buf, bLength.length, temp.length);
+        this.field[fieldNumber - 1] = buf;
+        SecurityUtil.setBinaryOne(bitMap, fieldNumber);
+    }
+
 	/**
 	 * 处理定长域
 	 * 

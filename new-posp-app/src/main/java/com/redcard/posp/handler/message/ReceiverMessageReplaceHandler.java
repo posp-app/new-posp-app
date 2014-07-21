@@ -66,8 +66,8 @@ public class ReceiverMessageReplaceHandler implements IMessageHandler {
 				if(ApplicationContent.MSG_TYPE_REVERSAL_RESP.equals(msg.getMSGType())
 						||ApplicationContent.MSG_TYPE_SALE_RESP.equals(msg.getMSGType())
 						||ApplicationContent.MSG_TYPE_SALE_RESP.equals(msg.getMSGType())){
-					//msg.setASCField(62, merchantPos.getFldBatchNo());
-				}
+                    msg.setUnicertainAscField(62,merchantPos.getFldBatchNo());
+                }
 				
 				String targetMac = DefaultMessageHandler.getMAC(msg);
 				msg.setBCDField(64, targetMac);
