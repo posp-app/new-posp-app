@@ -5,6 +5,8 @@ import java.util.Map;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.redcard.posp.handler.DefaultMessageHandler;
 import com.redcard.posp.manage.model.TblMerchantPos;
@@ -26,6 +28,7 @@ import com.redcard.posp.support.ResultCode;
  * @date 2014-5-1
  */
 public class ReceiverMessageReplaceHandler implements IMessageHandler {
+	private static Logger logger = LoggerFactory.getLogger(ReceiverMessageReplaceHandler.class);
 
 	private boolean isContinue = true;
 	
@@ -59,6 +62,13 @@ public class ReceiverMessageReplaceHandler implements IMessageHandler {
 						msg.setBCDField(4, tm.getFldTransactionAmount());
 					}
 				}
+				
+				if(ApplicationContent.MSG_TYPE_REVERSAL_RESP.equals(msg.getMSGType())
+						||ApplicationContent.MSG_TYPE_SALE_RESP.equals(msg.getMSGType())
+						||ApplicationContent.MSG_TYPE_SALE_RESP.equals(msg.getMSGType())){
+					//msg.setASCField(62, merchantPos.getFldBatchNo());
+				}
+				
 				String targetMac = DefaultMessageHandler.getMAC(msg);
 				msg.setBCDField(64, targetMac);
 				

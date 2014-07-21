@@ -174,26 +174,12 @@ public class MessageValidityHandler implements IMessageHandler {
 			pos.setFldMerchantCode(msg.getCardAcceptorIdentification());
 			pos.setFldMacKey(m.getMacKey());
 			pos.setFldPinKey(m.getPinKey());
-			//当前上送的批次号+1
-			/*String currentBatchNo = msg.getBatchNumber();
-			int iCurrentBatchNo = Integer.parseInt(currentBatchNo)+1;
-			if (iCurrentBatchNo>999999) {
-				iCurrentBatchNo = 1;
-			}
-			String nextBatchNo = CommonUtil.addLeftZero(Integer.toString(iCurrentBatchNo), 6);
-			m.setASCField(62, CommonUtil.addLeftZero(Integer.toString(nextBatchNo.length()), 4)+
-					nextBatchNo);*/
-			logger.info(m.get62Field().substring(4));
-			pos.setFldBatchNo(m.get62Field().substring(4));
-			//logger.debug("pos mac key=["+pos.getFldMacKey()+"]");
-			//logger.debug("pos pin key=["+pos.getFldPinKey()+"]");
 			ApplicationContentSpringProvider.getInstance().getMerchantPosService()
 				.updateKey(pos);
 			TblMerchantPos p = ManageCacheService.findPos(pos.getFldTerminalNo());
 			if (p!=null) {
 				p.setFldMacKey(m.getMacKey());
 				p.setFldPinKey(m.getPinKey());
-				p.setFldBatchNo(pos.getFldBatchNo());
 			}
 			//返回新的批次号
 			

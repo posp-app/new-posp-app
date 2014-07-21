@@ -1010,15 +1010,20 @@ public class Message implements Serializable {
 	}
 	
 	public String to8583FormatString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("bitMap=["+TypeConvert.bytes2HexString(bitMap)+"]\r");
-		for (int i=1;i<=field.length;i++) {
-			if (!StringUtils.isEmpty(getFieldOrgString(i))) {
-				//System.out.println(i+":-------------["+TypeConvert.bytes2HexString(field[i-1])+"]----------------");
-				sb.append("Field["+i+"]="+getFieldOrgString(i)+"\n");
+		try {
+			StringBuilder sb = new StringBuilder();
+			sb.append("bitMap=[" + TypeConvert.bytes2HexString(bitMap) + "]\r");
+			for (int i = 1; i <= field.length; i++) {
+				if (!StringUtils.isEmpty(getFieldOrgString(i))) {
+					// System.out.println(i+":-------------["+TypeConvert.bytes2HexString(field[i-1])+"]----------------");
+					sb.append("Field[" + i + "]=" + getFieldOrgString(i) + "\n");
+				}
 			}
+			return sb.toString();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return sb.toString();
+		return "";
 	}
 
 	public byte[][] getField() {

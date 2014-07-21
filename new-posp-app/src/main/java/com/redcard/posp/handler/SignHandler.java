@@ -44,12 +44,19 @@ public class SignHandler extends SimpleChannelUpstreamHandler {
         Message msg = MessageFactory.getInputMessage(cb.array());
         logger.info("接收到签到消息,域值：\r\n" + msg.to8583FormatString());
         if (ApplicationContent.MSG_TYPE_SIGN_ON_RESP.equals(msg.getMSGType())) {
-
+        	String ipAddress = socketAddress.toString();
+        	//不能使用socketAddress.getHostName(),不知道为什么会等待5秒左右
+        	String ip = ipAddress.split(":")[0].substring(1);
+        	Integer port = Integer.valueOf(ipAddress.split(":")[1]);
             TblProxyHost queryObject = new TblProxyHost();
-            queryObject.setFldHostPort(socketAddress.getPort());
-            queryObject.setFldHostIp(socketAddress.getHostString());
+            queryObject.setFldHostPort(port);
+            queryObject.setFldHostIp(ip);
             queryObject.setFldProtocolType(null);
+            logger.info("444444444444444444444");
+
             List<TblProxyHost> tblProxyHostList = ApplicationContentSpringProvider.getInstance().getProxyHostService().getTblProxyHostListByObj(queryObject);
+
+            
             if (tblProxyHostList != null && tblProxyHostList.size() > 0) {
                 //签到，更新pinKey 和macKey
                 TblProxyHost tblProxyHost = tblProxyHostList.get(0);
@@ -83,6 +90,7 @@ public class SignHandler extends SimpleChannelUpstreamHandler {
                 ApplicationContentSpringProvider.getInstance().getProxyHostService().update(save);
                 //更新缓存中的转发主机的key
                 ManageCacheService.updateProxyHostKeyByCode(save);
+                getAtomicBoolean().set(true);
             }
         } else {
             logger.error("转发主机["+socketAddress+"]签到失败");
@@ -90,7 +98,6 @@ public class SignHandler extends SimpleChannelUpstreamHandler {
 
         e.getChannel().close();
         e.getChannel().disconnect();
-        getAtomicBoolean().set(true);
     }
 
     @Override

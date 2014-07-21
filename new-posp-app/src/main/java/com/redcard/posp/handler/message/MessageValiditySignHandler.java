@@ -55,9 +55,22 @@ public class MessageValiditySignHandler implements IMessageHandler {
         if (param.get(ApplicationKey.PROXY_MODE) != null
                 && ApplicationKey.PROXY_SIGN_MODE_ORG.toString().equals(param.get(ApplicationKey.PROXY_MODE))) {
 
-            Date latestSignDate = (Date) param.get(ApplicationKey.PROXY_SIGN_DATE);
-            String pinKey = (String) param.get(ApplicationKey.PIN_KEY);
-            String macKey = (String) param.get(ApplicationKey.MAC_KEY);
+        	TblProxyHost queryObject = new TblProxyHost();
+            queryObject.setFldHostPort(port);
+            queryObject.setFldHostIp(ip);
+            queryObject.setFldProtocolType(null);
+            List<TblProxyHost> tblProxyHostList = ApplicationContentSpringProvider.getInstance().getProxyHostService().getTblProxyHostListByObj(queryObject);
+
+            if (tblProxyHostList == null && tblProxyHostList.size() == 0) {
+            	logger.info("路由IP [" + param.get(ApplicationKey.IP) + "]:[" + param.get(ApplicationKey.PORT) + "] 不存在 ");
+                isContinue = false;
+                DefaultMessageHandler.returnOrgMessage(msg, inBoundChannel, ResultCode.RESULT_CODE_60.getCode());
+                return;
+            }
+        	
+            Date latestSignDate = tblProxyHostList.get(0).getFldSignDate();
+            String pinKey = tblProxyHostList.get(0).getFldPinKey();
+            String macKey = tblProxyHostList.get(0).getFldMacKey();
 
             if (latestSignDate != null
                     && DateUtils.isSameDay(new Date(), latestSignDate)
@@ -97,7 +110,7 @@ public class MessageValiditySignHandler implements IMessageHandler {
                 logger.error("==================");
                 long start = System.currentTimeMillis();
                 while ((System.currentTimeMillis()-start)<5000 && !atomicBoolean.get()) {
-                    Thread.currentThread().sleep(100);
+                    Thread.currentThread().sleep(10);
                 }
                 logger.error("==================");
 
@@ -107,16 +120,9 @@ public class MessageValiditySignHandler implements IMessageHandler {
                     return;
                 }
 
-                TblProxyHost queryObject = new TblProxyHost();
-                queryObject.setFldHostPort(port);
-                queryObject.setFldHostIp(ip);
-                queryObject.setFldProtocolType(null);
-                List<TblProxyHost> tblProxyHostList = ApplicationContentSpringProvider.getInstance().getProxyHostService().getTblProxyHostListByObj(queryObject);
-                if (tblProxyHostList != null && tblProxyHostList.size() > 0) {
-                    param.put(ApplicationKey.PIN_KEY, tblProxyHostList.get(0).getFldPinKey());
-                    param.put(ApplicationKey.MAC_KEY, tblProxyHostList.get(0).getFldMacKey());
-                    param.put(ApplicationKey.PROXY_SIGN_DATE, tblProxyHostList.get(0).getFldSignDate());
-                }
+                param.put(ApplicationKey.PIN_KEY, tblProxyHostList.get(0).getFldPinKey());
+                param.put(ApplicationKey.MAC_KEY, tblProxyHostList.get(0).getFldMacKey());
+                param.put(ApplicationKey.PROXY_SIGN_DATE, tblProxyHostList.get(0).getFldSignDate());
 
                 isContinue = true;
             } catch (Exception e) {
