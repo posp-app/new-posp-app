@@ -27,7 +27,15 @@ public class MessageServiceImpl {
 		tblTransactionMessage.setFldAdditionalAmount(message.getBalanceAmount());
 		//批次号
 		tblTransactionMessage.setFldBatchNumber(message.getBatchNumber());
-		tblTransactionMessage.setFldCardNo(ApplicationContentSpringProvider.doMaskCardNO(StringUtil.isEmpty(message.getAccount())?null:message.getAccount().substring(0,19)));
+        String cardNo = null;
+        if (!StringUtil.isEmpty(message.getAccount())) {
+            if (message.getAccount().length() > 19) {
+                cardNo = message.getAccount().substring(0, 19);
+            } else {
+                cardNo = message.getAccount();
+            }
+        }
+        tblTransactionMessage.setFldCardNo(ApplicationContentSpringProvider.doMaskCardNO(cardNo));
 		//卡类型
 		tblTransactionMessage.setFldCardType(message.getCardType());
 		//tblTransactionMessage.setFldExpirationDate(message.getDateOfExpired());

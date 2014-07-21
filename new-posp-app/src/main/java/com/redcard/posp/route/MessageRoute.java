@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,8 +77,18 @@ public class MessageRoute implements IRouter {
 			return r;
 		}
 		
-		//@TODO 异常未捕获
-		String cardNO = message.getAccount().substring(0,19);
+		//@TODO 处理普天卡，长度为16位
+        if(StringUtils.isEmpty(message.getAccount())){
+            logger.error("卡号信息不能为空");
+            r.setResultCode(ResultCode.RESULT_CODE_63);
+            return r;
+        }
+
+        String cardNO = message.getAccount();
+
+        if(message.getAccount().length()>19){
+            cardNO = message.getAccount().substring(0,19);
+        }
 		TblMerchantPos posNO = ManageCacheService.findPos(m,terminalNO);
 		if (posNO == null) {
 			logger.error("商户["+m.getFldCode()+"]下没有终端["+terminalNO+"]");
