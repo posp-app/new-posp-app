@@ -52,7 +52,6 @@ public class SignHandler extends SimpleChannelUpstreamHandler {
             queryObject.setFldHostPort(port);
             queryObject.setFldHostIp(ip);
             queryObject.setFldProtocolType(null);
-            logger.info("444444444444444444444");
 
             List<TblProxyHost> tblProxyHostList = ApplicationContentSpringProvider.getInstance().getProxyHostService().getTblProxyHostListByObj(queryObject);
 

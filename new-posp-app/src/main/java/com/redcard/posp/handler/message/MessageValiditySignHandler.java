@@ -107,18 +107,22 @@ public class MessageValiditySignHandler implements IMessageHandler {
                     }
                 });
 
-                logger.error("==================");
+                //等待签到返回
+                logger.error("等待签到结果");
                 long start = System.currentTimeMillis();
                 while ((System.currentTimeMillis()-start)<5000 && !atomicBoolean.get()) {
                     Thread.currentThread().sleep(10);
                 }
-                logger.error("==================");
+                logger.error("签到结果已返回");
 
                 if(!atomicBoolean.get()){
                     isContinue = false;
                     DefaultMessageHandler.returnOrgMessage(msg, inBoundChannel, ResultCode.RESULT_CODE_93.getCode());
                     return;
                 }
+
+                //重新加载最新的pinkey和mackey
+                tblProxyHostList = ApplicationContentSpringProvider.getInstance().getProxyHostService().getTblProxyHostListByObj(queryObject);
 
                 param.put(ApplicationKey.PIN_KEY, tblProxyHostList.get(0).getFldPinKey());
                 param.put(ApplicationKey.MAC_KEY, tblProxyHostList.get(0).getFldMacKey());
