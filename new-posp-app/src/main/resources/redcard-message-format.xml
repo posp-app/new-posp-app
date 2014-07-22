@@ -3,7 +3,7 @@
 <message-format name="redcard">
 	<head>
 		<package-length length="2" format="BCD"/>
-		<TPDU length="5" format="BCD" default-value="6000000003"/>
+		<TPDU length="5" format="BCD" default-value="6000030000"/>
 	</head>
 	<bit-map format="B64" length="8"/>
 	<fields>
