@@ -7,9 +7,9 @@
 		</encoder>
 	</appender>
 	<appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">  
-        <file>/opt/posp_log/posp.log</file>  
+        <file>log/posp.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
-            <FileNamePattern>/opt/posp_log/posp.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <FileNamePattern>log/posp.%d{yyyy-MM-dd}.log</FileNamePattern>
 			<maxHistory>30</maxHistory>  
         </rollingPolicy>  
         <encoder>
